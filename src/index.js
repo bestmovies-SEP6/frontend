@@ -1,14 +1,45 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
-import App from './App';
+import App from './pages/home/App';
 import reportWebVitals from './reportWebVitals';
+import {createHashRouter, Navigate, RouterProvider} from "react-router-dom";
+import {QueryClient, QueryClientProvider} from "@tanstack/react-query";
+import LoginComponent from "./pages/auth/login";
+import RegisterComponent from "./pages/auth/register";
+
+
+const router = createHashRouter([
+    {
+        path: "/",
+        element: <App/>,
+        children: [
+            {
+                index: true,
+                element: <Navigate to={"login"}/>
+            },
+
+            {
+                path: 'login',
+                element: <LoginComponent/>
+            },
+            {
+                path: 'register',
+                element: <RegisterComponent/>
+            }
+        ]
+    }
+]);
+
+const queryClient = new QueryClient();
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>
+    <React.StrictMode>
+        <QueryClientProvider client={queryClient}>
+            <RouterProvider router={router}/>
+        </QueryClientProvider>
+    </React.StrictMode>
 );
 
 // If you want to start measuring performance in your app, pass a function
