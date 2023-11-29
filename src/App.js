@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import { RouterProvider, createHashRouter } from "react-router-dom";
 import { QueryClient, QueryClientProvider } from "react-query";
 import { Root } from './routes/Root';
-import Home from './routes/Home';
+import Home from './pages/home/Home';
 import SearchBar from './components/SearchBar';
 
 

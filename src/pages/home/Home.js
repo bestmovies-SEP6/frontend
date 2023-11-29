@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from "react";
 
-import MovieCard from "../components/MovieCard";
-import { SearchBar } from "../components/SearchBar";
-import NavBar from "../components/NavBar";
+import MovieCard from "../../components/MovieCard";
+import { SearchBar } from "../../components/SearchBar";
+import NavBar from "../../components/NavBar";
 
-export default function Home() {
+ function Home() {
   const [movies, setMovies] = useState([]);
     
   const API_URL = "http://www.omdbapi.com/?i=tt3896198&apikey=e8ebe675";
@@ -37,3 +37,5 @@ export default function Home() {
     </div>
   );
 }
+
+export default Home;
