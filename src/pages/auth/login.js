@@ -24,7 +24,7 @@ function LoginComponent() {
             <input type="text" id="username" name="username" value={username} onChange={e => setUsername(e.target.value)} required/>
             <label htmlFor="password">Password:</label>
             <input type="password" id="password" name="password" value={password} onChange={e => setPassword(e.target.value)} required/>
-            <button onClick={onLoginClicked}>Login</button>
+            <button className="login_button" onClick={onLoginClicked}>Login</button>
         </div>
     );
 }

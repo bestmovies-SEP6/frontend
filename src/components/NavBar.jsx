@@ -1,21 +1,21 @@
 import React from 'react';
-import SearchBar from '../components/SearchBar'; // Assuming you have a SearchBar component
 import logo from  '../images/logo.png';
 import '../css/NavBar.css';
+import {NavLink} from "react-router-dom";
+import SearchBarComponent from "./SearchBarComponent";
 
 function Navbar()  {
     return (
         <nav className="navbar">
-            <div className="navbar-logo">
-                {/* <img src={logo} alt="Logo" /> */}
-                <h1>BestMOVIES</h1>
-            </div>
+            <NavLink to={"/"} className="navbar-logo">
+                 <img src={logo} alt="Logo"/>
+            </NavLink>
             <div className="navbar-search">
-                <SearchBar />
+                <SearchBarComponent />
             </div>
-            <div className="navbar-signin">
+            <NavLink  to={"/login"} className="navbar-signin">
                 <button>Sign In</button>
-            </div>
+            </NavLink>
         </nav>
     );
 };

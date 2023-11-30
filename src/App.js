@@ -1,33 +1,33 @@
-import './css/App.css';
 import React, { useState } from 'react';
 import { RouterProvider, createHashRouter } from "react-router-dom";
 import { QueryClient, QueryClientProvider } from "react-query";
-import { Root } from './routes/Root';
-import Home from './pages/home/Home';
-import SearchBar from './components/SearchBar';
+import {Home} from './pages/home/Home';
+import {Root} from "./pages/Root";
 
 
 const queryClient = new QueryClient();
 
-  const router = createHashRouter([
+const router = createHashRouter([
     {
-      path: "/",
-      element: <Home />,
-      children: [
-        // Aru routes
-      ],
+        path: "/",
+        element: <Root />,
+        children: [
+            {
+                element: <Home />
+            },
+        ],
     },
-  ]);
+]);
 
 
- export function App() {
+export function App() {
 
-  return (
-  
-    <div className="App">
-        <RouterProvider router={router} />
-    </div>
-  );
+    return (
+
+        <div className="App">
+            <RouterProvider router={router} />
+        </div>
+    );
 }
 
 export default App;

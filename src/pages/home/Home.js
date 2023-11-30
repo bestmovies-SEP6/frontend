@@ -1,41 +1,31 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, Component } from "react";
 
+import { useMoviesInformationContext} from "../../contexts/MoviesInformationContext";
 import MovieCard from "../../components/MovieCard";
-import { SearchBar } from "../../components/SearchBar";
-import NavBar from "../../components/NavBar";
-
+import "../../css/Home.css"
  function Home() {
-  const [movies, setMovies] = useState([]);
-    
-  const API_URL = "http://www.omdbapi.com/?i=tt3896198&apikey=e8ebe675";
-
-  const searchMovies = async (title) => {
-    const res = await fetch(`${API_URL}&s=${title}`);
-    const data = await res.json();
-    setMovies(data.Search)
-    console.log(data.Search);
-  };
-  useEffect(() => {
-     searchMovies('Nepal');
-  }, []);
-
+     const {isLoading, isError, data } = useMoviesInformationContext();
+/*  const API_URL = "http://www.omdbapi.com/?i=tt3896198&apikey=e8ebe675";*/
+     // Check if the data is available and has a 'Search' property
+     const movies = data?.Search;
   return (
-    <div className="app">
-      <NavBar />
-
-      {movies?.length > 0 ? (
-        <div className="container">
-          {movies.map((movie) => (
-            <MovieCard key={movie.imdbID} movie={movie} />
-          ))}
-        </div>
-      ) : (
-        <div className="empty">
-          <h2> No movies found</h2>
-        </div>
-      )}
-    </div>
+      <div >
+          {
+              movies?.length > 0
+                  ?(
+                      <div className="container">
+                          {movies.map((movie) => (
+                              <MovieCard movie={movie}/>
+                          ))}
+                      </div>
+                  ) : (
+                      <div className="empty">
+                          <h2> No movies found</h2>
+                      </div>
+                  )
+          }
+      </div>
   );
 }
 
-export default Home;
+export {Home};
