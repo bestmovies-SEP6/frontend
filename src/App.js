@@ -6,6 +6,7 @@ import {Home} from "./pages/home/Home";
 import {Root} from "./pages/Root";
 import {MoviesProvider} from "./contexts/MoviesInformationContext";
 import {SearchTermProvider} from "./contexts/SearchTermContext";
+import MovieDetails from "./components/MovieDetails";
 
 
 const queryClient = new QueryClient();
@@ -22,7 +23,11 @@ const queryClient = new QueryClient();
           {
               path:"/login",
               element: <LoginComponent/>
-          }
+          },
+          {
+              path: "/movie/:id", // Movie details page with dynamic segment for the movie ID
+              element: <MovieDetails />
+          },
       ],
     },
   ]);

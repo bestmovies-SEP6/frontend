@@ -1,5 +1,14 @@
- function MovieCard({movie}) {
-    return <div className="movie">
+import React from 'react';
+import { useNavigate } from 'react-router-dom'; // Import useNavigate instead of useHistory
+
+function MovieCard({movie}) {
+    const navigate = useNavigate(); // useNavigate instead of useHistory
+
+    const handleCardClick = () => {
+        navigate(`/movie/${movie.id}`); // Use navigate function to change the route
+    };
+
+    return (<div className="movie" onClick={handleCardClick}>
     <div>
       <p>{movie.release_date}</p>
     </div>
@@ -17,7 +26,7 @@
       {/*<span>{movie.Type}</span>*/}
       <h3>{movie.title}</h3>
     </div>
-  </div>;
-};
+  </div>);
+}
 
  export default MovieCard;

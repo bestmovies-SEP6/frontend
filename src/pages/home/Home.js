@@ -1,6 +1,5 @@
 import React, {useState, useEffect, Component} from "react";
 
-import {useMoviesInformationContext} from "../../contexts/MoviesInformationContext";
 import MovieCard from "../../components/MovieCard";
 import "../../css/Home.css"
 import MovieCarousel from "../../components/MovieCarousel";

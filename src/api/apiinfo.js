@@ -13,6 +13,12 @@ export function fetchInitialMovies() {
     return fetch(url).then((res) => res.json());
 }
 
+export function fetchMovieDetails(movieId) {
+    const url = `https://bestmovies-api-5azra6r55a-ew.a.run.app/Movie/details/${movieId}`;
+    return fetch(url).then(res => res.json());
+}
+
+
 export function fetchNowPlaying(){
     const API_URL_Now_Playing = "https://bestmovies-api-5azra6r55a-ew.a.run.app/Movie/now-playing"
     const url = `${API_URL_Now_Playing}`;
