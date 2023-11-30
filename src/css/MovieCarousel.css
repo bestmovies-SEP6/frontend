@@ -1,22 +1,60 @@
-/* Add this to your Home.css or a relevant CSS file */
-
-/* This styles the overall carousel container */
 .carousel-container {
-    width: 100%; /* Adjust the width as needed */
-    height:65vh;
-
-    margin: 0 auto; /* This will center your carousel */
-    position: relative; /* Needed for absolute positioning of children if necessary */
-    overflow: hidden; /* Ensures nothing overflows from the carousel */
-    /*background: #333333;*/
+    width: 100%;
+    height: 65vh; /* Fixed height for the carousel */
+    margin: 0 auto;
+    position: relative;
+    overflow: hidden;
 }
-
-
 
 .carousel-image {
-    height: 50%;
-    width: 50%;
-    /*object-fit: contain;*/
+    width: 100%; /* Full width of the container */
+    height: 98%; /* Full height of the container */
+    display: flex; /* Use flex to center the image inside the div */
+    justify-content: center; /* Center horizontally */
+    align-items: center; /* Center vertically */
 }
 
-/* Additional styling for navigation buttons, titles, etc. can be added here */
+.carousel-image img {
+    width: 100%;
+    height: 65vh;
+    object-fit: fill;
+    display: block;
+}
+
+
+
+/* Arrow button styles */
+.slick-prev,
+.slick-next {
+    font-size: 0; /* Removes the default arrow characters */
+    line-height: 0;
+    position: absolute;
+    top: 50%; /* Aligns the button to the middle vertically */
+    z-index: 1;
+    cursor: pointer;
+    border: none; /* Removes border */
+    width: 30px; /* Arrow width */
+    height: 30px; /* Arrow height */
+    border-radius: 15px; /* Makes it round */
+    justify-content: center;
+    align-items: center;
+    display: flex;
+    opacity: 0.5; /* Arrow opacity */
+    transform: translateY(-50%); /* Centers the arrow vertically */
+}
+
+.slick-prev {
+    left: 25px; /* Adjust as needed for your design */
+}
+
+.slick-next {
+    right: 25px; /* Adjust as needed for your design */
+}
+
+.slick-prev:hover,
+.slick-prev:focus,
+.slick-next:hover,
+.slick-next:focus {
+    opacity: 1; /* Full opacity on hover/focus */
+}
+

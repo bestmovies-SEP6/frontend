@@ -23,20 +23,41 @@ function MovieCarousel() {
         infinite: true,
         speed: 300,
         slidesToShow: 1,
-        adaptiveHeight: true
+        adaptiveHeight: true,
+        nextArrow: <SampleNextArrow />,
+        prevArrow: <SamplePrevArrow />
     };
     return (
         <Slider {...settings} className="carousel-container">
-            {movies.slice(0, 5).map((movie, index) => (
+            {movies.slice(0, 7).map((movie, index) => (
 
-                <div key={index} className="carousel-image"  style={{backgroundImage: `url(${movie.poster_path})`}}>
-                    {/* If you are using an img tag instead of background images */}
-                     <img src={movie.poster_path} alt={movie.title} />
-                    {console.log(movie)}
+                <div key={index} className="carousel-image">
+                     <img src={movie.backdrop_path} alt={movie.title} />
                 </div>
             ))}
         </Slider>
     );
 }
+// Custom Arrow components
+function SamplePrevArrow(props) {
+    const { className, style, onClick } = props;
+    return (
+        <div
+            className={className}
+            style={{ ...style, display: "block", left: "25px" }}
+            onClick={onClick}
+        />
+    );
+}
 
+function SampleNextArrow(props) {
+    const { className, style, onClick } = props;
+    return (
+        <div
+            className={className}
+            style={{ ...style, display: "block", right: "25px" }}
+            onClick={onClick}
+        />
+    );
+}
 export default MovieCarousel;
