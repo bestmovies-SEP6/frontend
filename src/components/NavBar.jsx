@@ -1,6 +1,7 @@
 import React from 'react';
 import logo from  '../images/logo.png';
 import '../css/NavBar.css';
+import "../css/SearchBar.css"
 import {NavLink} from "react-router-dom";
 import SearchBarComponent from "./SearchBarComponent";
 
