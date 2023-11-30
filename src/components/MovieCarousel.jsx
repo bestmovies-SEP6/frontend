@@ -5,8 +5,14 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import {fetchNowPlaying} from "../api/apiinfo";
 import "../css/MovieCarousel.css"
+import {useNavigate} from "react-router-dom";
 function MovieCarousel() {
     const [movies, setMovies] = useState([]);
+    const navigate = useNavigate(); // useNavigate instead of useHistory
+
+    function handleCarouselClick(id){
+        navigate(`/movie/${id}`); // Use navigate function to change the route
+    }
 
     useEffect(() => {
         fetchNowPlaying().then(data => {
@@ -32,7 +38,7 @@ function MovieCarousel() {
             {movies.slice(0, 7).map((movie, index) => (
 
                 <div key={index} className="carousel-image">
-                     <img src={movie.backdrop_path} alt={movie.title} />
+                     <img src={movie.backdrop_path} alt={movie.title}  />
                 </div>
             ))}
         </Slider>
