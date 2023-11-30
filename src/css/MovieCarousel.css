@@ -1,0 +1,22 @@
+/* Add this to your Home.css or a relevant CSS file */
+
+/* This styles the overall carousel container */
+.carousel-container {
+    width: 100%; /* Adjust the width as needed */
+    height:65vh;
+
+    margin: 0 auto; /* This will center your carousel */
+    position: relative; /* Needed for absolute positioning of children if necessary */
+    overflow: hidden; /* Ensures nothing overflows from the carousel */
+    /*background: #333333;*/
+}
+
+
+
+.carousel-image {
+    height: 50%;
+    width: 50%;
+    /*object-fit: contain;*/
+}
+
+/* Additional styling for navigation buttons, titles, etc. can be added here */

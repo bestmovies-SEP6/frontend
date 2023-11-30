@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { RouterProvider, createHashRouter } from "react-router-dom";
 import { QueryClient, QueryClientProvider } from "react-query";
-// import SearchBar from './components/SearchBar';
 import LoginComponent from "./pages/auth/login";
 import {Home} from "./pages/home/Home";
 import {Root} from "./pages/Root";
