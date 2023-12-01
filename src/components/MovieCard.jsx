@@ -28,5 +28,19 @@ function MovieCard({movie}) {
     </div>
   </div>);
 }
+function MovieCardList(props){
+const  {movies} = props;
+    return  <div>
+        { movies?.length > 0 ? (
+            <div className="container">
+                {movies.map((movie, index) => (
+                    <MovieCard key={index} movie={movie} />
+                ))}
+            </div>
+        ) :  (
+            <p>No Movies</p>
+        )}
+    </div>
 
- export default MovieCard;
+}
+ export {MovieCard, MovieCardList};

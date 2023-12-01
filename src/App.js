@@ -7,6 +7,7 @@ import {Root} from "./pages/Root";
 import {MoviesProvider} from "./contexts/MoviesInformationContext";
 import {SearchTermProvider} from "./contexts/SearchTermContext";
 import MovieDetails from "./components/MovieDetails";
+import {Search} from "./pages/Search";
 
 
 const queryClient = new QueryClient();
@@ -28,6 +29,10 @@ const queryClient = new QueryClient();
               path: "/movie/:id", // Movie details page with dynamic segment for the movie ID
               element: <MovieDetails />
           },
+          {
+              path: "/filter", // Movie details page with dynamic segment for the movie ID
+              element: <Search />
+          },
       ],
     },
   ]);
@@ -41,9 +46,7 @@ const queryClient = new QueryClient();
         <QueryClientProvider client={queryClient}>
 
             <SearchTermProvider>
-                <MoviesProvider>
                     <RouterProvider router={router} />
-                </MoviesProvider>
             </SearchTermProvider>
         </QueryClientProvider>
     </div>

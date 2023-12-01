@@ -3,9 +3,9 @@ import React, { useEffect, useState } from 'react';
 import Slider from 'react-slick';
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-import {fetchNowPlaying} from "../api/apiinfo";
 import "../css/MovieCarousel.css"
 import {useNavigate} from "react-router-dom";
+import {fetchNowPlayingMovies} from "../api/apiinfo";
 function MovieCarousel() {
     const [movies, setMovies] = useState([]);
     const navigate = useNavigate(); // useNavigate instead of useHistory
@@ -15,7 +15,7 @@ function MovieCarousel() {
     }
 
     useEffect(() => {
-        fetchNowPlaying().then(data => {
+        fetchNowPlayingMovies().then(data => {
             // Assuming the data returned is an array of movies
             // Adjust if the structure is different
             setMovies(data);
