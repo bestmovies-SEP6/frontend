@@ -1,0 +1,26 @@
+.search {
+    background-color: transparent;
+    border: 2px solid #a87a4d;
+    height: 5vh;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: row;
+    justify-items: center;
+    align-items: center;
+}
+
+.filter_button {
+    margin: 5px !important;
+    }
+
+.search-bar {
+    width: 24vw;
+    margin: 5px 5px 5px 0;
+    background-color: transparent;
+    border: 0px;
+}
+
+.search-bar:focus {
+    border: 0;    outline: none;
+}
+

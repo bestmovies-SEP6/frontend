@@ -1,0 +1,25 @@
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 1.5em;
+    background-color: #cad9e4;
+    height: 8vh;
+  }
+  
+  .navbar-logo {
+    flex: 0; /* Do not allow the logo to grow */
+  }
+  
+  .navbar-logo img {
+    width: 10em;
+    height: 6em;
+  }
+  
+  .navbar-search {
+    flex: 1; /* Allow the search bar to grow */
+    max-width: 600px; /* or whatever max width you prefer */
+    margin: 0 auto; /* This will center the search bar */
+  }
+  
+

@@ -1,0 +1,84 @@
+/*! CSS Used from: movie */
+.container {
+  min-height: 100vh;
+  background-color: rgba(136, 157, 166, 0.8);
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center; /* Center items horizontally */
+  align-items: center; /* Center items vertically */
+}
+
+.movie {
+  width: 210px;
+  height: 360px;
+  margin: 1.5em;
+
+  position: relative;
+  border-radius: 12px;
+  overflow: hidden;
+  border: none;
+
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0, 1);
+  box-shadow: 1px 13px 10px -7px rgba(0, 0, 0, 0.1);
+}
+
+.movie div:nth-of-type(1) {
+  position: absolute;
+  width: 100%;
+  opacity: 0;
+  top: 0;
+  color: #f9d3b4;
+}
+
+
+.movie div:nth-of-type(2) {
+  width: 100%;
+  height: 100%;
+}
+
+.movie div:nth-of-type(2) img {
+  height: 100%;
+  width: 100%;
+}
+
+.movie div:nth-of-type(3) {
+  z-index: 2;
+  background-color: #233a3f;
+  padding: 16px 24px 24px 24px;
+
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  left: 0;
+}
+
+.movie div:nth-of-type(3) span {
+  font-family: "Raleway", sans-serif;
+  text-transform: uppercase;
+  font-size: 13px;
+  letter-spacing: 2px;
+  font-weight: 500;
+  color: #f0f0f0;
+}
+
+.movie div:nth-of-type(3) h3 {
+  margin-top: 5px;
+  font-family: "Roboto Slab", serif;
+  color: #47c0d7;
+}
+
+.movie:hover div:nth-of-type(2) {
+  height: 100%;
+}
+
+.movie:hover div:nth-of-type(1) {
+  background-color: rgba(51, 51, 51, 0.47);
+  opacity: 1;
+}
+
+.movie:hover {
+  border: 1px solid green; /* Adjust the width and color as needed */
+  box-shadow: 0px 30px 18px -8px rgba(167, 57, 57, 0.1);
+  transform: scale(1.05, 1.05);
+
+}

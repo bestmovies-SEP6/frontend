@@ -27,7 +27,7 @@ input {
     border-radius: 4px;
 }
 
-button {
+.login_button {
     padding: 10px;
     background-color: #007bff;
     color: #fff;
@@ -36,6 +36,6 @@ button {
     cursor: pointer;
 }
 
-button:hover {
+.login_button:hover {
     background-color: #0056b3;
 }
