@@ -9,9 +9,12 @@ import {fetchNowPlayingMovies} from "../api/apiinfo";
 function MovieCarousel() {
     const [movies, setMovies] = useState([]);
     const navigate = useNavigate(); // useNavigate instead of useHistory
+    const [isDragging, setIsDragging] = useState(false); // State to track dragging
 
     function handleCarouselClick(id){
-        navigate(`/movie/${id}`); // Use navigate function to change the route
+        if (!isDragging) {
+            navigate(`/movie/${id}`);
+        }
     }
 
     useEffect(() => {
@@ -31,13 +34,15 @@ function MovieCarousel() {
         slidesToShow: 1,
         adaptiveHeight: true,
         nextArrow: <SampleNextArrow />,
-        prevArrow: <SamplePrevArrow />
+        prevArrow: <SamplePrevArrow />,
+        beforeChange: () => setIsDragging(true), // Set isDragging to true before a slide change
+        afterChange: () => setIsDragging(false), // Set isDragging back to false after a slide change
     };
     return (
-        <Slider {...settings} className="carousel-container">
+        <Slider {...settings} className="carousel-container" >
             {movies.slice(0, 7).map((movie, index) => (
 
-                <div key={index} className="carousel-image">
+                <div key={index} className="carousel-image" onClick={() => handleCarouselClick(movie.id)}>
                      <img src={movie.backdrop_path} alt={movie.title}  />
                 </div>
             ))}
