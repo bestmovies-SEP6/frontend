@@ -11,7 +11,7 @@
 .movie {
   width: 210px;
   height: 360px;
-  margin: 1.5rem;
+  margin: 1.5em;
 
   position: relative;
   border-radius: 12px;
@@ -24,7 +24,6 @@
 
 .movie div:nth-of-type(1) {
   position: absolute;
-  padding: 16px;
   width: 100%;
   opacity: 0;
   top: 0;
