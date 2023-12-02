@@ -1,7 +1,7 @@
 import React, { createContext, useContext } from "react";
 import { useQuery } from "react-query";
 import { useSearchTermContext } from "./SearchTermContext";
-import {fetchMovieDetails, fetchTrendingMovies} from "../api/apiinfo";
+import {fetchTrendingMovies} from "../api/moviesApi";
 
 const MoviesInformationContext = createContext();
 

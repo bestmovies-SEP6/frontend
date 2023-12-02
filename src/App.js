@@ -1,14 +1,12 @@
 import React, { useState } from 'react';
 import { RouterProvider, createHashRouter } from "react-router-dom";
 import { QueryClient, QueryClientProvider } from "react-query";
-import LoginComponent from "./pages/auth/login";
-import {Home} from "./pages/home/Home";
-import {Root} from "./pages/Root";
-import {MoviesProvider} from "./contexts/MoviesInformationContext";
+import LoginComponent from "./ui/pages/auth/login";
+import {HomePage} from "./ui/pages/home/HomePage";
+import {Root} from "./ui/pages/Root";
 import {SearchTermProvider} from "./contexts/SearchTermContext";
-import MovieDetails from "./components/MovieDetails";
-import {Search} from "./pages/Search";
-
+import MovieDetailsPage from "./ui/pages/movieDetails/MovieDetailsPage";
+// import Search from "./ui/pages/search/Search";
 
 const queryClient = new QueryClient();
 
@@ -19,7 +17,7 @@ const queryClient = new QueryClient();
       children: [
           {
               path: "/",
-              element: <Home />
+              element: <HomePage />
           },
           {
               path:"/login",
@@ -27,12 +25,12 @@ const queryClient = new QueryClient();
           },
           {
               path: "/movie/:id", // Movie details page with dynamic segment for the movie ID
-              element: <MovieDetails />
-          },
-          {
-              path: "/filter", // Movie details page with dynamic segment for the movie ID
-              element: <Search />
-          },
+              element: <MovieDetailsPage />
+          }
+          // {
+          //     path: "/filter", // Movie details page with dynamic segment for the movie ID
+          //     element: <Search />
+          // },
       ],
     },
   ]);
@@ -44,7 +42,6 @@ const queryClient = new QueryClient();
 
     <div className="App">
         <QueryClientProvider client={queryClient}>
-
             <SearchTermProvider>
                     <RouterProvider router={router} />
             </SearchTermProvider>
