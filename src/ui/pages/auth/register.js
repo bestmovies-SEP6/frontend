@@ -1,12 +1,19 @@
 import "./login.css";
 import {useState} from "react";
-import {register} from "../../../api/authenticationApi";
+import {useRegisterMutation} from "../../../redux/features/api/authApi";
+import LoadingComponent from "../../components/loading/loadingComponent";
+import ErrorComponent from "../../components/error/errorComponent";
 
 
 function RegisterComponent(){
     const [username, setUsername] = useState("");
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
+
+    const [register, {isLoading, error}] = useRegisterMutation();
+
+    if (isLoading) return <LoadingComponent/>
+    if (error) return <ErrorComponent error={error}/>
 
 
     async function onSignupClicked() {

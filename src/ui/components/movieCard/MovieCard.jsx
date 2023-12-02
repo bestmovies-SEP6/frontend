@@ -24,4 +24,4 @@ function MovieCard({movie, onClick}) {
     </div>);
 }
 
-export {MovieCard};
+export default MovieCard;

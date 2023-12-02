@@ -5,19 +5,16 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import "./MovieCarousel.css"
 import {useNavigate} from "react-router-dom";
-import {useQuery} from "react-query";
-import {fetchNowPlayingMovies} from "../../../api/moviesApi";
+
 import LoadingComponent from "../loading/loadingComponent";
 import ErrorComponent from "../error/errorComponent";
+import {useNowPlayingMoviesQuery} from "../../../redux/features/api/moviesApi";
 function MovieCarousel() {
     const navigate = useNavigate(); // useNavigate instead of useHistory
     const [isDragging, setIsDragging] = useState(false); // State to track dragging
 
 
-    const {data, error, isLoading} = useQuery({
-        queryKey: ["CarouselData"],
-        queryFn: fetchNowPlayingMovies
-    });
+    const {data, error, isLoading} = useNowPlayingMoviesQuery()
 
     if (isLoading) return <LoadingComponent/>
     if (error) return <ErrorComponent error={error}/>
