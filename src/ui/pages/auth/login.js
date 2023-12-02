@@ -1,6 +1,6 @@
 import "./login.css";
 import {useState} from "react";
-import {login} from "../../api/authentication";
+import {login} from "../../../api/authenticationApi";
 
 function LoginComponent() {
 

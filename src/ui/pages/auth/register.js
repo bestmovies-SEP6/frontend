@@ -1,6 +1,6 @@
 import "./login.css";
 import {useState} from "react";
-import {register} from "../../api/authentication";
+import {register} from "../../../api/authenticationApi";
 
 
 function RegisterComponent(){

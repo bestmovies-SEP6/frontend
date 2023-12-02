@@ -2,7 +2,7 @@ import React, { useState, useContext } from "react";
 import { Button } from "@mui/material";
 import FilterAltIcon from "@mui/icons-material/FilterAlt";
 import SearchOutlinedIcon from "@mui/icons-material/SearchOutlined";
-import { useSearchTermContext } from "../contexts/SearchTermContext";
+import { useSearchTermContext } from "../../../contexts/SearchTermContext";
 import {useNavigate} from "react-router-dom";
 
 export default function SearchBarComponent() {
