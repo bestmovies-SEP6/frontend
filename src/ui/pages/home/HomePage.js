@@ -1,13 +1,16 @@
 import React from "react";
 
-import {MovieCard} from "../../components/movieCard/MovieCard";
+import MovieCard from "../../components/movieCard/MovieCard";
 import "./Home.css"
 import MovieCarousel from "../../components/movieCarousel/MovieCarousel";
-import {useQuery} from "react-query";
-import {fetchAndCombineVariousMovies} from "../../../api/moviesApi";
 import LoadingComponent from "../../components/loading/loadingComponent";
 import ErrorComponent from "../../components/error/errorComponent";
 import {useNavigate} from "react-router-dom";
+import {
+    usePopularMoviesQuery,
+    useTopRatedMoviesQuery,
+    useTrendingMoviesQuery
+} from "../../../redux/features/api/moviesApi";
 
 
 function HomePage() {
@@ -29,13 +32,19 @@ function MovieCardList() {
     const navigate = useNavigate();
 
 
-    const {data, error, isLoading} = useQuery({
-        queryKey: ["moviesHomePage"],
-        queryFn: fetchAndCombineVariousMovies,
-    })
+    const trending = useTrendingMoviesQuery();
+    const popular = usePopularMoviesQuery();
+    const topRated = useTopRatedMoviesQuery();
+
+    const isLoading = trending.isLoading || popular.isLoading || topRated.isLoading;
+    const error = trending.error || popular.error || topRated.error;
+
 
     if (isLoading) return <LoadingComponent/>;
     if (error) return <ErrorComponent error={error}/>;
+
+    const data = getUniqueMovies(trending.data, popular.data, topRated.data);
+
 
 
     function onClickMovieCard(movieId) {
@@ -55,5 +64,14 @@ function MovieCardList() {
 
 }
 
+
+function getUniqueMovies(trending, popular, topRated) {
+    const allMovies = [...trending, ...popular, ...topRated];
+    // Remove duplicates
+    const uniqueMoviesMap = new Map();
+    allMovies.forEach(movie => uniqueMoviesMap.set(movie.id, movie));
+    return  Array.from(uniqueMoviesMap.values());
+
+}
 
 export {HomePage};
