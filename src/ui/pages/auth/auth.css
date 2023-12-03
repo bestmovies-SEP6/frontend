@@ -51,8 +51,8 @@
 }
 
 /* Styling for buttons inside the container */
-.container button {
-    background-color: #1f5b93;
+.container-button {
+    background-color: var(--primary);
     color: #fff;
     font-size: 12px;
     padding: 10px 45px;

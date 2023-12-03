@@ -5,6 +5,8 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import "./MovieCarousel.css"
 import {useNavigate} from "react-router-dom";
+import StarBorderIcon from '@mui/icons-material/StarBorder';
+import AccessAlarmsIcon from '@mui/icons-material/AccessAlarms';
 
 import LoadingComponent from "../loading/loadingComponent";
 import ErrorComponent from "../error/errorComponent";
@@ -58,37 +60,48 @@ function MovieCarousel() {
 }
 
 function CarouselElement({movie}) {
-    const {data, error, isLoading} = useMovieDetailsByIdQuery(movie.id)
+    const {data, isLoading} = useMovieDetailsByIdQuery(movie.id)
 
-    console.log("data  ========================================>", data);
+    const backGroundStyle = {
+        backgroundImage: `url(${movie.backdrop_path})`,
+        backgroundSize: "cover",
+
+    }
 
     return (
-        <div className="carousel-image">
-            <div className={"overlay"}>
-                <div className={"movie-title"}>
-                    {movie.title}
-                </div>
-                {isLoading ||
-                    <div className={"movie-details"}>
-                        <div className={"movie-rating"}>
-                            {data.vote_average}
+        <div className="carousel-image" style={backGroundStyle}>
+            <div className={"gradient-wrapper"}>
+                <div className={"details-container"}>
+                    <div className={"movie-title"}>
+                        {movie.title}
+                    </div>
+                    {isLoading || <>
+                        <div className={"movie-details dimmed-color"}>
+                            <div className={"movie-detail"}>
+                                <StarBorderIcon/>
+                                {data.vote_average.toFixed(2)}
+                            </div>
+                            <div className={"movie-detail"}>
+                                <AccessAlarmsIcon/>
+                                {data.runtime} min
+                            </div>
+                            <div className={"movie-detail genres"}>
+                                {data.genres.map(genre => (
+                                   " "+ genre.name + "  "
+                                ))}
+                            </div>
                         </div>
-                        <div className={"movie-runtime"}>
-                            {data.runtime} min
-                        </div>
-                        <div className={"movie-genres"}>
-                            {data.genres.map(genre => (
-                                genre.name + " "
-                            ))}
-                        </div>
-                        <div className={"movie-description"}>
+                        <div className={"movie-description dimmed-color"}>
                             {data.overview}
                         </div>
-                    </div>}
-
+                    </>}
+                    <div className={"buttons"}>
+                        <button className={"details-button"}>View Details</button>
+                        <button className={"wishlist-button"}> Add to wishlist</button>
+                    </div>
+                </div>
             </div>
-            {/*Out of overlay*/}
-            <img src={movie.backdrop_path} alt={movie.title} loading={"lazy"}/>
+
         </div>
     )
 }

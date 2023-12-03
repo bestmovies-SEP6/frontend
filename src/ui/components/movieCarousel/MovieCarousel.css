@@ -1,46 +1,12 @@
 
-
-.overlay{
-    position: absolute;
-    height: 200px;
-    width: 100%;
-    top: 72vh;
-    z-index: 2;
-    background: linear-gradient(0deg, rgba(2,0,36,1) 0%, rgba(0,0,0,0) 0%, rgba(0,0,3,0.8212535014005602) 0%, rgba(0,0,3,0.48792016806722693) 52%, rgba(0,0,3,0.32825630252100846) 84%, rgba(0,0,3,0.11817226890756305) 100%);
-    border: 3px red solid;
-    color: white;
-
-}
-
-.movie-details {
-    border: 2px yellow solid;
-    text-align: center;
-}
-
-.movie-title {
-    border: 2px cyan solid;
-    font-size: 1.5em; /* Adjust the font size as needed */
-}
-
-
-.movie-description {
-    border: 2px red solid;
-
-    margin-top: 5px; /* Adjust the margin as needed */
-}
-
-
-.slider{
-    border: 5px yellow solid;
-}
-
 .carousel-image {
     width: 100%; /* Full width of the container */
-    height: 100%; /* Full height of the container */
-    display: flex; /* Use flex to center the image inside the div */
-    justify-content: center; /* Center horizontally */
-    align-items: center; /* Center vertically */
-    border: 2px red solid;
+    height: 100vh; /* Full height of the container */
+    display: flex;
+    flex-direction: column;
+    justify-content: end;
+    align-items: center;
+    cursor: grab
 }
 
 .carousel-image img {
@@ -49,6 +15,110 @@
     object-fit: fill;
     display: block;
 }
+
+.gradient-wrapper{
+    width: 100%;
+    background: linear-gradient(0deg, rgba(2, 0, 36, 1) 0%, rgba(0, 0, 0, 1) 0%, rgba(0, 0, 3, 0.9809173669467787) 0%, rgba(0, 0, 3, 0.9164915966386554) 50%, rgba(0, 0, 3, 0.7484243697478992) 75%, rgba(0, 0, 3, 0.5495448179271709) 100%);
+    box-shadow: 0 -70px 69px 5px rgba(0,0,0,0.6);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+
+.details-container {
+    width: 70%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    color: white;
+}
+.icons{
+    font-size: small;
+}
+.movie-details {
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.dimmed-color{
+    color: #565c67;
+}
+.movie-detail{
+    margin: 3px 3px 3px 5px;
+    padding: 3px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: medium;
+
+}
+
+.genres{
+    color: #7a8290;
+    margin-left: 1rem;
+}
+
+.movie-title {
+    text-align: center;
+    font-weight: bold;
+    font-size: 3em; /* Adjust the font size as needed */
+}
+
+
+.movie-description {
+    margin-top: 5px; /* Adjust the margin as needed */
+    text-align: center;
+    font-size: small;
+}
+
+.buttons {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5em;
+    margin-top: 10px;
+    margin-bottom: 8vh;
+}
+
+.details-button{
+    background: var(--primary);
+    border-radius: 15px;
+    border: 2px solid var(--primary);
+    padding: 6px 24px;
+    font-size: 1em;
+    cursor: pointer;
+    color: var(--text);
+    transition: background-color 0.5s ease;
+
+}
+
+.details-button:hover{
+    background-color: var(--secondary);
+}
+
+.wishlist-button {
+    background: transparent;
+    border-radius: 15px;
+    border: 2px solid var(--primary);
+    padding: 6px 24px;
+    font-size: 1em;
+    cursor: pointer;
+    color: var(--text);
+    transition: background-color 0.5s ease;
+
+}
+
+.wishlist-button:hover{
+    background-color: var(--secondary);
+}
+
+
+
+
 /* Arrow button styles */
 .slick-prev,
 .slick-next {
