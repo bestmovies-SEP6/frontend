@@ -1,74 +1,71 @@
-.movie {
-    width: 210px;
-    height: 360px;
-    margin: 1.5em;
-
+.movie-card {
+    width: 160px;
+    height: 285px;
+    margin: 0.4em;
     position: relative;
-    border-radius: 12px;
+    border-radius: 8px;
     overflow: hidden;
-    border: none;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    background-color: #0e1723;
+    box-sizing: border-box;
+}
+.movie-card:hover{
+    border: 2px solid var(--primary);
+}
+.movie-card:hover .bg-overlay{
+    background: linear-gradient(0deg, rgba(2,0,36,1) 0%, rgba(0,0,0,1) 0%, rgba(87,141,32,0.9613095238095238) 0%, rgba(87,141,32,0.7792366946778712) 25%, rgba(87,141,46,0.27503501400560226) 75%, rgba(87,141,46,0.006127450980392135) 100%);
 
-    transition: all 0.4s cubic-bezier(0.175, 0.885, 0, 1);
-    box-shadow: 1px 13px 10px -7px rgba(0, 0, 0, 0.1);
 }
 
-.movie div:nth-of-type(1) {
-    position: absolute;
-    width: 100%;
-    opacity: 0;
-    top: 0;
-    color: #f9d3b4;
-}
-
-
-.movie div:nth-of-type(2) {
+.bg-overlay{
     width: 100%;
     height: 100%;
 }
 
-.movie div:nth-of-type(2) img {
-    height: 100%;
+.poster-container{
     width: 100%;
+    height: 70%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
-.movie div:nth-of-type(3) {
-    z-index: 2;
-    background-color: #233a3f;
-    padding: 16px 24px 24px 24px;
-
-    position: absolute;
-    bottom: 0;
-    right: 0;
-    left: 0;
-}
-
-.movie div:nth-of-type(3) span {
-    font-family: "Raleway", sans-serif;
-    text-transform: uppercase;
-    font-size: 13px;
-    letter-spacing: 2px;
-    font-weight: 500;
-    color: #f0f0f0;
-}
-
-.movie div:nth-of-type(3) h3 {
-    margin-top: 5px;
-    font-family: "Roboto Slab", serif;
-    color: #47c0d7;
-}
-
-.movie:hover div:nth-of-type(2) {
+.poster-image{
+    width: 100%;
     height: 100%;
+    object-fit: cover;
+    padding: 4px;
+    border-radius: 12px;
 }
 
-.movie:hover div:nth-of-type(1) {
-    background-color: rgba(51, 51, 51, 0.47);
-    opacity: 1;
+.movie-stats{
+    margin: 4px;
+    display: flex;
+    justify-content: space-around;
+    font-size: 0.8rem;
+    background-color: var(--background);
+    border-radius: 20px;
+    padding: 0.2em 0.4em;
+}
+.movie-name{
+    color: var(--text);
+    padding: 4px;
+    font-size: 0.7rem;
+    text-align: center;
+    height: 18%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
-.movie:hover {
-    border: 1px solid green; /* Adjust the width and color as needed */
-    box-shadow: 0px 30px 18px -8px rgba(167, 57, 57, 0.1);
-    transform: scale(1.05, 1.05);
-
+.movie-rating{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.dot{
+    text-align: center;
+    font-weight: bold;
 }

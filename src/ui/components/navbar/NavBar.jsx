@@ -14,7 +14,7 @@ function Navbar()  {
             <div className="navbar-search">
                 <SearchBarComponent />
             </div>
-            <NavLink  to={"/login"} className="navbar-signin">
+            <NavLink  to={"/authenticate"} className="navbar-signin">
                 <button>Sign In</button>
             </NavLink>
         </nav>

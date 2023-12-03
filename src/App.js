@@ -1,54 +1,47 @@
 import React from 'react';
-import { RouterProvider, createHashRouter } from "react-router-dom";
-import { QueryClient, QueryClientProvider } from "react-query";
-import LoginComponent from "./ui/pages/auth/login";
+import {RouterProvider, createHashRouter} from "react-router-dom";
+import {QueryClient, QueryClientProvider} from "react-query";
 import {HomePage} from "./ui/pages/home/HomePage";
 import {Root} from "./ui/pages/Root";
+
+import AuthenticationPage from "./ui/pages/auth/auth";
 import MovieDetailsPage from "./ui/pages/movieDetails/MovieDetailsPage";
-import RegisterComponent from "./ui/pages/auth/register";
 
 const queryClient = new QueryClient();
 
-  const router = createHashRouter([
+const router = createHashRouter([
     {
-      path: "/",
-      element: <Root />,
-      children: [
-          {
-              path: "/",
-              element: <HomePage />
-          },
-          {
-              path:"/login",
-              element: <LoginComponent/>
-          },
-          {
-              path: "/register",
-              element: <RegisterComponent/>
-          },
-          {
-              path: "/movie/:id", // Movie details page with dynamic segment for the movie ID
-              element: <MovieDetailsPage />
-          }
-          // {
-          //     path: "/filter", // Movie details page with dynamic segment for the movie ID
-          //     element: <Search />
-          // },
-      ],
+        path: "/",
+        element: <Root/>,
+        children: [
+            {
+                path: "/",
+                element: <HomePage/>
+            },
+            {
+                path: "/movie/:id", // Movie details page with dynamic segment for the movie ID
+                element: <MovieDetailsPage/>
+            }
+        ],
     },
-  ]);
+
+    {
+        path: "/authenticate",
+        element: <AuthenticationPage/>,
+    }
+]);
 
 
- export function App() {
+export function App() {
 
-  return (
+    return (
 
-    <div className="App">
-        <QueryClientProvider client={queryClient}>
-                    <RouterProvider router={router} />
-        </QueryClientProvider>
-    </div>
-  );
+        <div className="App">
+            <QueryClientProvider client={queryClient}>
+                <RouterProvider router={router}/>
+            </QueryClientProvider>
+        </div>
+    );
 }
 
 export default App;
