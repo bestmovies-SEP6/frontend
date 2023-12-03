@@ -1,24 +1,29 @@
 import React from 'react';
 import "./MovieCard.css";
+import StarBorderIcon from "@mui/icons-material/StarBorder";
 
 function MovieCard({movie, onClick}) {
 
-    return (<div className="movie" onClick={onClick}>
-        <div>
-            <p>{movie.release_date}</p>
+    const backGroundStyle = {
+        backgroundImage: `url(${movie.poster_path})`,
+        backgroundSize: "cover",
+
+    }
+
+    return (<div className="movie-card" onClick={onClick} >
+        <div className={"poster-container"} style={backGroundStyle}>
+            <div className={"bg-overlay"}>
+
+            </div>
         </div>
-        <div>
-            <img
-                src={
-                    movie.poster_path
-                        ? movie.poster_path
-                        : "https://via.placeholder.com/404"
-                }
-                alt={movie.title}
-            />
+        <div className={"movie-stats dimmed-color"}>
+            <div>Movie</div>
+            <div className={"dot"}>
+                | |
+            </div>
+            <div>{movie.release_date.slice(0, 4)}</div>
         </div>
-        <div>
-            {/*<span>{movie.Type}</span>*/}
+        <div className={"movie-name"}>
             <h3>{movie.title}</h3>
         </div>
     </div>);
