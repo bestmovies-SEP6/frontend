@@ -1,7 +1,7 @@
 import React from "react";
 
 import MovieCard from "../../components/movieCard/MovieCard";
-import "./Home.css"
+import "./HomePage.css"
 import MovieCarousel from "../../components/movieCarousel/MovieCarousel";
 import LoadingComponent from "../../components/loading/loadingComponent";
 import ErrorComponent from "../../components/error/errorComponent";
@@ -46,10 +46,10 @@ function MovieCardList() {
     const data = getUniqueMovies(trending.data, popular.data, topRated.data);
 
 
-
     function onClickMovieCard(movieId) {
         navigate(`/movie/${movieId}`);
     }
+
     return <div>
         {data?.length > 0 ? (
             <div className="movie-container">
@@ -70,7 +70,7 @@ function getUniqueMovies(trending, popular, topRated) {
     // Remove duplicates
     const uniqueMoviesMap = new Map();
     allMovies.forEach(movie => uniqueMoviesMap.set(movie.id, movie));
-    return  Array.from(uniqueMoviesMap.values());
+    return Array.from(uniqueMoviesMap.values());
 
 }
 
