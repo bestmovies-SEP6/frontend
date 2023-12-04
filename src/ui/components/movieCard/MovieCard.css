@@ -9,6 +9,9 @@
     justify-content: space-between;
     background-color: var(--secondary-background);
     box-sizing: border-box;
+    transition: border 0.2s ease;
+    border: 2px solid var(--secondary-background);
+
 }
 .movie-card:hover{
     border: 2px solid var(--primary);

@@ -1,0 +1,70 @@
+.flat-movies-container {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 0.7rem;
+    padding: 0.5rem;
+}
+
+.flat-movie-card {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    width: 100%;
+    padding: 0.5rem;
+    gap: 0.5rem;
+    border-radius: 10px;
+    cursor: pointer;
+    border: 2px #081215 solid;
+    box-sizing: content-box;
+    transition: border 0.2s ease;
+    background-color: #081215;
+
+}
+.flat-movie-card:hover{
+    border: 2px var(--secondary) solid;
+}
+
+.flat-poster{
+    width: 35px;
+    height: 40px;
+    border-radius: 5px;
+}
+
+.flat-poster-image{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.flat-info{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    gap: 0.25rem;
+    width: 100%;
+}
+
+.flat-icons{
+    font-size: 0.75rem;
+    color: var(--secondary-text);
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+
+}
+
+.flat-icon{
+    display: flex;
+    gap: 0.1rem;
+    justify-content: center;
+    align-items: center;
+}
+.flat-title{
+    font-size: 0.8rem;
+    color: var(--text);
+}
