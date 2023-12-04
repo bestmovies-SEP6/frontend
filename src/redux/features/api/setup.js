@@ -2,9 +2,7 @@ import {createApi, fetchBaseQuery} from "@reduxjs/toolkit/query/react";
 
 
 const baseQuery = fetchBaseQuery({
-   // baseUrl: 'https://bestmovies-api-5azra6r55a-ew.a.run.app/',
-    //TODO:
-    baseUrl : 'http://localhost:5086/',
+    baseUrl: 'https://bestmovies-api-5azra6r55a-ew.a.run.app/',
     credentials: 'include',
     prepareHeaders: (headers, {getState}) => {
         const token = getState().auth.jwtToken;
