@@ -184,6 +184,10 @@
     background-color: var(--secondary-background);
     box-sizing: border-box;
 }
+.cast-card:hover{
+    border: 2px solid var(--primary);
+
+}
 
 .cast-card-image {
     width: 100%;
@@ -199,6 +203,17 @@
     object-fit: contain;
 
 }
+.cast-card:hover .bg-overlay-person{
+    background: linear-gradient(0deg, rgba(2,0,36,1) 0%, rgba(0,0,0,1) 0%, rgba(87,141,32,0.9613095238095238) 0%, rgba(87,141,32,0.7792366946778712) 25%, rgba(87,141,46,0.27503501400560226) 75%, rgba(87,141,46,0.006127450980392135) 100%);
+
+}
+
+.bg-overlay-person{
+    position: absolute;
+    width: 100%;
+    height: 70%;
+}
+
 
 .cast-name {
     display: flex;
