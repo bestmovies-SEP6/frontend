@@ -124,7 +124,9 @@ function CastCard({person}) {
     const placeholderImage = 'https://www.publicdomainpictures.net/pictures/280000/velka/not-found-image-15383864787lu.jpg'
     return <div className={"cast-card"}>
         <div className={"cast-card-image"}>
-            <img className={"cast-img"} src={person.profile_path ?person.profile_path: placeholderImage } alt={"Person profile"} loading={"lazy"}/>
+            <img className={"cast-img"} src={person.profile_path ? person.profile_path: placeholderImage } alt={"Person profile"} loading={"lazy"}/>
+            <div className={"bg-overlay-person"}></div>
+
         </div>
         <div className={"cast-name"}>
             <div className={"real-name"}>
