@@ -1,0 +1,39 @@
+.person-card {
+    flex: 1 0 22%;
+    margin: 10px;
+    min-width: 200px;
+    max-width: 400px;
+    position: relative;
+    cursor: pointer;
+    overflow: hidden;
+    box-sizing: border-box;
+    border-radius: 8px;
+    display: flex;
+    flex-direction: column;
+    background-color: #0e1723;
+    gap: normal;
+
+}
+.profile-container {
+    width: 100%;
+    height: 30em;
+    background-size: cover;
+    background-position: center;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.people-name {
+    margin-top: 1px;
+    padding: 3px;
+    color: white;
+    text-align: center;
+}
+.people-known-for {
+    margin-top: 1px;
+    padding: 3px;
+    color: white;
+    text-align: center;
+    margin-bottom: 2px;
+}
+
