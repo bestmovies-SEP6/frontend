@@ -1,6 +1,8 @@
 // MovieCarousel.js
-import React, {useEffect, useState} from 'react';
+import React, { useState} from 'react';
 import Slider from 'react-slick';
+
+
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import "./MovieCarousel.css"
@@ -13,7 +15,6 @@ import ErrorComponent from "../error/errorComponent";
 import {useMovieDetailsByIdQuery, useNowPlayingMoviesQuery} from "../../../redux/features/api/moviesApi";
 
 function MovieCarousel() {
-    const navigate = useNavigate(); // useNavigate instead of useHistory
     const [isDragging, setIsDragging] = useState(false); // State to track dragging
 
 
@@ -23,13 +24,6 @@ function MovieCarousel() {
     if (error) return <ErrorComponent error={error}/>
 
     console.log(data);
-
-
-    function handleCarouselClick(id) {
-        if (!isDragging) {
-            navigate(`/movie/${id}`);
-        }
-    }
 
     const settings = {
         dots: true,
@@ -61,15 +55,23 @@ function MovieCarousel() {
 
 function CarouselElement({movie}) {
     const {data, isLoading} = useMovieDetailsByIdQuery(movie.id)
+    const navigate = useNavigate();
+
 
     const backGroundStyle = {
         backgroundImage: `url(${movie.backdrop_path})`,
         backgroundSize: "cover",
 
     }
+    function onDetailsClick() {
+        navigate("/movie/" + movie.id)
+    }
 
     return (
         <div className="carousel-image" style={backGroundStyle}>
+            <div className={"navbar-gradient"}>
+
+            </div>
             <div className={"gradient-wrapper"}>
                 <div className={"details-container"}>
                     <div className={"movie-title"}>
@@ -96,7 +98,7 @@ function CarouselElement({movie}) {
                         </div>
                     </>}
                     <div className={"buttons"}>
-                        <button className={"details-button"}>View Details</button>
+                        <button onClick={onDetailsClick} className={"details-button"}>View Details</button>
                         <button className={"wishlist-button"}> Add to wishlist</button>
                     </div>
                 </div>

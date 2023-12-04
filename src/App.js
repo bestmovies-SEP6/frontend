@@ -4,7 +4,7 @@ import {QueryClient, QueryClientProvider} from "react-query";
 import {HomePage} from "./ui/pages/home/HomePage";
 import {Root} from "./ui/pages/Root";
 
-import AuthenticationPage from "./ui/pages/auth/auth";
+import AuthenticationPage from "./ui/pages/auth/authPage";
 import MovieDetailsPage from "./ui/pages/movieDetails/MovieDetailsPage";
 import {People} from "./ui/pages/people/People";
 
