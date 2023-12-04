@@ -1,16 +1,19 @@
 import React from 'react';
 import "./MovieDetailsPage.css";
-import {useMovieDetailsByIdQuery} from "../../../redux/features/api/moviesApi";
+import {useMovieDetailsByIdQuery, useSimilarMoviesByIdQuery} from "../../../redux/features/api/moviesApi";
 import StarBorderIcon from '@mui/icons-material/StarBorder';
 
 import {useParams} from "react-router-dom";
 import LoadingComponent from "../../components/loading/loadingComponent";
 import {usePersonsByMovieIdQuery} from "../../../redux/features/api/personApi";
+import FlatMoviesList from "../../components/flatMovieCard/FlatMovieCard";
 
 function MovieDetailsPage() {
     const {id} = useParams();
     const {data: movie, isLoading: isLoadingMovie, error: errorMovie} = useMovieDetailsByIdQuery(id)
     const {data: persons, isLoading: isLoadingPersons, error: errorPersons} = usePersonsByMovieIdQuery(id);
+    const {data: similarMovies, isLoading: isLoadingSimilarMovies} = useSimilarMoviesByIdQuery(id);
+
 
     const isLoading = isLoadingPersons || isLoadingMovie;
 
@@ -29,6 +32,11 @@ function MovieDetailsPage() {
                     <TopBilledCastsContainer persons={topTen}/>
                 </div>
                 <div className={"similar-section"}>
+                    <div className={"hard-title"}>
+                        You may like
+                    </div>
+                    {isLoading ? <LoadingComponent/> : <FlatMoviesList movies={similarMovies.slice(0,10)}/>}
+
                 </div>
 
             </div>
@@ -114,7 +122,7 @@ function TopBilledCastsContainer({persons}) {
     return <div className={"cast-container-top"}>
         <div className={"hard-title"}>Top Billed Casts</div>
         <div className={"casts-list"}>
-            {persons.map(person => <CastCard key = {person.id} person={person}/> )}
+            {persons.map(person => <CastCard key={person.id} person={person}/>)}
         </div>
     </div>
 
@@ -124,7 +132,8 @@ function CastCard({person}) {
     const placeholderImage = 'https://www.publicdomainpictures.net/pictures/280000/velka/not-found-image-15383864787lu.jpg'
     return <div className={"cast-card"}>
         <div className={"cast-card-image"}>
-            <img className={"cast-img"} src={person.profile_path ? person.profile_path: placeholderImage } alt={"Person profile"} loading={"lazy"}/>
+            <img className={"cast-img"} src={person.profile_path ? person.profile_path : placeholderImage}
+                 alt={"Person profile"} loading={"lazy"}/>
             <div className={"bg-overlay-person"}></div>
 
         </div>
@@ -132,11 +141,13 @@ function CastCard({person}) {
             <div className={"real-name"}>
                 {person.name}
             </div>
-            <div className= {"character-name"}>
+            <div className={"character-name"}>
                 {person.character}
             </div>
         </div>
     </div>
 }
+
+
 
 export default MovieDetailsPage;
