@@ -78,7 +78,6 @@ function SignUpContainer() {
 
     }, [username, password, email]);
 
-    if (isLoading) return <LoadingComponent/>
     if (error) return <ErrorComponent error={error}/>
 
     async function onSignup() {
@@ -102,6 +101,7 @@ function SignUpContainer() {
     return (
         <>
             <div className="form-element">
+                {isLoading && <LoadingComponent/>}
                 <h1>Create Account</h1>
                 <span>Fill in the details for Registration</span>
                 <input type={"text"} placeholder={"Username"} value={username}
