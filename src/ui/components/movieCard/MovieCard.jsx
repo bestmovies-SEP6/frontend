@@ -1,6 +1,5 @@
 import React from 'react';
 import "./MovieCard.css";
-import StarBorderIcon from "@mui/icons-material/StarBorder";
 
 function MovieCard({movie, onClick}) {
 

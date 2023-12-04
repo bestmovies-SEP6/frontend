@@ -1,8 +1,11 @@
 import {TailSpin} from "react-loader-spinner";
+import "./loadingComponent.css";
 
 function LoadingComponent(){
     return (
-     <TailSpin color = "red" radius={"8px"}/>
+        <div className={"loading-container"}>
+            <TailSpin color = "#578d2e" radius={"8px"}/>
+        </div>
     )
 }
 
