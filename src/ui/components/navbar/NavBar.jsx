@@ -6,14 +6,14 @@ import {NavLink, useNavigate} from "react-router-dom";
 import SearchBarComponent from "../search/SearchBarComponent";
 import LoginIcon from '@mui/icons-material/Login';
 import LogoutIcon from '@mui/icons-material/Logout';
-import {logOut, selectAuth} from "../../../redux/features/state/authState";
+import {logOut, selectIsLoggedIn} from "../../../redux/features/state/authState";
 import {useDispatch, useSelector} from "react-redux";
 
 function Navbar() {
     return (
         <nav className="navbar">
             <NavLink to={"/"} className="navbar-logo">
-                <img src={logo} alt="Logo"/>
+                {/*<img src={logo} alt="Logo"/>*/}
             </NavLink>
             <div className="navbar-search">
                 <SearchBarComponent/>
@@ -24,7 +24,7 @@ function Navbar() {
 };
 
 function SignInOutButton() {
-    const auth = useSelector(selectAuth);
+    const isLoggedIn = useSelector(selectIsLoggedIn);
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
@@ -35,7 +35,7 @@ function SignInOutButton() {
         navigate("/authenticate")
     }
 
-    if (auth && auth.username && auth.jwtToken) {
+    if (isLoggedIn) {
         return <>
             <button className={"sign-in-out"} onClick={onSignOutClick}>
                 <LogoutIcon/>

@@ -3,7 +3,7 @@ import React, {useEffect, useState} from "react";
 import VisibilityOutlinedIcon from '@mui/icons-material/VisibilityOutlined';
 import VisibilityOffOutlinedIcon from '@mui/icons-material/VisibilityOffOutlined';
 
-import "./auth.css";
+import "./authPage.css";
 import {useLoginMutation, useRegisterMutation} from "../../../redux/features/api/authApi";
 import LoadingComponent from "../../components/loading/loadingComponent";
 import ErrorComponent from "../../components/error/errorComponent";

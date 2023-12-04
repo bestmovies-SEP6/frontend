@@ -5,9 +5,9 @@
     justify-content: space-between;
     align-items: center;
     padding: 0 1.5em;
-    background: linear-gradient(180deg, rgba(0, 0, 0, 1) 0%, rgba(0, 0, 0, 0.891281512605042) 45%, rgba(0, 0, 0, 0) 100%);
+    /*background: linear-gradient(180deg, rgba(0, 0, 0, 1) 0%, rgba(0, 0, 0, 0.891281512605042) 45%, rgba(0, 0, 0, 0) 100%);*/
+    background-color: var(--secondary-background);
     height: 12vh;
-    z-index: 9;
 }
 
 .navbar-logo {
@@ -39,6 +39,7 @@
     cursor: pointer;
     border: none;
     transition: background-color 0.3s ease;
+    z-index: 10;
 
 }
 .sign-in-out:hover {
