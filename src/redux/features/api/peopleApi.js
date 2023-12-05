@@ -6,7 +6,10 @@ const peopleApi = baseApi
             popularPeopleByPageNo: builder.query({
                 query: (pageNo) => `Peoples/popular-person/${pageNo}`
             }),
+            personDetailsByPersonId: builder.query({
+                query: (personId) => `Peoples/person-details/${personId}`
+            }),
         })
     });
-export const {  usePopularPeopleByPageNoQuery } = peopleApi;
+export const {  usePopularPeopleByPageNoQuery, usePersonDetailsByPersonIdQuery } = peopleApi;
 

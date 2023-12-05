@@ -1,0 +1,8 @@
+.person-biography-container {
+    border: 1px solid black;
+    margin-top: 1vh;
+    margin-right: 1vw;
+    padding-right: 10vw;
+    flex: 1;
+
+}

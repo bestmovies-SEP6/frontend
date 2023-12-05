@@ -1,0 +1,34 @@
+.person-info-container {
+    height: auto;
+    width: 27vw;
+    /*border: 1px solid black;*/
+    padding-left: 10vw;
+    margin-top: 1vh;
+}
+
+.person-image {
+    width: 15vw;
+    height: 40vh;
+}
+
+.person-image > img {
+    height: 100%;
+    width: 100%;
+    border-radius: 30px;
+}
+
+
+.personal-info {
+    display: flex;
+    flex-direction: column;
+    width: 15vw;
+}
+
+
+.personal-info > div {
+    margin-top: 1.2vh;
+}
+
+.person-social-medias {
+    margin: 1.2vh 0px;
+}
