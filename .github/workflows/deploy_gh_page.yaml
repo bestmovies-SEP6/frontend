@@ -28,12 +28,12 @@ jobs:
       - name: Build
         run: npm run build
 
-#      - name: Test
-#        run: npm run test
-#
-#      - name: Deploy
-#        uses: peaceiris/actions-gh-pages@v3
-#        with:
-#          github_token: ${{ secrets.SEP6_TOKEN }}
-#          publish_dir: ./build
+      - name: Test
+        run: npm run test
+
+      - name: Deploy
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.SEP6_TOKEN }}
+          publish_dir: ./build
 
