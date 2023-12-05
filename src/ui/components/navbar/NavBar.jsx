@@ -1,15 +1,21 @@
 import React from 'react';
-import logo from '../../../images/logo.png';
 import './NavBar.css';
 import "../search/SearchBar.css"
 import {NavLink, useNavigate} from "react-router-dom";
 import SearchBarComponent from "../search/SearchBarComponent";
 import LoginIcon from '@mui/icons-material/Login';
 import LogoutIcon from '@mui/icons-material/Logout';
+import PersonIcon from '@mui/icons-material/Person';
 import {logOut, selectIsLoggedIn} from "../../../redux/features/state/authState";
 import {useDispatch, useSelector} from "react-redux";
 
 function Navbar() {
+    const navigate = useNavigate();
+
+    function onPeopleClick() {
+        navigate("/people/1")
+    }
+
     return (
         <nav className="navbar">
             <NavLink to={"/"} className="navbar-logo">
@@ -18,13 +24,11 @@ function Navbar() {
             <div className="navbar-search">
                 <SearchBarComponent/>
             </div>
-            <NavLink  to={"/people/1"} className="navbar-person">
-                <button>Person</button>
-            </NavLink>
-            <NavLink  to={"/authenticate"} className="navbar-signin">
-                <button>Sign In</button>
-            </NavLink>
-            <SignInOutButton/>
+            <button onClick={onPeopleClick} className={"nav-btn"}>
+                <PersonIcon/>
+                People
+            </button>
+
             <SignInOutButton/>
         </nav>
     );
@@ -38,13 +42,14 @@ function SignInOutButton() {
     function onSignOutClick() {
         dispatch(logOut());
     }
+
     function onSignInClick() {
         navigate("/authenticate")
     }
 
     if (isLoggedIn) {
         return <>
-            <button className={"sign-in-out"} onClick={onSignOutClick}>
+            <button className={"nav-btn"} onClick={onSignOutClick}>
                 <LogoutIcon/>
                 Sign Out
             </button>
@@ -52,7 +57,7 @@ function SignInOutButton() {
         </>
     }
     return <>
-        <button onClick={onSignInClick} className={"sign-in-out"}>
+        <button onClick={onSignInClick} className={"nav-btn"}>
             <LoginIcon/>
             Sign In
         </button>

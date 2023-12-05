@@ -1,6 +1,7 @@
 .navbar {
     position: absolute;
     display: flex;
+    gap: 3rem;
     width: 100%;
     justify-content: space-between;
     align-items: center;
@@ -25,7 +26,7 @@
     margin: 0 auto; /* This will center the search bar */
 }
 
-.sign-in-out {
+.nav-btn {
     background-color: var(--primary);
     color: var(--text);
     padding: 6px 10px;
@@ -45,5 +46,6 @@
 .sign-in-out:hover {
     background-color: var(--secondary);
 }
-  
+
+
 

@@ -2,10 +2,6 @@ import React from "react";
 import "./PersonCard.css";
 
 function PersonCard({ person, onClick }) {
-    const backGroundStyle = {
-        backgroundImage: `url(${person.profile_path})`,
-        backgroundSize: "cover",
-    };
 
     // Function to create a string of movie/series titles
     const getKnownForTitles = () => {
@@ -16,7 +12,9 @@ function PersonCard({ person, onClick }) {
 
     return (
         <div className="person-card" onClick={onClick}>
-            <div className="profile-container" style={backGroundStyle}></div>
+            <div className="profile-container">
+                <img className={"profile-image"} src={person.profile_path} alt={person +"'s profile image"} loading={"lazy"}/>
+            </div>
             <div className="people-name">
                 <h3>{person.name}</h3>
             </div>

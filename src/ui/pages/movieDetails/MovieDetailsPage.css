@@ -59,7 +59,12 @@
     width: 335px;
     height: 505px;
     margin-left: 1rem;
-
+}
+.poster-card-image{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 8px;
 }
 
 .details {
@@ -103,21 +108,25 @@
     margin-left: 1rem;
 }
 
-.details-map {
+.details-map-container {
     display: flex;
+    flex-direction: column;
     padding: 1.25rem;
     align-items: flex-start;
     justify-content: flex-start;
-    gap: 5rem;
+    gap: 1rem;
     font-size: 0.9rem;
+}
+.details-map{
+    display: flex;
+    justify-content: flex-start;
+    gap: 5rem;
+    align-items: center;
 }
 
 .detail-key {
+    min-width: 6rem;
     color: var(--secondary-text);
-}
-
-.detail-key > p, .detail-value > p {
-    margin-bottom: 0.5rem;
 }
 
 .detail-value {
@@ -162,6 +171,7 @@
     color: var(--primary);
     font-size: 1.25rem;
     font-weight: bold;
+    background-color: #081215;
 }
 
 .casts-list {

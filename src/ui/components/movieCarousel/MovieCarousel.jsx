@@ -15,15 +15,12 @@ import ErrorComponent from "../error/errorComponent";
 import {useMovieDetailsByIdQuery, useNowPlayingMoviesQuery} from "../../../redux/features/api/moviesApi";
 
 function MovieCarousel() {
-    const [isDragging, setIsDragging] = useState(false); // State to track dragging
-
 
     const {data, error, isLoading} = useNowPlayingMoviesQuery()
 
     if (isLoading) return <LoadingComponent/>
     if (error) return <ErrorComponent error={error}/>
 
-    console.log(data);
 
     const settings = {
         dots: true,
@@ -35,8 +32,6 @@ function MovieCarousel() {
         adaptiveHeight: true,
         nextArrow: <SampleNextArrow/>,
         prevArrow: <SamplePrevArrow/>,
-        beforeChange: () => setIsDragging(true), // Set isDragging to true before a slide change
-        afterChange: () => setIsDragging(false), // Set isDragging back to false after a slide change
     };
     const movies = data.slice(0, 9)
 
