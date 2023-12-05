@@ -11,7 +11,6 @@ import {
     useTopRatedMoviesQuery,
     useTrendingMoviesQuery
 } from "../../../redux/features/api/moviesApi";
-import {toast} from "react-toastify";
 
 
 function HomePage() {
