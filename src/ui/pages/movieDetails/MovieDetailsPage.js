@@ -7,6 +7,7 @@ import {useParams} from "react-router-dom";
 import LoadingComponent from "../../components/loading/loadingComponent";
 import {usePersonsByMovieIdQuery} from "../../../redux/features/api/personApi";
 import FlatMoviesList from "../../components/flatMovieCard/FlatMovieCard";
+import {toast} from "react-toastify";
 
 function MovieDetailsPage() {
     const {id} = useParams();
@@ -17,10 +18,14 @@ function MovieDetailsPage() {
 
     const isLoading = isLoadingPersons || isLoadingMovie;
 
-    if (isLoading) return <LoadingComponent/>;
+    let directors = "";
+    let topTen = [];
 
-    const directors = persons.filter(person => person.known_for_department === "Directing").map(person => person.name).join(", ");
-    const topTen = persons.slice(0, 10);
+
+    if (!isLoading) {
+         directors = persons.filter(person => person.known_for_department === "Directing").map(person => person.name).join(", ");
+         topTen = persons.slice(0, 10);
+    }
 
     console.log(directors);
     console.log(topTen);
@@ -30,14 +35,18 @@ function MovieDetailsPage() {
         <div className={"whole-container"}>
             <div className={"navbar-excluded"}>
                 <div className={"content-section"}>
-                    <DetailContainer movie={movie} persons={topTen} directors={directors}/>
-                    <TopBilledCastsContainer persons={topTen}/>
+                    {!isLoading ? <>
+                        <DetailContainer movie={movie} persons={topTen} directors={directors}/>
+                        <TopBilledCastsContainer persons={topTen}/>
+                    </> : <LoadingComponent/>
+                    }
                 </div>
                 <div className={"similar-section"}>
                     <div className={"hard-title"}>
                         You may like
                     </div>
-                    {isLoadingSimilarMovies ? <LoadingComponent/> : <FlatMoviesList movies={similarMovies.slice(0, 10)}/>}
+                    {isLoadingSimilarMovies ? <LoadingComponent/> :
+                        <FlatMoviesList movies={similarMovies.slice(0, 10)}/>}
                 </div>
 
             </div>
@@ -50,7 +59,8 @@ function DetailContainer({movie, persons, directors}) {
     return <>
         <div className={"movie-details-container"}>
             <div className={"poster-card"}>
-                <img className={"poster-card-image"} src={movie.poster_path} alt={movie.name + "'s poster"} loading={"lazy"}/>
+                <img className={"poster-card-image"} src={movie.poster_path} alt={movie.name + "'s poster"}
+                     loading={"lazy"}/>
             </div>
             <div className={"details"}>
                 <div className={"icons-holder"}>
@@ -71,7 +81,7 @@ function DetailContainer({movie, persons, directors}) {
                 <div className={"overview"}>
                     {movie.overview}
                 </div>
-                <DetailsMapContainer movie={movie} persons={persons} directors = {directors}/>
+                <DetailsMapContainer movie={movie} persons={persons} directors={directors}/>
 
                 <div className={"buttons"}>
                     <button className={"details-button"}>Add to Favorites</button>
