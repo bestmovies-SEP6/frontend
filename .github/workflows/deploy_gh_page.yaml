@@ -2,7 +2,7 @@ name: Deploy to Github Page
 on:
   push:
     branches:
-      - main
+      - himal
 
 jobs:
   build:
@@ -12,18 +12,18 @@ jobs:
       contents: read
 
     steps:
-      - name: Checkout repo
-        uses: actions/checkout@v3
-        with:
-          token: ${{ secrets.SEP6_TOKEN }}
+      - name: Checkout
+        uses: actions/checkout@v4.1.1
+
 
       - name: Setup Node.js
         uses: actions/setup-node@v4.0.0
         with:
-          node-version: 'node'
+            node-version: 'node'
 
       - name: Install dependencies
         run: npm install
+
 
       - name: Build
         run: npm run build
