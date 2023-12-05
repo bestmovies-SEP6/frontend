@@ -25,6 +25,7 @@ function Navbar() {
                 <button>Sign In</button>
             </NavLink>
             <SignInOutButton/>
+            <SignInOutButton/>
         </nav>
     );
 };
