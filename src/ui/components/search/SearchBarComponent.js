@@ -2,7 +2,7 @@
 // import { Button } from "@mui/material";
 // import FilterAltIcon from "@mui/icons-material/FilterAlt";
 // import SearchOutlinedIcon from "@mui/icons-material/SearchOutlined";
-import {useNavigate} from "react-router-dom";
+// import {useNavigate} from "react-router-dom";
 
 export default function SearchBarComponent() {
     // const navigate = useNavigate(); // useNavigate instead of useHistory
