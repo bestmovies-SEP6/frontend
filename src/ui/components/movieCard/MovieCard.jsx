@@ -3,11 +3,11 @@ import "./MovieCard.css";
 
 function MovieCard({movie, onClick}) {
 
-    const backGroundStyle = {
-        backgroundImage: `url(${movie.poster_path})`,
-        backgroundSize: "cover",
-
-    }
+    // const backGroundStyle = {
+    //     backgroundImage: `url(${movie.poster_path})`,
+    //     backgroundSize: "cover",
+    //
+    // }
 
     return (<div className="movie-card" onClick={onClick}>
         <div className={"poster-container"}>
