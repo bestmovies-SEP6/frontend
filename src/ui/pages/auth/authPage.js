@@ -65,6 +65,7 @@ function SignUpContainer() {
     const [email, setEmail] = useState("");
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
+    // eslint-disable-next-line no-unused-vars
     const [errorMessage, setErrorMessage] = useState("");
 
     const [register, {isLoading, error}] = useRegisterMutation();
@@ -124,6 +125,7 @@ function SignUpContainer() {
 function SignInContainer() {
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
+    // eslint-disable-next-line no-unused-vars
     const [errorMessage, setErrorMessage] = useState("");
 
     const [login, {isLoading, error}] = useLoginMutation();
@@ -163,6 +165,7 @@ function SignInContainer() {
                     onChange={(e) => setPassword(e.target.value)}
                 />
 
+                {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
                 <a href="#">Forget Your Password?</a>
                 <button className="container-button" onClick={onSignIn}>Sign In</button>
             </div>

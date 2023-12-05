@@ -21,7 +21,7 @@ function PersonBiography({personData}) {
 }
 
 function ParagraphComponent({paragraph}) {
-    const regex = /(?:\.|\?|\!)\s([^\.!?]*?)$/;
+    const regex = /[.?!]\s([^.!?]*?)$/;
     let match = paragraph.match(regex);
 
     const lastIndex = match ? paragraph.lastIndexOf(match[1]) : paragraph.length;
