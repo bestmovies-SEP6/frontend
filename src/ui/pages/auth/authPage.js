@@ -11,6 +11,7 @@ import {useDispatch} from "react-redux";
 import {setCredentials} from "../../../redux/features/state/authState";
 import {useNavigate} from "react-router-dom";
 import {validateCredentials, validateEmail} from "../../../utils/validator";
+import {toast} from "react-toastify";
 
 function AuthenticationPage() {
     const [isActive, setIsActive] = useState(false);
