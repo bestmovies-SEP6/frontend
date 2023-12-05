@@ -2,7 +2,7 @@ import {createApi, fetchBaseQuery} from "@reduxjs/toolkit/query/react";
 
 
     const remoteApi = "https://bestmovies-api-5azra6r55a-ew.a.run.app/";
-    //const localApi = "http://localhost:5086/";
+    // const localApi = "http://localhost:5086/";
 
 
 const baseQuery = fetchBaseQuery({

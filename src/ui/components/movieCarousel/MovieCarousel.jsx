@@ -1,8 +1,6 @@
 // MovieCarousel.js
 import React from 'react';
 import Slider from 'react-slick';
-
-
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import "./MovieCarousel.css"
@@ -11,23 +9,20 @@ import StarBorderIcon from '@mui/icons-material/StarBorder';
 import AccessAlarmsIcon from '@mui/icons-material/AccessAlarms';
 
 import LoadingComponent from "../loading/loadingComponent";
-import ErrorComponent from "../error/errorComponent";
 import {useMovieDetailsByIdQuery, useNowPlayingMoviesQuery} from "../../../redux/features/api/moviesApi";
 import {toast} from "react-toastify";
+import {
+    useAddToWishlistMutation,
+    useGetWishlistsQuery,
+    useRemoveFromWishlistMutation
+} from "../../../redux/features/api/wishlistApi";
+import {selectIsLoggedIn} from "../../../redux/features/state/authState";
+import {useSelector} from "react-redux";
 
 function MovieCarousel() {
 
     const {data, error, isLoading} = useNowPlayingMoviesQuery()
 
-    if (isLoading) {
-        toast.info("Loading Movies for you.. Hang on!", {
-            toastId: "loadingCarousel",
-            autoClose: 4000,
-            closeOnClick: false,
-            pauseOnHover: false
-        });
-        return <div> </div>
-    }
     if (error) {
         toast.update("loadingCarousel", {
             render: error.data,
@@ -36,8 +31,6 @@ function MovieCarousel() {
             closeOnClick: false,
         })
     }
-
-
     const settings = {
         dots: true,
         infinite: true,
@@ -49,23 +42,34 @@ function MovieCarousel() {
         nextArrow: <SampleNextArrow/>,
         prevArrow: <SamplePrevArrow/>,
     };
-    const movies = data.slice(0, 9)
-
     return (
         <>
-            <Slider {...settings} className={"slider"}>
-                {movies.map((movie, index) => (
-                    <CarouselElement key={movie.id} movie={movie}/>
-                ))}
-            </Slider>
+            {!isLoading ?
+                (<Slider {...settings} className={"slider"}>
+                    {data.slice(0, 9).map((movie, index) => (
+                        <CarouselElement key={movie.id} movie={movie}/>
+                    ))}
+                </Slider>) : <LoadingComponent/>
+            }
         </>
 
-    )
-        ;
+    );
 }
 
 function CarouselElement({movie}) {
     const {data, isLoading} = useMovieDetailsByIdQuery(movie.id)
+    const [addToWishlistMutation, {isLoading: isLoadingWishlistAdd}] = useAddToWishlistMutation();
+    const [removeFromWishlist, {isLoading: isLoadingWishlistRemove}] = useRemoveFromWishlistMutation();
+    const isLoggedIn = useSelector(selectIsLoggedIn);
+
+    const {data: wishLists} = useGetWishlistsQuery();
+
+    let isInWishlist = false;
+    if (wishLists) {
+        isInWishlist = wishLists.some(movieItem => movieItem.id === movie.id);
+    }
+
+
     const navigate = useNavigate();
 
 
@@ -74,9 +78,77 @@ function CarouselElement({movie}) {
         backgroundSize: "cover",
 
     }
+
     function onDetailsClick() {
         navigate("/movie/" + movie.id)
     }
+
+    if (isLoadingWishlistAdd) {
+        toast.info("Adding to wishlist...", {
+            toastId: "wishlist",
+            autoClose: true,
+            closeOnClick: false,
+        })
+    }
+
+    if (isLoadingWishlistRemove) {
+        toast.info("Removing from wishlist...", {
+            toastId: "wishlist",
+            autoClose: true,
+            closeOnClick: false,
+        })
+    }
+
+    async function onAddWishlistClick() {
+        if (!isLoggedIn) {
+            toast.error("Login is required to add to wishlist")
+            return;
+        }
+
+        const {error} = await addToWishlistMutation(movie.id)
+
+        if (error) {
+            toast.update("wishlist", {
+                render: error.data,
+                type: toast.TYPE.ERROR,
+                autoClose: false,
+                closeOnClick: false,
+            })
+            return;
+        }
+        toast.update("wishlist", {
+            render: "Added to wishlist",
+            type: toast.TYPE.SUCCESS,
+            autoClose: 2000,
+            closeOnClick: false,
+        })
+    }
+
+    async function removeFromWishlistClick() {
+        if (!isLoggedIn) {
+            toast.error("Login is required to remove a wishlist")
+            return;
+        }
+        const {error} = await removeFromWishlist(movie.id)
+
+        console.log(error);
+        if (error) {
+            toast.update("wishlist", {
+                render: error.data,
+                type: toast.TYPE.ERROR,
+                autoClose: false,
+                closeOnClick: false,
+            })
+            return;
+        }
+        toast.update("wishlist", {
+            render: "Removed from wishlist",
+            type: toast.TYPE.SUCCESS,
+            autoClose: 2000,
+            closeOnClick: false,
+        })
+    }
+
 
     return (
         <div className="carousel-image" style={backGroundStyle}>
@@ -100,7 +172,7 @@ function CarouselElement({movie}) {
                             </div>
                             <div className={"movie-detail genres"}>
                                 {data.genres.map(genre => (
-                                   " "+ genre.name + "  "
+                                    " " + genre.name + "  "
                                 ))}
                             </div>
                         </div>
@@ -110,8 +182,12 @@ function CarouselElement({movie}) {
                     </>}
                     <div className={"buttons"}>
                         <button onClick={onDetailsClick} className={"details-button"}>View Details</button>
-                        <button className={"wishlist-button"}> Add to wishlist</button>
-                    </div>
+                        {isInWishlist ? (
+                            <button onClick={removeFromWishlistClick} className={"wishlist-button remove"}>Remove from Wishlist</button>
+                        ) : (
+                            <button onClick={onAddWishlistClick} className={"wishlist-button add"}>Add to
+                                Wishlist</button>
+                        )}                    </div>
                 </div>
             </div>
 
