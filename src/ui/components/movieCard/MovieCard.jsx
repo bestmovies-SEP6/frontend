@@ -1,6 +1,5 @@
 import React from 'react';
 import "./MovieCard.css";
-import StarBorderIcon from "@mui/icons-material/StarBorder";
 
 function MovieCard({movie, onClick}) {
 
@@ -10,11 +9,10 @@ function MovieCard({movie, onClick}) {
 
     }
 
-    return (<div className="movie-card" onClick={onClick} >
-        <div className={"poster-container"} style={backGroundStyle}>
-            <div className={"bg-overlay"}>
-
-            </div>
+    return (<div className="movie-card" onClick={onClick}>
+        <div className={"poster-container"}>
+            <img className={"poster-image"} src={movie.poster_path} alt={movie.name + "'s poster"} loading={"lazy"}/>
+            <div className={"bg-overlay"}></div>
         </div>
         <div className={"movie-stats dimmed-color"}>
             <div>Movie</div>

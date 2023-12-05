@@ -3,7 +3,7 @@ import React, {useEffect, useState} from "react";
 import VisibilityOutlinedIcon from '@mui/icons-material/VisibilityOutlined';
 import VisibilityOffOutlinedIcon from '@mui/icons-material/VisibilityOffOutlined';
 
-import "./auth.css";
+import "./authPage.css";
 import {useLoginMutation, useRegisterMutation} from "../../../redux/features/api/authApi";
 import LoadingComponent from "../../components/loading/loadingComponent";
 import ErrorComponent from "../../components/error/errorComponent";
@@ -78,7 +78,6 @@ function SignUpContainer() {
 
     }, [username, password, email]);
 
-    if (isLoading) return <LoadingComponent/>
     if (error) return <ErrorComponent error={error}/>
 
     async function onSignup() {
@@ -102,6 +101,7 @@ function SignUpContainer() {
     return (
         <>
             <div className="form-element">
+                {isLoading && <LoadingComponent/>}
                 <h1>Create Account</h1>
                 <span>Fill in the details for Registration</span>
                 <input type={"text"} placeholder={"Username"} value={username}

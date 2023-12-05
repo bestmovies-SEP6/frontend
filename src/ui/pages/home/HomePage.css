@@ -5,6 +5,7 @@
     margin: 0 auto;
     position: relative;
     overflow: hidden;
+    z-index: 5;
 }
 
 
@@ -15,7 +16,8 @@
     background-color: var(--background);
     display: flex;
     flex-wrap: wrap;
-    justify-content: start; /* Center items horizontally */
+    gap: 0.8em;
+    justify-content: center; /* Center items horizontally */
     align-items: center; /* Center items vertically */
 
 }

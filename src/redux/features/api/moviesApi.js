@@ -17,8 +17,11 @@ const moviesApi = baseApi
             }),
             movieDetailsById: builder.query({
                 query: (movieId) => `Movies/details/${movieId}`
-            })
+            }),
+            similarMoviesById: builder.query({
+                query: (movieId) => `Movies/${movieId}/similar`
+            }),
         })
     });
- export const {useNowPlayingMoviesQuery, useTrendingMoviesQuery, useTopRatedMoviesQuery, usePopularMoviesQuery, useMovieDetailsByIdQuery} = moviesApi;
+ export const {useNowPlayingMoviesQuery, useTrendingMoviesQuery, useTopRatedMoviesQuery, usePopularMoviesQuery, useMovieDetailsByIdQuery, useSimilarMoviesByIdQuery} = moviesApi;
 

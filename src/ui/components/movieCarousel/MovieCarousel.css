@@ -4,9 +4,10 @@
     height: 100vh; /* Full height of the container */
     display: flex;
     flex-direction: column;
-    justify-content: end;
+    justify-content: space-between;
     align-items: center;
-    cursor: grab
+    cursor: grab;
+    z-index: 20;
 }
 
 .carousel-image img {
@@ -14,6 +15,12 @@
     height: 100vh;
     object-fit: fill;
     display: block;
+}
+
+.navbar-gradient{
+    width: 100%;
+    height: 12vh;
+    background: linear-gradient(180deg, rgba(0, 0, 0, 1) 0%, rgba(0, 0, 0, 0.891281512605042) 45%, rgba(0, 0, 0, 0) 100%);
 }
 
 .gradient-wrapper{
@@ -45,7 +52,7 @@
 }
 
 .dimmed-color{
-    color: #565c67;
+    color: var(--secondary-text);
 }
 .movie-detail{
     margin: 3px 3px 3px 5px;
@@ -92,7 +99,7 @@
     font-size: 1em;
     cursor: pointer;
     color: var(--text);
-    transition: background-color 0.5s ease;
+    transition: background-color 0.3s ease;
 
 }
 
@@ -108,7 +115,7 @@
     font-size: 1em;
     cursor: pointer;
     color: var(--text);
-    transition: background-color 0.5s ease;
+    transition: background-color 0.3s ease;
 
 }
 
