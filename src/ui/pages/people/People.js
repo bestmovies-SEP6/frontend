@@ -3,9 +3,8 @@ import "./People.css";
 import { useNavigate, useParams } from "react-router-dom";
 import { usePopularPeopleByPageNoQuery } from "../../../redux/features/api/peopleApi";
 import PersonCard from "../../components/personCard/personCard";
-import LoadingComponent from "../../components/loading/loadingComponent";
-import ErrorComponent from "../../components/error/errorComponent";
 import Pagination from "../../components/pagination/Pagination";
+import {toast} from "react-toastify";
 
 function People() {
     const { pageNo } = useParams();
@@ -31,8 +30,14 @@ function PeopleCardList({ pageNo }) {
     const isLoading = peopleByPageNo.isLoading;
     const error = peopleByPageNo.error;
 
-    if (isLoading) return <LoadingComponent />;
-    if (error) return <ErrorComponent error={error} />;
+    if (error) {
+        toast.update("loadingPeople", {
+            render: error.data,
+            type: "error",
+            autoClose: false,
+        })
+        return <div> Something went wrong </div>
+    }
 
     function onClickPersonCard(personId) {
         navigate(`/person-details/${personId}`);
@@ -40,16 +45,17 @@ function PeopleCardList({ pageNo }) {
 
     const data = peopleByPageNo.data;
     return (
-        <div>
-            {data?.length > 0 ? (
+        <div>{
+            !isLoading ? (
                 <div className="people-container">
                     {data.map((person, index) => (
                         <PersonCard key={index} person={person} onClick={() => onClickPersonCard(person.id)} />
                     ))}
                 </div>
             ) : (
-                <p>No People Found</p>
-            )}
+                <p>Loading people...</p>
+            )
+        }
         </div>
     );
 }

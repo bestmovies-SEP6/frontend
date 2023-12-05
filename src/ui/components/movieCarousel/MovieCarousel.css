@@ -17,16 +17,16 @@
     display: block;
 }
 
-.navbar-gradient{
+.navbar-gradient {
     width: 100%;
     height: 12vh;
     background: linear-gradient(180deg, rgba(0, 0, 0, 1) 0%, rgba(0, 0, 0, 0.891281512605042) 45%, rgba(0, 0, 0, 0) 100%);
 }
 
-.gradient-wrapper{
+.gradient-wrapper {
     width: 100%;
     background: linear-gradient(0deg, rgba(2, 0, 36, 1) 0%, rgba(0, 0, 0, 1) 0%, rgba(0, 0, 3, 0.9809173669467787) 0%, rgba(0, 0, 3, 0.9164915966386554) 50%, rgba(0, 0, 3, 0.7484243697478992) 75%, rgba(0, 0, 3, 0.5495448179271709) 100%);
-    box-shadow: 0 -70px 69px 5px rgba(0,0,0,0.6);
+    box-shadow: 0 -70px 69px 5px rgba(0, 0, 0, 0.6);
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -41,9 +41,11 @@
     justify-content: space-between;
     color: white;
 }
-.icons{
+
+.icons {
     font-size: small;
 }
+
 .movie-details {
     text-align: center;
     display: flex;
@@ -51,10 +53,11 @@
     align-items: center;
 }
 
-.dimmed-color{
+.dimmed-color {
     color: var(--secondary-text);
 }
-.movie-detail{
+
+.movie-detail {
     margin: 3px 3px 3px 5px;
     padding: 3px;
     display: flex;
@@ -64,7 +67,7 @@
 
 }
 
-.genres{
+.genres {
     color: #7a8290;
     margin-left: 1rem;
 }
@@ -91,7 +94,7 @@
     margin-bottom: 8vh;
 }
 
-.details-button{
+.details-button {
     background: var(--primary);
     border-radius: 15px;
     border: 2px solid var(--primary);
@@ -103,27 +106,36 @@
 
 }
 
-.details-button:hover{
+.details-button:hover {
     background-color: var(--secondary);
 }
 
 .wishlist-button {
     background: transparent;
     border-radius: 15px;
-    border: 2px solid var(--primary);
     padding: 6px 24px;
     font-size: 1em;
     cursor: pointer;
     color: var(--text);
     transition: background-color 0.3s ease;
+}
+
+.add {
+    border: 2px solid var(--primary);
 
 }
 
-.wishlist-button:hover{
+.add:hover {
     background-color: var(--secondary);
+
+}
+.remove{
+    border: 2px solid var(--accent);
 }
 
-
+.remove:hover {
+    background-color: var(--accent);
+}
 
 
 /* Arrow button styles */

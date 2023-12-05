@@ -3,14 +3,18 @@ import React from "react";
 import MovieCard from "../../components/movieCard/MovieCard";
 import "./HomePage.css"
 import MovieCarousel from "../../components/movieCarousel/MovieCarousel";
-import LoadingComponent from "../../components/loading/loadingComponent";
-import ErrorComponent from "../../components/error/errorComponent";
 import {useNavigate} from "react-router-dom";
 import {
     usePopularMoviesQuery,
     useTopRatedMoviesQuery,
     useTrendingMoviesQuery
 } from "../../../redux/features/api/moviesApi";
+import {toast} from "react-toastify";
+import LoadingComponent from "../../components/loading/loadingComponent";
+import {useGetWishlistsQuery} from "../../../redux/features/api/wishlistApi";
+import {useSelector} from "react-redux";
+import {selectIsLoggedIn} from "../../../redux/features/state/authState";
+import FlatMoviesList from "../../components/flatMovieCard/FlatMovieCard";
 
 
 function HomePage() {
@@ -19,9 +23,18 @@ function HomePage() {
             <div className={"carousel-container"}>
                 <MovieCarousel/>
             </div>
-            <div className={"movies-container"}>
-                <MovieCardList/>
+            <div className={"container-wrapper"}>
+                <div className={"movies-container"}>
+                    <MovieCardList/>
+                </div>
+                <div className={"wishlists-section"}>
+                    <div className={"hard-title"}>
+                        Wishlists
+                    </div>
+                    <WishListsContainer/>
+                </div>
             </div>
+
         </>
     );
 }
@@ -38,8 +51,19 @@ function MovieCardList() {
     const error = trending.error || popular.error || topRated.error;
 
 
-    if (isLoading) return <LoadingComponent/>;
-    if (error) return <ErrorComponent error={error}/>;
+    if (isLoading) {
+        return <LoadingComponent/>
+    }
+
+
+    if (error) {
+        toast.update("loadingHomePage", {
+            render: error.data,
+            type: "error",
+            autoClose: false,
+        })
+        return <div></div>
+    }
 
     const data = getUniqueMovies(trending.data, popular.data, topRated.data);
 
@@ -61,6 +85,32 @@ function MovieCardList() {
     </div>
 
 }
+
+function WishListsContainer() {
+    const isLoggedIn = useSelector(selectIsLoggedIn);
+    const {data: wishLists, isLoading, error} = useGetWishlistsQuery();
+
+    const navigate = useNavigate();
+    if (!isLoggedIn) {
+        return <div className={"login-required"} onClick={() => navigate("/authenticate")}>
+            Login to see your wishlists
+        </div>
+    }
+
+    if (isLoading) {
+        return <LoadingComponent/>
+    }
+    if (error) {
+        toast.error(error.data, {
+            autoClose: false,
+        });
+    }
+    return <div className={"wishlists-container"}>
+        <FlatMoviesList movies={wishLists}/>
+    </div>
+
+}
+
 
 
 function getUniqueMovies(trending, popular, topRated) {

@@ -7,6 +7,14 @@ import {useParams} from "react-router-dom";
 import LoadingComponent from "../../components/loading/loadingComponent";
 import {usePersonsByMovieIdQuery} from "../../../redux/features/api/personApi";
 import FlatMoviesList from "../../components/flatMovieCard/FlatMovieCard";
+import {toast} from "react-toastify";
+import {
+    useAddToWishlistMutation,
+    useGetWishlistsQuery,
+    useRemoveFromWishlistMutation
+} from "../../../redux/features/api/wishlistApi";
+import {useSelector} from "react-redux";
+import {selectIsLoggedIn} from "../../../redux/features/state/authState";
 
 function MovieDetailsPage() {
     const {id} = useParams();
@@ -14,13 +22,16 @@ function MovieDetailsPage() {
     const {data: persons, isLoading: isLoadingPersons} = usePersonsByMovieIdQuery(id);
     const {data: similarMovies, isLoading: isLoadingSimilarMovies} = useSimilarMoviesByIdQuery(id);
 
-
     const isLoading = isLoadingPersons || isLoadingMovie;
 
-    if (isLoading) return <LoadingComponent/>;
+    let directors = "";
+    let topTen = [];
 
-    const directors = persons.filter(person => person.known_for_department === "Directing").map(person => person.name).join(", ");
-    const topTen = persons.slice(0, 10);
+
+    if (persons) {
+        directors = persons.filter(person => person.known_for_department === "Directing").map(person => person.name).join(", ");
+        topTen = persons.slice(0, 10);
+    }
 
     console.log(directors);
     console.log(topTen);
@@ -30,16 +41,19 @@ function MovieDetailsPage() {
         <div className={"whole-container"}>
             <div className={"navbar-excluded"}>
                 <div className={"content-section"}>
-                    <DetailContainer movie={movie} persons={topTen} directors={directors}/>
-                    <TopBilledCastsContainer persons={topTen}/>
+                    {!isLoading ? <>
+                        <DetailContainer movie={movie} persons={topTen} directors={directors}/>
+                        <TopBilledCastsContainer persons={topTen}/>
+                    </> : <LoadingComponent/>
+                    }
                 </div>
                 <div className={"similar-section"}>
                     <div className={"hard-title"}>
                         You may like
                     </div>
-                    {isLoadingSimilarMovies ? <LoadingComponent/> : <FlatMoviesList movies={similarMovies.slice(0, 10)}/>}
+                    {isLoadingSimilarMovies ? <LoadingComponent/> :
+                        <FlatMoviesList movies={similarMovies.slice(0, 10)}/>}
                 </div>
-
             </div>
         </div>
 
@@ -47,19 +61,92 @@ function MovieDetailsPage() {
 }
 
 function DetailContainer({movie, persons, directors}) {
+
+    const [addToWishListMutation, {isLoading}] = useAddToWishlistMutation()
+    const [removeFromWishlist, {isLoading: isLoadingWishlistRemove}] = useRemoveFromWishlistMutation();
+    const isLoggedIn = useSelector(selectIsLoggedIn);
+
+    const {data: wishLists} = useGetWishlistsQuery();
+
+    if (isLoading) {
+        toast.info("Adding to wishlist...", {
+            toastId: "wishlist",
+            autoClose: false,
+        });
+    }
+
+    if (isLoadingWishlistRemove) {
+        toast.info("Removing from wishlist...", {
+            toastId: "wishlist",
+            autoClose: false,
+        });
+    }
+
+    let isInWishlist = false;
+
+    if (wishLists) {
+        isInWishlist = wishLists.some(movieItem => movieItem.id === movie.id);
+    }
+
+    async function onAddWishlistClick() {
+        const {error} = await addToWishListMutation(movie.id)
+
+        if (error) {
+            toast.update("wishlist", {
+                render: error.data,
+                type: toast.TYPE.ERROR,
+                autoClose: false,
+                closeOnClick: false,
+            })
+            return;
+        }
+        toast.update("wishlist", {
+            render: "Added to wishlist",
+            type: toast.TYPE.SUCCESS,
+            autoClose: 2000,
+            closeOnClick: false,
+        })
+    }
+
+    async function removeFromWishlistClick() {
+        if (!isLoggedIn) {
+            toast.error("Login is required to remove a wishlist")
+            return;
+        }
+
+        const {error} = await removeFromWishlist(movie.id)
+
+        if (error) {
+            toast.update("wishlist", {
+                render: error.data,
+                type: toast.TYPE.ERROR,
+                autoClose: false,
+                closeOnClick: false,
+            })
+            return;
+        }
+        toast.update("wishlist", {
+            render: "Removed from wishlist",
+            type: toast.TYPE.SUCCESS,
+            autoClose: 2000,
+            closeOnClick: false,
+        })
+    }
+
     return <>
         <div className={"movie-details-container"}>
             <div className={"poster-card"}>
-                <img className={"poster-card-image"} src={movie.poster_path} alt={movie.name + "'s poster"} loading={"lazy"}/>
+                <img className={"poster-card-image"} src={movie.poster_path} alt={movie.name + "'s poster"}
+                     loading={"lazy"}/>
             </div>
             <div className={"details"}>
                 <div className={"icons-holder"}>
                     <div className={"icon"}>
                         <StarBorderIcon/>
-                        {movie.vote_average.toFixed(2)}
+                        {movie.vote_average?.toFixed(2)}
                     </div>
                     <div className={"icon"}>
-                        {movie.release_date.substring(0, 4)}
+                        {movie.release_date?.substring(0, 4)}
                     </div>
                     <div className={"icon"}>
                         {movie.runtime} min
@@ -71,11 +158,15 @@ function DetailContainer({movie, persons, directors}) {
                 <div className={"overview"}>
                     {movie.overview}
                 </div>
-                <DetailsMapContainer movie={movie} persons={persons} directors = {directors}/>
+                <DetailsMapContainer movie={movie} persons={persons} directors={directors}/>
 
                 <div className={"buttons"}>
                     <button className={"details-button"}>Add to Favorites</button>
-                    <button className={"wishlist-button"}> Add to wishlist</button>
+                    {isInWishlist ? (
+                        <button onClick={removeFromWishlistClick} className={"wishlist-button remove"}>Remove from Wishlist</button>
+                    ) : (
+                        <button onClick={onAddWishlistClick} className={"wishlist-button add"}>Add to Wishlist</button>
+                    )}
                 </div>
             </div>
         </div>
@@ -190,7 +281,6 @@ function CastCard({person}) {
             <img className={"cast-img"} src={person.profile_path ? person.profile_path : placeholderImage}
                  alt={"Person profile"} loading={"lazy"}/>
             <div className={"bg-overlay-person"}></div>
-
         </div>
         <div className={"cast-name"}>
             <div className={"real-name"}>
