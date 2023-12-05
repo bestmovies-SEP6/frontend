@@ -3,14 +3,14 @@ import React from "react";
 import MovieCard from "../../components/movieCard/MovieCard";
 import "./HomePage.css"
 import MovieCarousel from "../../components/movieCarousel/MovieCarousel";
-import LoadingComponent from "../../components/loading/loadingComponent";
-import ErrorComponent from "../../components/error/errorComponent";
 import {useNavigate} from "react-router-dom";
 import {
     usePopularMoviesQuery,
     useTopRatedMoviesQuery,
     useTrendingMoviesQuery
 } from "../../../redux/features/api/moviesApi";
+import {toast} from "react-toastify";
+import LoadingComponent from "../../components/loading/loadingComponent";
 
 
 function HomePage() {
@@ -38,8 +38,19 @@ function MovieCardList() {
     const error = trending.error || popular.error || topRated.error;
 
 
-    if (isLoading) return <LoadingComponent/>;
-    if (error) return <ErrorComponent error={error}/>;
+    if (isLoading) {
+        return <LoadingComponent/>
+    }
+
+
+    if (error) {
+        toast.update("loadingHomePage", {
+            render: error.data,
+            type: "error",
+            autoClose: false,
+        })
+        return <div> </div>
+    }
 
     const data = getUniqueMovies(trending.data, popular.data, topRated.data);
 

@@ -4,12 +4,13 @@ import {useParams} from "react-router-dom";
 import {usePersonDetailsByPersonIdQuery} from "../../../redux/features/api/peopleApi";
 import {PersonInfo} from "../../components/personDetails/PersonInfo";
 import {PersonBiography} from "../../components/personDetails/PersonBiography";
+import LoadingComponent from "../../components/loading/loadingComponent";
 function PersonDetailsPage() {
     const {personId} = useParams();
     const {data: person, isLoading: isLoadingPerson} = usePersonDetailsByPersonIdQuery(personId)
     // Handle loading state
     if (isLoadingPerson) {
-        return <div>Loading...</div>;
+        return <LoadingComponent/>
     }
     // Check if person data is available after loading
     if (!person) {

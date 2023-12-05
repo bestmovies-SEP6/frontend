@@ -13,13 +13,29 @@ import AccessAlarmsIcon from '@mui/icons-material/AccessAlarms';
 import LoadingComponent from "../loading/loadingComponent";
 import ErrorComponent from "../error/errorComponent";
 import {useMovieDetailsByIdQuery, useNowPlayingMoviesQuery} from "../../../redux/features/api/moviesApi";
+import {toast} from "react-toastify";
 
 function MovieCarousel() {
 
     const {data, error, isLoading} = useNowPlayingMoviesQuery()
 
-    if (isLoading) return <LoadingComponent/>
-    if (error) return <ErrorComponent error={error}/>
+    if (isLoading) {
+        toast.info("Loading Movies for you.. Hang on!", {
+            toastId: "loadingCarousel",
+            autoClose: 4000,
+            closeOnClick: false,
+            pauseOnHover: false
+        });
+        return <div> </div>
+    }
+    if (error) {
+        toast.update("loadingCarousel", {
+            render: error.data,
+            type: toast.TYPE.ERROR,
+            autoClose: false,
+            closeOnClick: false,
+        })
+    }
 
 
     const settings = {
