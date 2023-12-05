@@ -21,8 +21,6 @@ function MovieDetailsPage() {
     const {data: movie, isLoading: isLoadingMovie} = useMovieDetailsByIdQuery(id)
     const {data: persons, isLoading: isLoadingPersons} = usePersonsByMovieIdQuery(id);
     const {data: similarMovies, isLoading: isLoadingSimilarMovies} = useSimilarMoviesByIdQuery(id);
-    const {data: wishLists, isLoading: isLoadingWishLists} = useGetWishlistsQuery();
-
 
     const isLoading = isLoadingPersons || isLoadingMovie;
 
@@ -68,7 +66,7 @@ function DetailContainer({movie, persons, directors}) {
     const [removeFromWishlist, {isLoading: isLoadingWishlistRemove}] = useRemoveFromWishlistMutation();
     const isLoggedIn = useSelector(selectIsLoggedIn);
 
-    const {data: wishLists, isLoading: isWishListsLoading} = useGetWishlistsQuery();
+    const {data: wishLists} = useGetWishlistsQuery();
 
     if (isLoading) {
         toast.info("Adding to wishlist...", {
