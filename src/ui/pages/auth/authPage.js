@@ -72,6 +72,7 @@ function SignUpContainer() {
         toast.info("Creating Account", {
             toastId: "signUpToast",
             pauseOnHover: false,
+            autoClose: 15000
         });
     }
 
@@ -91,7 +92,6 @@ function SignUpContainer() {
             toast.update("signUpToast", {
                 render: error.data,
                 type: "error",
-                autoClose: 4000,
                 pauseOnHover: true
             });
             return;
@@ -106,7 +106,7 @@ function SignUpContainer() {
         setUsername("");
         setPassword("");
         setEmail("");
-        navigate("/")
+        navigate("/", {replace: true})
     }
 
     return (
@@ -143,6 +143,7 @@ function SignInContainer() {
         toast.info("Logging In", {
             toastId: "signInToast",
             pauseOnHover: false,
+            autoClose: 15000
         });
     }
 
@@ -168,13 +169,14 @@ function SignInContainer() {
          toast.update("signInToast", {
             render: `Welcome back ${username}`,
             type: "success",
+            autoClose: 2000,
             pauseOnHover: false,
         });
         const jwtToken = data.jwt_token;
         dispatch(setCredentials({jwtToken, username}));
         setUsername("");
         setPassword("");
-        navigate("/")
+        navigate("/", {replace: true})
     }
 
     return (
