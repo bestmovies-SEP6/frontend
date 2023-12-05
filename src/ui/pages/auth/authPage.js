@@ -5,8 +5,6 @@ import VisibilityOffOutlinedIcon from '@mui/icons-material/VisibilityOffOutlined
 
 import "./authPage.css";
 import {useLoginMutation, useRegisterMutation} from "../../../redux/features/api/authApi";
-import LoadingComponent from "../../components/loading/loadingComponent";
-import ErrorComponent from "../../components/error/errorComponent";
 import {useDispatch} from "react-redux";
 import {setCredentials} from "../../../redux/features/state/authState";
 import {useNavigate} from "react-router-dom";
@@ -66,7 +64,6 @@ function SignUpContainer() {
     const [email, setEmail] = useState("");
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
-    const [errorMessage, setErrorMessage] = useState("");
 
     const [registerMutation, {isLoading}] = useRegisterMutation();
     const dispatch = useDispatch();
