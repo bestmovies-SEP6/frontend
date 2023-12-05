@@ -46,8 +46,7 @@ function MovieCardList() {
 
 
     function onClickMovieCard(movieId) {
-        // navigate(`/movie/${movieId}`);
-        toast("This feature is not implemented yet")
+        navigate(`/movie/${movieId}`);
     }
 
     return <div>
