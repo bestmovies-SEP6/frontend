@@ -1,15 +1,15 @@
 import React from 'react';
 import {RouterProvider, createHashRouter} from "react-router-dom";
-import {QueryClient, QueryClientProvider} from "react-query";
 import {HomePage} from "./ui/pages/home/HomePage";
 import {Root} from "./ui/pages/Root";
 
 import AuthenticationPage from "./ui/pages/auth/authPage";
 import MovieDetailsPage from "./ui/pages/movieDetails/MovieDetailsPage";
 import {People} from "./ui/pages/people/People";
+import {ToastContainer} from "react-toastify";
+import 'react-toastify/dist/ReactToastify.css';
 import PersonDetailsPage from "./ui/pages/people/PersonDetailspage";
 
-const queryClient = new QueryClient();
 
 const router = createHashRouter([
     {
@@ -47,9 +47,15 @@ export function App() {
     return (
 
         <div className="App">
-            <QueryClientProvider client={queryClient}>
-                <RouterProvider router={router}/>
-            </QueryClientProvider>
+            <ToastContainer
+                position={"top-right"}
+                autoClose={4000}
+                hideProgressBar={false}
+                newestOnTop={false}
+                closeOnClick rtl={false}
+                theme={"dark"}
+            />
+            <RouterProvider router={router}/>
         </div>
     );
 }

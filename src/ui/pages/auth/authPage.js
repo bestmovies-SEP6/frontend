@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react";
+import React, {useState} from "react";
 
 import VisibilityOutlinedIcon from '@mui/icons-material/VisibilityOutlined';
 import VisibilityOffOutlinedIcon from '@mui/icons-material/VisibilityOffOutlined';
@@ -35,7 +35,6 @@ function AuthenticationPage() {
                     <SignInContainer/>
                 </div>
 
-
                 {/*container that shifts between left and right*/}
                 <div className="toggle-container">
                     <div className="toggle">
@@ -62,47 +61,59 @@ function AuthenticationPage() {
 
 /*sign-up container */
 function SignUpContainer() {
+
     const [email, setEmail] = useState("");
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
-    // eslint-disable-next-line no-unused-vars
     const [errorMessage, setErrorMessage] = useState("");
 
-    const [register, {isLoading, error}] = useRegisterMutation();
+    const [registerMutation, {isLoading}] = useRegisterMutation();
     const dispatch = useDispatch();
     const navigate = useNavigate();
-
-
-    // This resets the error message when the user changes the username, password, or email
-    useEffect(() => {
-        setErrorMessage("");
-
-    }, [username, password, email]);
-
-    if (error) return <ErrorComponent error={error}/>
+    if (isLoading) {
+        toast.info("Creating Account", {
+            toastId: "signUpToast",
+            pauseOnHover: false,
+        });
+    }
 
     async function onSignup() {
         try {
             validateCredentials(username, password);
             validateEmail(email);
-            const {data} = await register({username, password, email});
-            const jwtToken = data.jwt_token;
-
-            dispatch(setCredentials({jwtToken, username}));
-            setUsername("");
-            setPassword("");
-            setEmail("");
-            navigate("/")
         } catch (e) {
-            setErrorMessage(e.message);
+            toast.error(e.message, {
+                toastId: "signUpToast"
+            })
         }
+        const {data, error} = await registerMutation({username, password, email});
 
+        console.log(error)
+        if (error) {
+            toast.update("signUpToast", {
+                render: error.data,
+                type: "error",
+                autoClose: 4000,
+                pauseOnHover: true
+            });
+            return;
+        }
+        const jwtToken = data.jwt_token;
+        toast.update("signUpToast", {
+            render: "Account Created Successfully, welcome to Best Movies",
+            type: "success",
+            pauseOnHover: false,
+        });
+        dispatch(setCredentials({jwtToken, username}));
+        setUsername("");
+        setPassword("");
+        setEmail("");
+        navigate("/")
     }
 
     return (
         <>
             <div className="form-element">
-                {isLoading && <LoadingComponent/>}
                 <h1>Create Account</h1>
                 <span>Fill in the details for Registration</span>
                 <input type={"text"} placeholder={"Username"} value={username}
@@ -125,31 +136,47 @@ function SignUpContainer() {
 function SignInContainer() {
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
-    // eslint-disable-next-line no-unused-vars
-    const [errorMessage, setErrorMessage] = useState("");
 
-    const [login, {isLoading, error}] = useLoginMutation();
+    const [login, {isLoading}] = useLoginMutation();
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
-    if (isLoading) return <LoadingComponent/>
-    if (error) return <ErrorComponent error={error}/>
+    if (isLoading) {
+        toast.info("Logging In", {
+            toastId: "signInToast",
+            pauseOnHover: false,
+        });
+    }
 
     async function onSignIn() {
         try {
             validateCredentials(username, password);
-            const {data} = await login({username, password});
-            const jwtToken = data.jwt_token;
-
-            console.log("data  ", data)
-
-            dispatch(setCredentials({jwtToken, username}));
-            setUsername("");
-            setPassword("");
-            navigate("/")
         } catch (e) {
-            setErrorMessage(e.message);
+            toast.error(e.message, {
+                toastId: "signInToast",
+                pauseOnHover: true
+            })
         }
+        const {data, error} = await login({username, password});
+        if (error) {
+            toast.update("signInToast", {
+                render: error.data,
+                type: "error",
+                autoClose: 4000,
+                pauseOnHover: true
+            });
+            return;
+        }
+         toast.update("signInToast", {
+            render: `Welcome back ${username}`,
+            type: "success",
+            pauseOnHover: false,
+        });
+        const jwtToken = data.jwt_token;
+        dispatch(setCredentials({jwtToken, username}));
+        setUsername("");
+        setPassword("");
+        navigate("/")
     }
 
     return (
