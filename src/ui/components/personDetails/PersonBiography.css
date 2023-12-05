@@ -1,8 +1,58 @@
 .person-biography-container {
-    border: 1px solid black;
-    margin-top: 1vh;
+    margin-top: 2vh;
     margin-right: 1vw;
     padding-right: 10vw;
     flex: 1;
 
+}
+
+.person-biography-container > h1{
+    color: var(--primary);
+    padding: 1vh 0;
+}
+
+.person-biography{
+    margin-top: 3vh;
+    margin-bottom: 1vh;
+    border-radius: 10px;
+    color: var(--secondary-text);
+    width: 100%;
+}
+
+.person-biography > p{
+    padding: 1vh 1vw;
+    font-size: 15px;
+    line-height: 1.5;
+    text-align: justify;
+}
+
+.person-biography > h3 {
+    color: var(--text);
+    font-size: 20px;
+    padding-bottom: 2vh;
+}
+
+.known-for {
+    margin-top: 4vh;
+    overflow-x: auto; /* Enables horizontal scrolling */
+    -webkit-overflow-scrolling: touch; /* Smooth scrolling on iOS */
+    position: relative;
+}
+
+.known-for-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: flex-start;
+    flex-wrap: nowrap;
+    gap: 1rem;
+    overflow-x: scroll;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+    padding-bottom: 15px;
+}
+.known-for > h3{
+    color: var(--text);
+    padding: 1vh 0;
 }
