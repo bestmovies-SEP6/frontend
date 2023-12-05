@@ -11,6 +11,7 @@ import {
     useTopRatedMoviesQuery,
     useTrendingMoviesQuery
 } from "../../../redux/features/api/moviesApi";
+import {toast} from "react-toastify";
 
 
 function HomePage() {
@@ -45,7 +46,8 @@ function MovieCardList() {
 
 
     function onClickMovieCard(movieId) {
-        navigate(`/movie/${movieId}`);
+        // navigate(`/movie/${movieId}`);
+        toast("This feature is not implemented yet")
     }
 
     return <div>
