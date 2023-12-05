@@ -72,7 +72,7 @@ function SignUpContainer() {
         toast.info("Creating Account", {
             toastId: "signUpToast",
             pauseOnHover: false,
-            autoClose: 15000
+            autoClose: false
         });
     }
 
@@ -143,7 +143,7 @@ function SignInContainer() {
         toast.info("Logging In", {
             toastId: "signInToast",
             pauseOnHover: false,
-            autoClose: 15000
+            autoClose: false
         });
     }
 

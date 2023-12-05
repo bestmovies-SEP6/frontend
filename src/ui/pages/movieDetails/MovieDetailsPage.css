@@ -1,23 +1,23 @@
 
 ::-webkit-scrollbar {
-    width: 20px;
+    width: 0.8rem;
+    height: 0.8rem;
 }
 
 /* Track */
 ::-webkit-scrollbar-track {
-    box-shadow: inset 0 0 5px grey;
     border-radius: 10px;
 }
 
 /* Handle */
 ::-webkit-scrollbar-thumb {
-    background: var(--secondary-background);
+    background: #686868;
     border-radius: 10px;
 }
 
 /* Handle on hover */
 ::-webkit-scrollbar-thumb:hover {
-    background: var(--background);
+    background: #7b7b7b;
 }
 
 .whole-container {
@@ -31,6 +31,7 @@
 .navbar-excluded {
     width: 100%;
     height: 100%; /* Fixed height for the carousel */
+    min-height: 100vh;
     margin-top: 12vh;
     display: flex;
     justify-content: center;

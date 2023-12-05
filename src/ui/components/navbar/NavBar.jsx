@@ -24,12 +24,14 @@ function Navbar() {
             <div className="navbar-search">
                 <SearchBarComponent/>
             </div>
-            <button onClick={onPeopleClick} className={"nav-btn"}>
-                <PersonIcon/>
-                People
-            </button>
+            <div className={"buttons-nav"}>
+                <button onClick={onPeopleClick} className={"nav-btn"}>
+                    <PersonIcon/>
+                    People
+                </button>
+                <SignInOutButton/>
+            </div>
 
-            <SignInOutButton/>
         </nav>
     );
 };

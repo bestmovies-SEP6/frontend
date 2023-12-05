@@ -1,7 +1,7 @@
 import React from 'react';
 import {RouterProvider, createHashRouter} from "react-router-dom";
 import {HomePage} from "./ui/pages/home/HomePage";
-import {Root} from "./ui/pages/Root";
+import {Root} from "./ui/pages/root/Root";
 
 import AuthenticationPage from "./ui/pages/auth/authPage";
 import MovieDetailsPage from "./ui/pages/movieDetails/MovieDetailsPage";

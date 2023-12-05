@@ -21,7 +21,7 @@ import {useSelector} from "react-redux";
 
 function MovieCarousel() {
 
-    const {data, error, isLoading} = useNowPlayingMoviesQuery()
+    const {data, error} = useNowPlayingMoviesQuery()
 
     if (error) {
         toast.update("loadingCarousel", {
@@ -44,7 +44,7 @@ function MovieCarousel() {
     };
     return (
         <>
-            {!isLoading ?
+            {data ?
                 (<Slider {...settings} className={"slider"}>
                     {data.slice(0, 9).map((movie, index) => (
                         <CarouselElement key={movie.id} movie={movie}/>
@@ -171,7 +171,7 @@ function CarouselElement({movie}) {
                                 {data.runtime} min
                             </div>
                             <div className={"movie-detail genres"}>
-                                {data.genres.map(genre => (
+                                {data.genres?.map(genre => (
                                     " " + genre.name + "  "
                                 ))}
                             </div>

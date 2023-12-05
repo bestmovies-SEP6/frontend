@@ -88,7 +88,7 @@ function MovieCardList() {
 
 function WishListsContainer() {
     const isLoggedIn = useSelector(selectIsLoggedIn);
-    const {data: wishLists, isLoading, error} = useGetWishlistsQuery();
+    const {data: wishLists, error} = useGetWishlistsQuery();
 
     const navigate = useNavigate();
     if (!isLoggedIn) {
@@ -97,7 +97,7 @@ function WishListsContainer() {
         </div>
     }
 
-    if (isLoading) {
+    if (!wishLists) {
         return <LoadingComponent/>
     }
     if (error) {
