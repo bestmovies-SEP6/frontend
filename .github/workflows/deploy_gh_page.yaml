@@ -2,7 +2,7 @@ name: Deploy to Github Page
 on:
   push:
     branches:
-      - himal
+      - main
 
 jobs:
   build:
