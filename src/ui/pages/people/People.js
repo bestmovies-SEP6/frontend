@@ -3,8 +3,6 @@ import "./People.css";
 import { useNavigate, useParams } from "react-router-dom";
 import { usePopularPeopleByPageNoQuery } from "../../../redux/features/api/peopleApi";
 import PersonCard from "../../components/personCard/personCard";
-import LoadingComponent from "../../components/loading/loadingComponent";
-import ErrorComponent from "../../components/error/errorComponent";
 import Pagination from "../../components/pagination/Pagination";
 import {toast} from "react-toastify";
 
