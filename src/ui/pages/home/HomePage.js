@@ -14,8 +14,6 @@ import {
 
 
 function HomePage() {
-    const movies = {}
-
     return (
         <>
             <div className={"carousel-container"}>
