@@ -19,10 +19,10 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v4.0.0
         with:
-            node-version: 'node'
+          node-version: 22
 
-      - name: Install dependencies
-        run: npm install
+      - name: npm/yarn/pnpm install
+        uses: Jaid/action-npm-install@v1.2.4
 
 
       - name: Build
