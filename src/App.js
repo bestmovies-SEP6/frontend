@@ -7,6 +7,7 @@ import {Root} from "./ui/pages/Root";
 import AuthenticationPage from "./ui/pages/auth/authPage";
 import MovieDetailsPage from "./ui/pages/movieDetails/MovieDetailsPage";
 import {People} from "./ui/pages/people/People";
+import PersonDetailsPage from "./ui/pages/people/PersonDetailspage";
 
 const queryClient = new QueryClient();
 
@@ -26,6 +27,10 @@ const router = createHashRouter([
             {
                 path: "/people/:pageNo", // People page with dynamic segment for the page number
                 element: <People/>
+            },
+            {
+                path: "/person-details/:personId", // People page with dynamic segment for the page number
+                element: <PersonDetailsPage/>
             }
         ],
     },

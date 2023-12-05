@@ -1,0 +1,65 @@
+/*
+.person-details {
+    display: flex;
+    margin: 20px;
+    font-family: Arial, sans-serif;
+}
+
+.person-details-left {
+    flex: 1;
+    margin-right: 20px;
+}
+
+.person-details-right {
+    flex: 2;
+}
+
+.person-details-social-media,
+.person-details-Known-For,
+.person-details-gender,
+.person-details-birthday,
+.person-details-place-of-birth,
+.person-details-also-known-as {
+    margin-bottom: 10px;
+}
+
+.person-summary {
+    margin-bottom: 20px;
+}
+
+.person-biography {
+    margin-bottom: 20px;
+}
+
+.known-for-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.known-for-item {
+    width: calc(25% - 10px);
+    text-align: center;
+}
+
+.known-for-item img {
+    width: 100%;
+    height: auto;
+    border-radius: 10px;
+}
+
+.known-for-item-details {
+    margin-top: 5px;
+}
+
+!* Add more specific styles here as needed to match the layout *!
+*/
+
+
+.person-details-container {
+    border: 1px solid black;
+    /*height: 100vh;*/
+    padding-top: 12vh;
+    display: flex;
+    flex-direction: row;
+}

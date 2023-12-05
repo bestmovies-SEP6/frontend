@@ -35,7 +35,7 @@ function PeopleCardList({ pageNo }) {
     if (error) return <ErrorComponent error={error} />;
 
     function onClickPersonCard(personId) {
-        navigate(`/person/${personId}`);
+        navigate(`/person-details/${personId}`);
     }
 
     const data = peopleByPageNo.data;
