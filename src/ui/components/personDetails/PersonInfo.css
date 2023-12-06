@@ -1,13 +1,23 @@
 .person-info-container {
     height: auto;
     width: 27vw;
-    /*border: 1px solid black;*/
     padding-left: 10vw;
-    margin-top: 1vh;
+    margin-top: 2vh;
+    min-width: 300px
+
+}
+
+.personal-info > h3{
+    color: var(--primary);
+    padding: 1vh 0;
+}
+
+h5{
+    color: var(--text);
 }
 
 .person-image {
-    width: 15vw;
+    width: 90%;
     height: 40vh;
 }
 
@@ -30,5 +40,5 @@
 }
 
 .person-social-medias {
-    margin: 1.2vh 0px;
+    margin: 1.2vh 0;
 }
