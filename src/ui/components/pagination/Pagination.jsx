@@ -1,5 +1,5 @@
 import React from 'react';
-import {useLocation, useNavigate} from 'react-router-dom';
+import {useLocation} from 'react-router-dom';
 import './Pagination.css';
 
 const Pagination = ({ total_pages, onNext, onPrevious, onPageClick }) => {
