@@ -69,7 +69,7 @@ function SignUpContainer() {
     const dispatch = useDispatch();
     const navigate = useNavigate();
     if (isLoading) {
-        toast.info("Creating Account", {
+        toast.info("Creating Account... This might take a minute if its a first database call..", {
             toastId: "signUpToast",
             pauseOnHover: false,
             autoClose: false
@@ -140,7 +140,7 @@ function SignInContainer() {
     const navigate = useNavigate();
 
     if (isLoading) {
-        toast.info("Logging In", {
+        toast.info("Logging In.. This might take a minute if its a first database call..", {
             toastId: "signInToast",
             pauseOnHover: false,
             autoClose: false

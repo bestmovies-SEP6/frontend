@@ -36,7 +36,7 @@
 }
 
 .nav-btn {
-    background-color: var(--primary);
+    background: var(--primary);
     color: var(--text);
     padding: 6px 10px;
     border-radius: 0.8rem;
@@ -48,13 +48,13 @@
     gap: 0.1rem;
     cursor: pointer;
     border: none;
-    transition: background-color 0.3s ease;
+    transition: background 0.2s ease;
     z-index: 10;
 
 }
 
-.sign-in-out:hover {
-    background-color: var(--secondary);
+.nav-btn:hover {
+    background: var(--secondary);
 }
 
 
