@@ -1,14 +1,30 @@
 import React from "react";
 import "./People.css";
-import { useNavigate, useParams } from "react-router-dom";
+import {useLocation, useNavigate} from "react-router-dom";
 import { usePopularPeopleByPageNoQuery } from "../../../redux/features/api/peopleApi";
 import PersonCard from "../../components/personCard/personCard";
 import Pagination from "../../components/pagination/Pagination";
 import {toast} from "react-toastify";
 
 function People() {
-    const { pageNo } = useParams();
-    const currentPage = parseInt(pageNo) || 1;
+    const navigate = useNavigate();
+    const location = useLocation();
+    const params = new URLSearchParams(location.search);
+    let pageNo = parseInt(params.get('pageNo'));
+    if (isNaN(pageNo) || pageNo < 1) pageNo = 1;
+
+    function  onNextPageClick() {
+        navigate(`/people?pageNo=${pageNo + 1}`)
+    }
+
+    function onPreviousPageClick() {
+        if (pageNo === 1) return;
+        navigate(`/people?pageNo=${pageNo - 1}`)
+    }
+
+    function onPageNumberClick(pageNumber) {
+        navigate(`/people?pageNo=${pageNumber}`)
+    }
 
     return (
         <>
@@ -16,9 +32,12 @@ function People() {
                 <h2>Popular People</h2>
             </div>
             <div className={"people-container"}>
-                <PeopleCardList pageNo={currentPage} />
+                <PeopleCardList pageNo={pageNo} />
             </div>
-            <Pagination total_pages={100}/>
+            <Pagination total_pages={100}
+                        onNext={onNextPageClick}
+                        onPrevious={onPreviousPageClick}
+                        onPageClick={onPageNumberClick}/>
         </>
     );
 }

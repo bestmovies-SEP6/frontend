@@ -49,6 +49,11 @@
     color: var(--primary);
     margin-right: 0.45rem;
     cursor: pointer;
+    transition: all 0.2s ease;
+}
+.search-icon:hover{
+    transform: scale(1.1);
+    color: var(--secondary);
 }
 
 .search-text{

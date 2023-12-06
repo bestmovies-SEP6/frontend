@@ -10,16 +10,19 @@
     border: none;
     padding: 10px 15px;
     margin: 0 4px;
-    border-radius: 50%;
-    transition: background-color 0.3s;
+    border-radius: 25%;
+    background-color: var(--secondary-background);
+    transition: background-color 0.3s ease;
+    color: var(--secondary-text);
+    cursor: pointer;
 }
 
 .pagination button:hover:not(.active) {
-    background-color: #ddd;
+    background-color: var(--secondary);
 }
 
 .pagination button.active {
-    background-color: #4CAF50;
+    background-color: var(--primary);
     color: white;
 }
 

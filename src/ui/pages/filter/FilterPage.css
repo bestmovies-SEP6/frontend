@@ -1,0 +1,99 @@
+.filter-container{
+    width: 100%;
+    height: 100%;
+    margin-top: 3rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+
+}
+
+
+
+.filter-options {
+    margin-left: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    width: 100%;
+    padding: 1rem;
+    height: 4vh;
+}
+
+.options{
+    width: 50%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.option{
+    flex: 1;
+    min-width: 30%;
+}
+
+.search-input{
+    width: 100%;
+    height: 100%;
+    background-color: var(--secondary-background);
+    color: #a4b4c0;
+    border: none;
+    border-radius: 0.7rem;
+    padding: 0.5rem;
+    font-size: 0.7rem;
+}
+
+.date-picker{
+    cursor: pointer;
+}
+
+.react-datepicker{
+    background-color: var(--secondary-background);
+    color: var(--text);
+    border: none;
+    border-radius: 0.7rem;
+    padding: 0.5rem;
+    font-size: 0.7rem;
+}
+
+.react-datepicker__header{
+    background-color: var(--secondary-background);
+    color: var(--text);
+
+}
+
+.react-datepicker__year-text:hover,
+.react-datepicker__year-text--in-selecting-range:hover,
+.react-datepicker__year-text--in-range:hover
+{
+    border-radius: 0.3rem;
+    background-color: var(--secondary);
+}
+.react-datepicker__year-text--selected,
+.react-datepicker__year-text--in-selecting-range,
+.react-datepicker__year-text--in-range
+{
+    background-color: var(--secondary);
+}
+
+.search-input *{
+    padding: 0.01rem !important;
+    color: var(--secondary-text) !important;
+    background-color: var(--secondary-background) !important;
+    border: none !important;
+}
+
+.react-datepicker__year-text--disabled {
+    cursor: default;
+    color: var(--secondary-text);
+}
+
+.search-input:focus{
+    outline: var(--primary) 1px solid;
+}
+
+.filter-button{
+    margin-right: 2rem;
+
+}

@@ -169,7 +169,10 @@
 }
 
 .hard-title {
-    color: var(--primary);
+    background: var(--primary-seconday-gradient);
+    -webkit-background-clip: text;
+    color: transparent;
+    display: inline-block;
     font-size: 1.25rem;
     font-weight: bold;
     padding-left: 1rem;
