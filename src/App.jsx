@@ -8,7 +8,8 @@ import MovieDetailsPage from "./ui/pages/movieDetails/MovieDetailsPage";
 import {People} from "./ui/pages/people/People";
 import {ToastContainer} from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
-import PersonDetailsPage from "./ui/pages/people/PersonDetailspage";
+import PersonDetailspage from "./ui/pages/people/PersonDetailspage";
+import FilterPage from "./ui/pages/filter/FilterPage";
 
 
 const router = createHashRouter([
@@ -25,12 +26,16 @@ const router = createHashRouter([
                 element: <MovieDetailsPage/>
             },
             {
-                path: "/people/:pageNo", // People page with dynamic segment for the page number
+                path: "/people/",
                 element: <People/>
             },
             {
                 path: "/person-details/:personId", // People page with dynamic segment for the page number
-                element: <PersonDetailsPage/>
+                element: <PersonDetailspage/>
+            },
+            {
+                path: "/filter",
+                element: <FilterPage/>
             }
         ],
     },

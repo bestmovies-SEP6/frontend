@@ -21,7 +21,34 @@ const moviesApi = baseApi
             similarMoviesById: builder.query({
                 query: (movieId) => `Movies/${movieId}/similar`
             }),
+            searchMovies: builder.query({
+                query: ({pageNo, query, region, year}) => {
+                    const params = new URLSearchParams();
+                    if (pageNo)
+                        params.append('pageNo', pageNo);
+
+                    if (query)
+                        params.append('query', query);
+
+                    if (region) {
+                        params.append('region', region);
+                    }
+                    if (year) {
+                        params.append('year', year);
+                    }
+                    console.log(`Movies/?${params.toString()}`)
+                    return `Movies/?${params.toString()}`
+                }
+            })
         })
     });
- export const {useNowPlayingMoviesQuery, useTrendingMoviesQuery, useTopRatedMoviesQuery, usePopularMoviesQuery, useMovieDetailsByIdQuery, useSimilarMoviesByIdQuery} = moviesApi;
+export const {
+    useNowPlayingMoviesQuery,
+    useTrendingMoviesQuery,
+    useTopRatedMoviesQuery,
+    usePopularMoviesQuery,
+    useMovieDetailsByIdQuery,
+    useSimilarMoviesByIdQuery,
+    useSearchMoviesQuery
+} = moviesApi;
 

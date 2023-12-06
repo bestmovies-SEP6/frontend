@@ -1,7 +1,7 @@
 import React from "react";
 import "./PersonCard.css";
 
-function PersonCard({ person, onClick }) {
+function PersonCard({person, onClick}) {
 
     // Function to create a string of movie/series titles
     const getKnownForTitles = () => {
@@ -13,7 +13,12 @@ function PersonCard({ person, onClick }) {
     return (
         <div className="person-card" onClick={onClick}>
             <div className="profile-container">
-                <img className={"profile-image"} src={person.profile_path} alt={person +"'s profile image"} loading={"lazy"}/>
+                <img className={"profile-image"} src={person.profile_path} alt={person + "'s profile image"}
+                     loading={"lazy"}
+                     onError={(e) => {
+                         e.target.alt = "image not found";
+                         e.target.src = "https://www.movienewz.com/img/films/poster-holder.jpg"
+                     }}/>
             </div>
             <div className="people-name">
                 <h3>{person.name}</h3>

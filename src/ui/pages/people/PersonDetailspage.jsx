@@ -5,7 +5,7 @@ import {usePersonDetailsByPersonIdQuery} from "../../../redux/features/api/peopl
 import {PersonInfo} from "../../components/personDetails/PersonInfo";
 import {PersonBiography} from "../../components/personDetails/PersonBiography";
 import LoadingComponent from "../../components/loading/loadingComponent";
-function PersonDetailsPage() {
+function PersonDetailspage() {
     const {personId} = useParams();
     const {data: person, isLoading: isLoadingPerson} = usePersonDetailsByPersonIdQuery(personId)
     // Handle loading state
@@ -24,4 +24,4 @@ function PersonDetailsPage() {
     )
 }
 
-export default PersonDetailsPage;
+export default PersonDetailspage;

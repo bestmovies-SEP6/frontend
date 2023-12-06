@@ -13,7 +13,7 @@ function Navbar() {
     const navigate = useNavigate();
 
     function onPeopleClick() {
-        navigate("/people/1")
+        navigate("/people")
     }
 
     return (

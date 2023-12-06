@@ -1,16 +1,19 @@
 import React from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
+import {useLocation} from 'react-router-dom';
 import './Pagination.css';
 
-const Pagination = ({ total_pages }) => {
-    const { pageNo } = useParams();
-    const currentPage = parseInt(pageNo) || 1;
-    const navigate = useNavigate();
+const Pagination = ({ total_pages, onNext, onPrevious, onPageClick }) => {
+    const location =useLocation();
+
+    const params = new URLSearchParams(location.search);
+    let pageNo = parseInt(params.get('pageNo'));
+    if (isNaN(pageNo) || pageNo < 1) pageNo = 1;
+
 
     // Determine the range of page numbers to show
     const pageNumbers = [];
     const pagesToShow = 5;
-    let startPage = Math.max(currentPage - Math.floor(pagesToShow / 2), 1);
+    let startPage = Math.max(pageNo - Math.floor(pagesToShow / 2), 1);
     let endPage = startPage + pagesToShow - 1;
 
     // Adjust if the end page goes beyond the total pages
@@ -23,23 +26,19 @@ const Pagination = ({ total_pages }) => {
         pageNumbers.push(i);
     }
 
-    const navigateToPage = (pageNumber) => {
-        navigate(`/people/${pageNumber}`);
-    };
-
     return (
         <div className="pagination">
-            <button onClick={() => navigateToPage(currentPage - 1)} disabled={currentPage <= 1}>&laquo;</button>
+            <button onClick={onPrevious} disabled={pageNo <= 1}>&laquo;</button>
             {pageNumbers.map(number => (
                 <button
                     key={number}
-                    onClick={() => navigateToPage(number)}
-                    className={currentPage === number ? 'active' : ''}
+                    onClick={() => onPageClick(number)}
+                    className={pageNo === number ? 'active' : ''}
                 >
                     {number}
                 </button>
             ))}
-            <button onClick={() => navigateToPage(currentPage + 1)} disabled={currentPage >= total_pages}>&raquo;</button>
+            <button onClick={onNext} disabled={pageNo >= total_pages}>&raquo;</button>
         </div>
     );
 };
