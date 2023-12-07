@@ -5,21 +5,35 @@ import {usePersonDetailsByPersonIdQuery} from "../../../redux/features/api/peopl
 import {PersonInfo} from "../../components/personDetails/PersonInfo";
 import {PersonBiography} from "../../components/personDetails/PersonBiography";
 import LoadingComponent from "../../components/loading/loadingComponent";
+import {toast} from "react-toastify";
+import PersonTimeLine from "../../components/personDetails/PersonTimeLine";
 function PersonDetailsPage() {
     const {personId} = useParams();
-    const {data: person, isLoading: isLoadingPerson} = usePersonDetailsByPersonIdQuery(personId)
+    const {data: person, isLoading: isLoadingPerson, error : isError} = usePersonDetailsByPersonIdQuery(personId)
+
     // Handle loading state
     if (isLoadingPerson) {
         return <LoadingComponent/>
     }
-    // Check if person data is available after loading
-    if (!person) {
-        return <div>No person data found</div>;
+
+    // Handle error state
+    if (isError) {
+        toast.update("loadingPersonDetailsPage", {
+            render: isError.data,
+            type: "error",
+            autoClose: false,
+        })
+        return <div></div>
     }
     return (
-        <div className={"person-details-container"}>
-            <PersonInfo personData={person}/>
-            <PersonBiography personData={person}/>
+        <div>
+            <div className={"person-details-container"}>
+                <PersonInfo personData={person}/>
+                <PersonBiography personData={person}/>
+            </div>
+            <div className={"person-timeline-container"}>
+                <PersonTimeLine personData={person}/>
+            </div>
         </div>
     )
 }
