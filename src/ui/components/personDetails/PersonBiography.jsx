@@ -3,6 +3,7 @@ import "../personDetails/PersonBiography.css";
 import MovieSimpleCard from "./moviecard/MovieSimpleCard";
 import {useNavigate} from "react-router-dom";
 import {toast} from "react-toastify";
+import PieChart from "./PieChart";
 
 function PersonBiography({personData}) {
     const navigate = useNavigate();
@@ -51,6 +52,11 @@ function PersonBiography({personData}) {
                         )
                     )}
                 </div>
+            </div>
+            <div className={"person-statistic-container"}>
+                <h3>Statistics</h3>
+
+                <PieChart personId={personData.id}/>
             </div>
         </div>
     );

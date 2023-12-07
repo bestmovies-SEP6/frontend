@@ -9,7 +9,10 @@ const peopleApi = baseApi
             personDetailsByPersonId: builder.query({
                 query: (personId) => `Peoples/person-details/${personId}`
             }),
+            personMoviePieChartDataByPersonId: builder.query({
+                query: (personId) => `Peoples/person-movie-pie-chart/${personId}`
+            }),
         })
     });
-export const {  usePopularPeopleByPageNoQuery, usePersonDetailsByPersonIdQuery } = peopleApi;
+export const {  usePopularPeopleByPageNoQuery, usePersonDetailsByPersonIdQuery, usePersonMoviePieChartDataByPersonIdQuery } = peopleApi;
 

@@ -56,3 +56,14 @@
     color: var(--text);
     padding: 1vh 0;
 }
+
+.person-statistic-container{
+    margin-top: 2vh;
+    max-height: 60vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+
+}
