@@ -18,8 +18,10 @@ function Navbar() {
 
     return (
         <nav className="navbar">
-            <NavLink to={"/"} className="navbar-logo">
-                {/*<img src={logo} alt="Logo"/>*/}
+            <NavLink to={"/"} className="navbar-logo ">
+                <div id={"logo"} className={"hard-title animate-text"}>
+                    BestMovies
+                </div>
             </NavLink>
             <div className="navbar-search">
                 <SearchBarComponent/>
@@ -34,7 +36,7 @@ function Navbar() {
 
         </nav>
     );
-};
+}
 
 function SignInOutButton() {
     const isLoggedIn = useSelector(selectIsLoggedIn);

@@ -36,7 +36,6 @@ const moviesApi = baseApi
                     if (year) {
                         params.append('year', year);
                     }
-                    console.log(`Movies/?${params.toString()}`)
                     return `Movies/?${params.toString()}`
                 }
             })
