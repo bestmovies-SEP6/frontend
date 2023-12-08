@@ -60,7 +60,6 @@ function LineChart({personId}) {
             </div>
         );
     }
-    console.log(apiData);
     // Sort the data by release date
     const sortedData = apiData ? [...apiData].sort((a, b) => new Date(a.release_date) - new Date(b.release_date)) : [];
 
