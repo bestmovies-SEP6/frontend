@@ -364,9 +364,18 @@
 }
 
 /*Statistics*/
+.statsHeading{
+    color: var(--primary);
+    font-size: 1.5rem;
+    font-weight: bold;
+    padding-left: 1rem;
+    padding-bottom: 1rem;
+}
+
 .movie-statistic-container{
     margin-top: 2vh;
     width: 100%;
+    height: 100%;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -380,3 +389,4 @@
     margin-bottom: 1vh;
     color: var(--secondary-text);
 }
+

@@ -662,7 +662,7 @@ function BarChartForBoxOffice({boxOffice, budget}) {
     };
 
     return (
-        <div style={{ height: '60vh', width: '40wh' }}>
+        <div style={{ height: '60vh', width: '90%' }}>
             <Bar data={chartData} options={options} />
         </div>
     );
@@ -724,7 +724,7 @@ function LineChartForPopularity({people}) {
     };
 
     return (
-        <div style={{ height: '60vh', width: '40wh' }}>
+        <div style={{ height: '60vh', width: '90%' }}>
             <Line datasetIdKey="popularity" data={data} options={options}/>
         </div>
     )
@@ -741,14 +741,16 @@ function SelectOptionToChooseWhich(props){
     }
 
     return(
-        <div className="movie-statistic-container">
-            <h1>Statistics</h1>
-            <select onChange={handleChartChange} value={selectedChart} className="select-style">
-                <option value="lineChart">Line Chart For Popularity</option>
-                <option value="barChart">Bar Chart For Roles</option>
-            </select>
-            {selectedChart === "barChart" && <BarChartForBoxOffice boxOffice={movie.revenue} budget={movie.budget}/>}
-            {selectedChart === "lineChart" &&  <LineChartForPopularity people={people} />}
+        <div>
+            <h1 className={"statsHeading"}>Statistics</h1>
+            <div className="movie-statistic-container">
+                <select onChange={handleChartChange} value={selectedChart} className="select-style">
+                    <option value="lineChart">Line Chart For Popularity</option>
+                    <option value="barChart">Bar Chart For Box Office</option>
+                </select>
+                {selectedChart === "barChart" && <BarChartForBoxOffice boxOffice={movie.revenue} budget={movie.budget}/>}
+                {selectedChart === "lineChart" &&  <LineChartForPopularity people={people} />}
+            </div>
         </div>
     )
 }
