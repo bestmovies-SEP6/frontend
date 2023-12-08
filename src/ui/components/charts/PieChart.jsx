@@ -1,8 +1,6 @@
 import React from 'react';
-import { Pie } from 'react-chartjs-2';
-import {
-    usePersonMoviePieChartDataByPersonIdQuery,
-} from "../../../redux/features/api/peopleApi";
+import {Pie} from 'react-chartjs-2';
+import {usePersonMovieGenreVariantsByPersonIdQuery} from "../../../redux/features/api/peopleApi";
 import {
     Chart as ChartJS,
     ArcElement,
@@ -28,23 +26,23 @@ ChartJS.register(
 
 function PieChart({personId}) {
 
-    const {data: pieChartData, isLoading, error} = usePersonMoviePieChartDataByPersonIdQuery(personId)
+    const {data: pieChartData, isLoading, error} = usePersonMovieGenreVariantsByPersonIdQuery(personId);
 
     if (error) {
         toast.update("loadingPieChart", {
             render: error.data,
             type: "error",
-            autoClose: false,
+            autoClose: true,
         })
     }
 
     if (isLoading) {
-        return(
+        return (
             <div>
                 {
                     toast("Loading Pie Chart", {
                         toastId: "loadingPieChart",
-                        autoClose: false,
+                        autoClose: true,
                         type: "info",
                     })
                 }
@@ -54,10 +52,18 @@ function PieChart({personId}) {
 
     // Ensure pieChartData is valid
     if (!pieChartData) {
-        return <div>No data available</div>;
+        return(
+            <div>
+                {toast("No data available", {
+                toastId: "loadingBarChart",
+                autoClose: true,
+                type: "info",
+            })
+        }</div>);
     }
     const labels = Object.keys(pieChartData);
     const values = Object.values(pieChartData);
+
     const pieChart_Data = {
         labels: labels,
         datasets: [
@@ -68,7 +74,11 @@ function PieChart({personId}) {
                     'rgba(54, 162, 235, 0.6)',
                     'rgba(255, 206, 86, 0.6)',
                     'rgba(75, 192, 192, 0.6)',
-                    'rgba(153, 102, 255, 0.6)'
+                    'rgba(203,194,105,0.6)',
+                    'rgba(255, 159, 64, 0.6)',
+                    'rgba(111,67,199,0.6)',
+                    'rgba(126,171,77,0.6)',
+                    'rgba(179,54,197,0.6)',
                 ],
                 borderWidth: 1
             }
@@ -83,4 +93,4 @@ function PieChart({personId}) {
     );
 }
 
-export default PieChart;
+export {PieChart};

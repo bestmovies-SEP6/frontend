@@ -2,8 +2,8 @@ import React from "react";
 import "./PersonDetailsPage.css";
 import {useParams} from "react-router-dom";
 import {usePersonDetailsByPersonIdQuery} from "../../../redux/features/api/peopleApi";
-import {PersonInfo} from "../../components/personDetails/PersonInfo";
-import {PersonBiography} from "../../components/personDetails/PersonBiography";
+import {PersonInfo} from "../../components/personDetails/personInfo/PersonInfo";
+import {PersonBiography} from "../../components/personDetails/personBiography/PersonBiography";
 import LoadingComponent from "../../components/loading/loadingComponent";
 import {toast} from "react-toastify";
 function PersonDetailsPage() {
