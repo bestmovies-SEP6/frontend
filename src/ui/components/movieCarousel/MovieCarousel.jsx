@@ -46,7 +46,7 @@ function MovieCarousel() {
         <>
             {data ?
                 (<Slider {...settings} className={"slider"}>
-                    {data.slice(0, 9).map((movie, index) => (
+                    {data.slice(0, 9).map((movie) => (
                         <CarouselElement key={movie.id} movie={movie}/>
                     ))}
                 </Slider>) : <LoadingComponent/>
@@ -57,7 +57,7 @@ function MovieCarousel() {
 }
 
 function CarouselElement({movie}) {
-    const {data, isLoading} = useMovieDetailsByIdQuery(movie.id)
+    const {data} = useMovieDetailsByIdQuery(movie.id)
     const [addToWishlistMutation, {isLoading: isLoadingWishlistAdd}] = useAddToWishlistMutation();
     const [removeFromWishlist, {isLoading: isLoadingWishlistRemove}] = useRemoveFromWishlistMutation();
     const isLoggedIn = useSelector(selectIsLoggedIn);
@@ -160,7 +160,7 @@ function CarouselElement({movie}) {
                     <div className={"movie-title"}>
                         {movie.title}
                     </div>
-                    {isLoading || <>
+                    {!data || <>
                         <div className={"movie-details dimmed-color"}>
                             <div className={"movie-detail"}>
                                 <StarBorderIcon/>
@@ -182,15 +182,16 @@ function CarouselElement({movie}) {
                     </>}
                     <div className={"buttons"}>
                         <button onClick={onDetailsClick} className={"details-button"}>View Details</button>
-                        {isInWishlist ? (
-                            <button onClick={removeFromWishlistClick} className={"wishlist-button remove"}>Remove from Wishlist</button>
+                        {isInWishlist && isLoggedIn ? (
+                            <button onClick={removeFromWishlistClick} className={"wishlist-button remove"}>Remove from
+                                Wishlist</button>
                         ) : (
                             <button onClick={onAddWishlistClick} className={"wishlist-button add"}>Add to
                                 Wishlist</button>
-                        )}                    </div>
+                        )}
+                    </div>
                 </div>
             </div>
-
         </div>
     )
 }

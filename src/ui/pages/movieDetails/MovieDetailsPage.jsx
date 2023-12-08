@@ -3,7 +3,7 @@ import "./MovieDetailsPage.css";
 import {useMovieDetailsByIdQuery, useSimilarMoviesByIdQuery} from "../../../redux/features/api/moviesApi";
 import StarBorderIcon from '@mui/icons-material/StarBorder';
 
-import {useNavigate, useParams} from "react-router-dom";
+import {useLocation, useNavigate, useParams} from "react-router-dom";
 import LoadingComponent from "../../components/loading/loadingComponent";
 import {usePersonsByMovieIdQuery} from "../../../redux/features/api/personApi";
 import FlatMoviesList from "../../components/flatMovieCard/FlatMovieCard";
@@ -14,15 +14,31 @@ import {
     useRemoveFromWishlistMutation
 } from "../../../redux/features/api/wishlistApi";
 import {useSelector} from "react-redux";
-import {selectIsLoggedIn} from "../../../redux/features/state/authState";
+import {selectIsLoggedIn, selectUsername} from "../../../redux/features/state/authState";
+import {
+    useDeleteReviewMutation,
+    useFetchReviewsQuery,
+    usePostReviewMutation
+} from "../../../redux/features/api/reviewsApi";
+import Box from '@mui/joy/Box';
+import Button from '@mui/joy/Button';
+import Textarea from '@mui/joy/Textarea';
+import Rating from '@mui/material/Rating';
+import StarIcon from '@mui/icons-material/Star';
+import FormControl from '@mui/joy/FormControl';
+import FormLabel from '@mui/joy/FormLabel';
+import ListItemAvatar from '@mui/material/ListItemAvatar';
+import Avatar from '@mui/material/Avatar'
+import {timeAgo} from "../../../utils/date";
+import DeleteIcon from '@mui/icons-material/Delete';
+import Pagination from "../../components/pagination/Pagination";
+
 
 function MovieDetailsPage() {
     const {id} = useParams();
-    const {data: movie, isLoading: isLoadingMovie} = useMovieDetailsByIdQuery(id)
-    const {data: persons, isLoading: isLoadingPersons} = usePersonsByMovieIdQuery(id);
-    const {data: similarMovies, isLoading: isLoadingSimilarMovies} = useSimilarMoviesByIdQuery(id);
-
-    const isLoading = isLoadingPersons || isLoadingMovie;
+    const {data: movie} = useMovieDetailsByIdQuery(id)
+    const {data: persons} = usePersonsByMovieIdQuery(id);
+    const {data: similarMovies} = useSimilarMoviesByIdQuery(id);
 
     let directors = "";
     let topTen = [];
@@ -38,23 +54,319 @@ function MovieDetailsPage() {
         <div className={"whole-container"}>
             <div className={"navbar-excluded"}>
                 <div className={"content-section"}>
-                    {!isLoading ? <>
+                    {movie ? <>
                         <DetailContainer movie={movie} persons={topTen} directors={directors}/>
                         <TopBilledCastsContainer persons={topTen}/>
                     </> : <LoadingComponent/>
                     }
+                    <div className={"reviews-section"}>
+                        <div className={"hard-title"}>
+                            Reviews
+                        </div>
+                        {movie ? <ReviewListsContainer movie={movie}/> : <LoadingComponent/>}
+                    </div>
                 </div>
                 <div className={"similar-section"}>
                     <div className={"hard-title"}>
                         You may like
                     </div>
-                    {isLoadingSimilarMovies ? <LoadingComponent/> :
+                    {!similarMovies ? <LoadingComponent/> :
                         <FlatMoviesList movies={similarMovies.slice(0, 10)}/>}
                 </div>
             </div>
         </div>
 
     );
+}
+
+function ReviewListsContainer({movie}) {
+
+    const location = useLocation();
+    const navigate = useNavigate();
+    const params = new URLSearchParams(location.search);
+    let pageNo = parseInt(params.get('pageNo'));
+    if (isNaN(pageNo) || pageNo < 1) pageNo = 1;
+
+    console.log(pageNo)
+
+    const {data: response, isLoading, error} = useFetchReviewsQuery({movieId :movie.id, pageNo});
+    if (response) console.log(response);
+
+
+    function onNext(){
+        navigateToPage(pageNo+1);
+    }
+    function onPrev(){
+        navigateToPage(pageNo-1);
+    }
+
+    function navigateToPage(pageNumber) {
+        const navigateAddress = new URLSearchParams();
+        navigateAddress.append('pageNo', pageNumber);
+
+        navigate(`/movie/${movie.id}?${navigateAddress.toString()}`)
+    }
+
+
+    if (error) {
+        toast.error(error.data, {
+            autoClose: false,
+        });
+        return <p>Something went wrong..</p>
+    }
+
+    let reviews = [];
+    if (response) {
+        reviews = response.reviews;
+    }
+    return <div className={"reviews-list-container"}>
+        {isLoading || !response ? <LoadingComponent/>
+            :
+            <div>
+                {reviews.length === 0 ? <>
+                        <p className={"no-reviews"}>This movies doesnt have any reviews yet.. Be the first one to
+                            review.....</p>
+                        <ReviewInput movie_id={movie.id}/>
+
+                    </>
+                    :
+                    <>
+                        <div>
+                            <div className={"hard-title reviews-count"}>
+                                BestMovies Reviews :
+                                <ReadonlyRating value={response.average_rating}/>
+                                ({response.total_reviews} reviews)
+                            </div>
+                        </div>
+                        <ReviewInput movie_id={movie.id}/>
+                        <div className={"reviews-container"}>
+                            {reviews.map(review => <ReviewCard key={review.id} review={review}/>)}
+                        </div>
+                        <Pagination total_pages={response.total_pages} onNext={onNext} onPrevious={onPrev} onPageClick={navigateToPage}/>
+                    </>}
+            </div>
+        }
+    </div>
+
+}
+
+
+function ReadonlyRating({value}) {
+
+    const color = value >= 4 ? '#a4bf43' : value >= 3 ? '#67a636' : value >= 2 ? '#f5c518' : '#e50914';
+    return <Rating
+        name="read-only"
+        value={value}
+        precision={0.1}
+        readOnly
+        sx={{
+            color: color,
+        }}
+        emptyIcon={<StarIcon style={{
+            opacity: 0.55,
+            color: '#728290',
+        }} fontSize="inherit"/>}
+    />
+}
+
+function ReviewInput({movie_id}) {
+    const [review, setReview] = React.useState();
+    const [rating, setRating] = React.useState(2.5);
+    const [hover, setHover] = React.useState(-1);
+
+    const isLoggedIn = useSelector(selectIsLoggedIn);
+    const [reviewMutation, {isLoading}] = usePostReviewMutation();
+
+    const labels = {
+        0.5: 'Abysmal',
+        1: 'Awful',
+        1.5: 'Poor',
+        2: 'Below Average',
+        2.5: 'Mediocre',
+        3: 'Decent',
+        3.5: 'Good',
+        4: 'Great',
+        4.5: 'Excellent',
+        5: 'Outstanding',
+    }
+
+    function getLabelText(value) {
+        return `${value} Star${value !== 1 ? 's' : ''}, ${labels[value]}`;
+    }
+
+    if (isLoading) {
+        toast.info("Adding review...", {
+            toastId: "review",
+            autoClose: false,
+        });
+    }
+
+    async function onAddClick() {
+        if (!isLoggedIn) {
+            toast.error("Login is required to add a review")
+            return;
+        }
+        if (!review || review.trim().length === 0) {
+            toast.error("Review cannot be empty")
+            return;
+        }
+        const {error} = await reviewMutation({movie_id, description: review.trim(), rating})
+
+        if (error) {
+            console.log(error);
+            toast.update("review", {
+                render: error.data,
+                type: toast.TYPE.ERROR,
+            });
+            return;
+        }
+        toast.update("review", {
+            render: "Review added successfully",
+            type: toast.TYPE.SUCCESS,
+            autoClose: 2000,
+        });
+        setRating(2.5);
+        setReview("");
+    }
+
+    return <div className={"review-input"}>
+        <FormControl
+            sx={{
+                width: '100%',
+                marginBottom: '1rem',
+            }}
+        >
+            <FormLabel sx={{
+                color: 'var(--primary)',
+                fontSize: '1rem',
+            }}>Your review</FormLabel>
+            <Textarea
+                placeholder="Write your review here ..."
+                value={review}
+                onChange={(e) => setReview(e.target.value)}
+                minRows={2}
+                maxRows={3}
+                sx={{
+                    width: '100%',
+                    border: 'none',
+                    backgroundColor: '#131e2e',
+                    color: '#fff',
+                    "--Textarea-focusedHighlight": '#67a636 !important',
+                }}
+                startDecorator={
+                    <Box
+                        sx={{
+                            width: '100%',
+                            display: 'flex',
+                            paddingLeft: '75%',
+                            alignItems: 'center',
+                        }}
+                    >
+                        <Rating
+                            name="hover-feedback"
+                            value={rating}
+                            precision={0.5}
+                            getLabelText={getLabelText}
+                            sx={{
+                                color: '#a4bf43',
+                            }}
+                            onChange={(event, newValue) => {
+                                setRating(newValue);
+                            }}
+                            onChangeActive={(event, newHover) => {
+                                setHover(newHover);
+                            }}
+                            emptyIcon={<StarIcon style={{
+                                opacity: 0.55,
+                                color: '#728290',
+                            }} fontSize="inherit"/>}
+                        />
+                        {rating !== null && (
+                            <Box sx={{ml: 2}}>{labels[hover !== -1 ? hover : rating]}</Box>
+                        )}
+                    </Box>
+                }
+                endDecorator={
+                    <Box
+                        sx={{
+                            display: 'flex',
+                            gap: 'var(--Textarea-paddingBlock)',
+                            pt: 'var(--Textarea-paddingBlock)',
+                            borderTop: '1px solid',
+                            flex: 'auto',
+                            marginRight: '1rem'
+                        }}
+                    >
+                        <Button onClick={onAddClick} sx={
+                            {
+                                ml: 'auto',
+                                backgroundColor: '#67a636',
+                                backgroundHover: '#578d2e',
+                            }
+                        }>Add</Button>
+                    </Box>
+                }
+            />
+        </FormControl>
+    </div>
+}
+
+function ReviewCard({review}) {
+    const userName = useSelector(selectUsername);
+    const isLoggedIn = useSelector(selectIsLoggedIn);
+
+    const [deleteReviewMutation, {isLoading}] = useDeleteReviewMutation();
+
+    if (isLoading) {
+        toast.info("Deleting review...", {
+            toastId: "review",
+            autoClose: false,
+        });
+    }
+
+    async function onDeleteClick() {
+        const {error} = await deleteReviewMutation(review.id);
+        if (error) {
+            toast.update("review", {
+                render: error.data,
+                type: toast.TYPE.ERROR,
+            });
+        }
+        toast.update("review", {
+            render: "Review deleted successfully",
+            type: toast.TYPE.SUCCESS,
+            autoClose: 3000,
+        });
+    }
+
+    return <div className={"review"}>
+        <div className={"avatar"}>
+            <ListItemAvatar>
+                <Avatar alt={review.author} sx={{
+                    backgroundColor: '#67a636',
+                }} children={review.author[0].toUpperCase()}/>
+            </ListItemAvatar>
+        </div>
+        <div className={"review-details"}>
+            <div className={"review-heading"}>
+                <div className={"review-author"}>
+                    <p>{review.author}</p>
+                    <p><ReadonlyRating value={review.rating}/></p>
+                </div>
+                <div onClick={onDeleteClick} className={"delete-icon"}>
+                    {isLoggedIn && userName === review.author &&
+                        <DeleteIcon/>
+                    }
+                </div>
+            </div>
+            <div className={"review-date"}>
+                {timeAgo(review.authored_at)}
+            </div>
+            <div className={"review-content"}>
+                {review.description}
+            </div>
+        </div>
+    </div>
 }
 
 function DetailContainer({movie, persons, directors}) {
@@ -135,7 +447,7 @@ function DetailContainer({movie, persons, directors}) {
         })
     }
 
-    function onAddToFavoritesClick(){
+    function onAddToFavoritesClick() {
         toast.info("This feature is not implemented yet..");
     }
 
@@ -168,8 +480,9 @@ function DetailContainer({movie, persons, directors}) {
 
                 <div className={"buttons"}>
                     <button onClick={onAddToFavoritesClick} className={"details-button"}>Add to Favorites</button>
-                    {isInWishlist && isLoggedIn? (
-                        <button onClick={removeFromWishlistClick} className={"wishlist-button remove"}>Remove from Wishlist</button>
+                    {isInWishlist && isLoggedIn ? (
+                        <button onClick={removeFromWishlistClick} className={"wishlist-button remove"}>Remove from
+                            Wishlist</button>
                     ) : (
                         <button onClick={onAddWishlistClick} className={"wishlist-button add"}>Add to Wishlist</button>
                     )}
@@ -270,7 +583,9 @@ function DetailsMapContainer({movie, persons, directors}) {
 
 }
 
-function TopBilledCastsContainer({persons}) {
+function TopBilledCastsContainer({
+                                     persons
+                                 }) {
     return <div className={"cast-container-top"}>
         <div className={"hard-title"}>Top Billed Casts</div>
         <div className={"casts-list"}>
@@ -280,10 +595,12 @@ function TopBilledCastsContainer({persons}) {
 
 }
 
-function CastCard({person}) {
+function CastCard({
+                      person
+                  }) {
     const navigate = useNavigate();
 
-    function onCardClick(){
+    function onCardClick() {
         navigate(`/person-details/${person.id}`)
     }
 
