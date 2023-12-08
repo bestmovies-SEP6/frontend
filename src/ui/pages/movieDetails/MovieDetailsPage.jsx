@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import "./MovieDetailsPage.css";
 import {useMovieDetailsByIdQuery, useSimilarMoviesByIdQuery} from "../../../redux/features/api/moviesApi";
 import StarBorderIcon from '@mui/icons-material/StarBorder';
@@ -32,8 +32,7 @@ import Avatar from '@mui/material/Avatar'
 import {timeAgo} from "../../../utils/date";
 import DeleteIcon from '@mui/icons-material/Delete';
 import Pagination from "../../components/pagination/Pagination";
-import {Bar} from "react-chartjs-2";
-
+import {Bar, Line} from "react-chartjs-2";
 
 function MovieDetailsPage() {
     const {id} = useParams();
@@ -58,7 +57,7 @@ function MovieDetailsPage() {
                     {movie ? <>
                         <DetailContainer movie={movie} persons={topTen} directors={directors}/>
                         <TopBilledCastsContainer persons={topTen}/>
-                        <BarChartForBoxOffice boxOffice={movie.revenue} budget={movie.budget}/>
+                        <SelectOptionToChooseWhich movie={movie} people={persons}/>
                     </> : <LoadingComponent/>
                     }
                     <div className={"reviews-section"}>
@@ -669,6 +668,89 @@ function BarChartForBoxOffice({boxOffice, budget}) {
     );
 }
 
+function LineChartForPopularity({people}) {
+    if (!people) return <></>;
+    console.log("people")
+    console.log(people);
+    // Sort the data by release date
+    const labels = people.map(item => item.name);
+    const dataPoints = people.map(item => item.popularity);
+    const data = {
+        labels,
+        datasets: [
+            {
+                label: 'Actor Popularity Scores',
+                data: dataPoints,
+                fill: true,
+                borderColor: 'rgb(53, 162, 235)',
+                tension: 0.1
+            }
+        ]
+    };
 
+    const options = {
+        scales: {
+            y: {
+                beginAtZero: true,
+                title: {
+                    display: true,
+                    text: 'Popularity Score'
+                }
+            },
+            x: {
+                title: {
+                    display: true,
+                    text: 'Name'
+                }
+            }
+        },
+        plugins: {
+            tooltip: {
+                callbacks: {
+                    title: function (tooltipItems) {
+                        // Get the index of the hovered item
+                        const index = tooltipItems[0].dataIndex;
+                        // Return the movie title for that index
+                        return people[index].name;
+                    },
+                    label: function (tooltipItem) {
+                        return `Popularity: ${tooltipItem.formattedValue}`;
+                    }
+                }
+            }
+        },
+        responsive: true,
+        maintainAspectRatio: false,
+    };
+
+    return (
+        <div style={{ height: '60vh', width: '40wh' }}>
+            <Line datasetIdKey="popularity" data={data} options={options}/>
+        </div>
+    )
+
+}
+
+function SelectOptionToChooseWhich(props){
+
+    const { movie, people } = props;
+    const [selectedChart, setSelectedChart] = useState("barChart");
+
+    const handleChartChange = (event) => {
+        setSelectedChart(event.target.value);
+    }
+
+    return(
+        <div className="movie-statistic-container">
+            <h1>Statistics</h1>
+            <select onChange={handleChartChange} value={selectedChart} className="select-style">
+                <option value="lineChart">Line Chart For Popularity</option>
+                <option value="barChart">Bar Chart For Roles</option>
+            </select>
+            {selectedChart === "barChart" && <BarChartForBoxOffice boxOffice={movie.revenue} budget={movie.budget}/>}
+            {selectedChart === "lineChart" &&  <LineChartForPopularity people={people} />}
+        </div>
+    )
+}
 
 export default MovieDetailsPage;
