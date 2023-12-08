@@ -32,6 +32,7 @@ import Avatar from '@mui/material/Avatar'
 import {timeAgo} from "../../../utils/date";
 import DeleteIcon from '@mui/icons-material/Delete';
 import Pagination from "../../components/pagination/Pagination";
+import {Bar} from "react-chartjs-2";
 
 
 function MovieDetailsPage() {
@@ -57,6 +58,7 @@ function MovieDetailsPage() {
                     {movie ? <>
                         <DetailContainer movie={movie} persons={topTen} directors={directors}/>
                         <TopBilledCastsContainer persons={topTen}/>
+                        <BarChartForBoxOffice boxOffice={movie.revenue} budget={movie.budget}/>
                     </> : <LoadingComponent/>
                     }
                     <div className={"reviews-section"}>
@@ -625,6 +627,48 @@ function CastCard({
         </div>
     </div>
 }
+
+
+function BarChartForBoxOffice({boxOffice, budget}) {
+    if (boxOffice === 0 && budget === 0) return <></>;
+
+    const labels = ["Box Office", "Budget"];
+    const chartData = {
+        labels: labels,
+        datasets: [
+            {
+                label: 'Box office vs Budget',
+                data: Object.values({boxOffice, budget}),
+                backgroundColor: [
+                    'rgba(255, 99, 132, 0.6)',
+                    'rgba(54, 162, 235, 0.6)',
+                ],
+                borderColor: [
+                    'rgba(255, 99, 132, 1)',
+                    'rgba(54, 162, 235, 1)',
+                ],
+                borderWidth: 2,
+            },
+        ],
+    };
+
+    const options = {
+        scales: {
+            y: {
+                beginAtZero: true,
+            },
+        },
+        responsive: true,
+        maintainAspectRatio: false,
+    };
+
+    return (
+        <div style={{ height: '60vh', width: '40wh' }}>
+            <Bar data={chartData} options={options} />
+        </div>
+    );
+}
+
 
 
 export default MovieDetailsPage;
