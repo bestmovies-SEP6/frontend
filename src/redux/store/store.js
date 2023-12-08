@@ -17,6 +17,7 @@ const rootReducer = combineReducers({
     [baseApi.reducerPath]: baseApi.reducer,
     auth : authReducer,
     errorModal: errorModalReducer,
+    whitelist: ['auth']
 });
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);
