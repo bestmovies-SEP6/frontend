@@ -1,8 +1,10 @@
 import React from "react";
-import "../personDetails/PersonBiography.css";
-import MovieSimpleCard from "./moviecard/MovieSimpleCard";
+import "./PersonBiography.css";
+import MovieSimpleCard from "../moviecard/MovieSimpleCard";
 import {useNavigate} from "react-router-dom";
 import {toast} from "react-toastify";
+import {StatisticsComponent} from "../StatisticsComponent";
+
 
 function PersonBiography({personData}) {
     const navigate = useNavigate();
@@ -52,6 +54,7 @@ function PersonBiography({personData}) {
                     )}
                 </div>
             </div>
+            <StatisticsComponent personId={personData.id} />
         </div>
     );
 }

@@ -1,6 +1,6 @@
 import React from "react";
 
-import "../personDetails/PersonInfo.css"
+import "./PersonInfo.css"
 
 function PersonInfo({personData}) {
     return (

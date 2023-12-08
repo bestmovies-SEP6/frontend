@@ -8,7 +8,7 @@ import MovieDetailsPage from "./ui/pages/movieDetails/MovieDetailsPage";
 import {People} from "./ui/pages/people/People";
 import {ToastContainer} from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
-import PersonDetailspage from "./ui/pages/people/PersonDetailspage";
+import PersonDetailspage from "./ui/pages/personDetails/PersonDetailspage";
 import FilterPage from "./ui/pages/filter/FilterPage";
 
 

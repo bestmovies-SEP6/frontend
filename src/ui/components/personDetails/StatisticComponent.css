@@ -1,0 +1,5 @@
+.select-style{
+    background-color: var(--background);
+    margin-bottom: 1vh;
+    color: var(--text);
+}
