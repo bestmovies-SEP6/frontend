@@ -71,6 +71,12 @@ function FilterPage() {
         navigate(`/filter?${navigateAddress.toString()}`)
     }
 
+    function onEnterPress(e) {
+        if (e.key === 'Enter') {
+            onFilterClick();
+        }
+    }
+
     return <div className={"whole-container"}>
         <div className={"navbar-excluded"}>
             <div className={"content-section"}>
@@ -82,11 +88,15 @@ function FilterPage() {
                         <div className={"options"}>
                             <div className={"option"}>
                                 <input className={"search-input"} type="text" placeholder={"Search movies..."}
-                                       value={searchQuery} onChange={e => setSearchQuery(e.target.value)}/>
+                                       value={searchQuery}
+                                       onKeyDown={onEnterPress}
+                                       onChange={e => setSearchQuery(e.target.value)}/>
                             </div>
                             <div className={"option"}>
                                 <input className={"search-input"} type="text" placeholder={"Region"}
-                                       value={searchRegion} onChange={e => setSearchRegion(e.target.value)}/>
+                                       value={searchRegion}
+                                       onKeyDown={onEnterPress}
+                                       onChange={e => setSearchRegion(e.target.value)}/>
 
                             </div>
                             <div className={"option"}>
@@ -120,7 +130,8 @@ function FilterPage() {
                         </div>
                     </div>
                     {showSearchResults ?
-                        <SearchMoviesComponent pageNo={pageNo} query={query} region={region} year={year} navigateToPage={navigateToPage}/> :
+                        <SearchMoviesComponent pageNo={pageNo} query={query} region={region} year={year}
+                                               navigateToPage={navigateToPage}/> :
                         <FirstPageUnSearchedComponent/>}
                 </div>
             </div>
