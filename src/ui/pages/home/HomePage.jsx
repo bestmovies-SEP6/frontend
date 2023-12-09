@@ -10,6 +10,7 @@ import {toast} from "react-toastify";
 import LoadingComponent from "../../components/loading/loadingComponent";
 import WishListComponent from "../../components/wishlists/WishListComponent";
 import MovieCardListComponent from "../../components/movieCardList/MovieCardListComponent";
+import FavoritesComponent from "../../components/favorites/FavoritesComponent";
 
 
 function HomePage() {
@@ -50,6 +51,10 @@ function HomePage() {
                         Wishlists
                     </div>
                     <WishListComponent/>
+                    <div className={"hard-title"}>
+                        Favorites
+                    </div>
+                    <FavoritesComponent/>
                 </div>
             </div>
 
