@@ -33,6 +33,11 @@ import {timeAgo} from "../../../utils/date";
 import DeleteIcon from '@mui/icons-material/Delete';
 import Pagination from "../../components/pagination/Pagination";
 import {Bar, Line} from "react-chartjs-2";
+import {
+    useAddToFavoritesMutation,
+    useGetFavoritesQuery,
+    useRemoveFromFavoritesMutation
+} from "../../../redux/features/api/favoritesApi";
 
 function MovieDetailsPage() {
     const {id} = useParams();
@@ -90,15 +95,16 @@ function ReviewListsContainer({movie}) {
 
     console.log(pageNo)
 
-    const {data: response, isLoading, error} = useFetchReviewsQuery({movieId :movie.id, pageNo});
+    const {data: response, isLoading, error} = useFetchReviewsQuery({movieId: movie.id, pageNo});
     if (response) console.log(response);
 
 
-    function onNext(){
-        navigateToPage(pageNo+1);
+    function onNext() {
+        navigateToPage(pageNo + 1);
     }
-    function onPrev(){
-        navigateToPage(pageNo-1);
+
+    function onPrev() {
+        navigateToPage(pageNo - 1);
     }
 
     function navigateToPage(pageNumber) {
@@ -143,7 +149,8 @@ function ReviewListsContainer({movie}) {
                         <div className={"reviews-container"}>
                             {reviews.map(review => <ReviewCard key={review.id} review={review}/>)}
                         </div>
-                        <Pagination total_pages={response.total_pages} onNext={onNext} onPrevious={onPrev} onPageClick={navigateToPage}/>
+                        <Pagination total_pages={response.total_pages} onNext={onNext} onPrevious={onPrev}
+                                    onPageClick={navigateToPage}/>
                     </>}
             </div>
         }
@@ -372,11 +379,16 @@ function ReviewCard({review}) {
 
 function DetailContainer({movie, persons, directors}) {
 
+    const isLoggedIn = useSelector(selectIsLoggedIn);
     const [addToWishListMutation, {isLoading}] = useAddToWishlistMutation()
     const [removeFromWishlist, {isLoading: isLoadingWishlistRemove}] = useRemoveFromWishlistMutation();
-    const isLoggedIn = useSelector(selectIsLoggedIn);
+
+
+    const [addToFavoritesMutation, {isLoading: isLoadingAddToFavorites}] = useAddToFavoritesMutation()
+    const [removeFromFavorites, {isLoading: isLoadingFavoriteRemove}] = useRemoveFromFavoritesMutation();
 
     const {data: wishLists} = useGetWishlistsQuery();
+    const {data: favorites} = useGetFavoritesQuery();
 
     if (isLoading) {
         toast.info("Adding to wishlist...", {
@@ -392,10 +404,28 @@ function DetailContainer({movie, persons, directors}) {
         });
     }
 
+    if (isLoadingAddToFavorites) {
+        toast.info("Adding to favorites...", {
+            toastId: "favorites",
+            autoClose: false,
+        });
+    }
+
+    if (isLoadingFavoriteRemove) {
+        toast.info("Removing from favorites...", {
+            toastId: "favorites",
+            autoClose: false,
+        });
+    }
+
     let isInWishlist = false;
+    let isInFavorites = false;
 
     if (wishLists) {
         isInWishlist = wishLists.some(movieItem => movieItem.id === movie.id);
+    }
+    if (favorites) {
+        isInFavorites = favorites.some(movieItem => movieItem.id === movie.id);
     }
 
     async function onAddWishlistClick() {
@@ -423,7 +453,56 @@ function DetailContainer({movie, persons, directors}) {
         })
     }
 
-    async function removeFromWishlistClick() {
+    async function onAddFavoritesClick() {
+        if (!isLoggedIn) {
+            toast.error("Login is required to add a favorite")
+            return;
+        }
+
+        const {error} = await addToFavoritesMutation(movie.id)
+
+        if (error) {
+            toast.update("favorites", {
+                render: error.data,
+                type: toast.TYPE.ERROR,
+                autoClose: false,
+                closeOnClick: false,
+            })
+            return;
+        }
+        toast.update("favorites", {
+            render: "Added to favorites",
+            type: toast.TYPE.SUCCESS,
+            autoClose: 2000,
+            closeOnClick: false,
+        })
+    }
+
+    async function removeFromFavoritesClick() {
+        if (!isLoggedIn) {
+            toast.error("Login is required to remove a favorite")
+            return;
+        }
+
+        const {error} = await removeFromFavorites(movie.id)
+
+        if (error) {
+            toast.update("favorites", {
+                render: error.data,
+                type: toast.TYPE.ERROR,
+                autoClose: false,
+                closeOnClick: false,
+            })
+            return;
+        }
+        toast.update("favorites", {
+            render: "Removed from favorites",
+            type: toast.TYPE.SUCCESS,
+            autoClose: 2000,
+            closeOnClick: false,
+        })
+    }
+    async function removeFromWishListClick() {
         if (!isLoggedIn) {
             toast.error("Login is required to remove a wishlist")
             return;
@@ -446,10 +525,6 @@ function DetailContainer({movie, persons, directors}) {
             autoClose: 2000,
             closeOnClick: false,
         })
-    }
-
-    function onAddToFavoritesClick() {
-        toast.info("This feature is not implemented yet..");
     }
 
     return <>
@@ -480,10 +555,20 @@ function DetailContainer({movie, persons, directors}) {
                 <DetailsMapContainer movie={movie} persons={persons} directors={directors}/>
 
                 <div className={"buttons"}>
-                    <button onClick={onAddToFavoritesClick} className={"details-button"}>Add to Favorites</button>
+
+                    {isInFavorites && isLoggedIn ? (
+                            <button onClick={removeFromFavoritesClick} className={"details-button remove-favorite"}>Remove from
+                                favorites</button>
+                        ) :
+                        (
+                            <button onClick={onAddFavoritesClick} className={"details-button"}>Add to
+                                favorites</button>
+                        )}
+
                     {isInWishlist && isLoggedIn ? (
-                        <button onClick={removeFromWishlistClick} className={"wishlist-button remove"}>Remove from
-                            Wishlist</button>
+                        <button onClick={removeFromWishListClick} className={"wishlist-button remove"}>Remove from
+                            Wishlist
+                        </button>
                     ) : (
                         <button onClick={onAddWishlistClick} className={"wishlist-button add"}>Add to Wishlist</button>
                     )}
@@ -662,8 +747,8 @@ function BarChartForBoxOffice({boxOffice, budget}) {
     };
 
     return (
-        <div style={{ height: '60vh', width: '90%' }}>
-            <Bar data={chartData} options={options} />
+        <div style={{height: '60vh', width: '90%'}}>
+            <Bar data={chartData} options={options}/>
         </div>
     );
 }
@@ -724,23 +809,23 @@ function LineChartForPopularity({people}) {
     };
 
     return (
-        <div style={{ height: '60vh', width: '90%' }}>
+        <div style={{height: '60vh', width: '90%'}}>
             <Line datasetIdKey="popularity" data={data} options={options}/>
         </div>
     )
 
 }
 
-function SelectOptionToChooseWhich(props){
+function SelectOptionToChooseWhich(props) {
 
-    const { movie, people } = props;
+    const {movie, people} = props;
     const [selectedChart, setSelectedChart] = useState("barChart");
 
     const handleChartChange = (event) => {
         setSelectedChart(event.target.value);
     }
 
-    return(
+    return (
         <div>
             <h1 className={"statsHeading"}>Statistics</h1>
             <div className="movie-statistic-container">
@@ -748,8 +833,9 @@ function SelectOptionToChooseWhich(props){
                     <option value="lineChart">Line Chart For Popularity</option>
                     <option value="barChart">Bar Chart For Box Office</option>
                 </select>
-                {selectedChart === "barChart" && <BarChartForBoxOffice boxOffice={movie.revenue} budget={movie.budget}/>}
-                {selectedChart === "lineChart" &&  <LineChartForPopularity people={people} />}
+                {selectedChart === "barChart" &&
+                    <BarChartForBoxOffice boxOffice={movie.revenue} budget={movie.budget}/>}
+                {selectedChart === "lineChart" && <LineChartForPopularity people={people}/>}
             </div>
         </div>
     )

@@ -6,6 +6,7 @@
     font-weight: bold;
     cursor: pointer;
     transition: color 0.2s ease;
+    margin-bottom: 5rem;
 }
 
 .login-required:hover{

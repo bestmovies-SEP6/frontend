@@ -137,6 +137,15 @@
     background-color: var(--accent);
 }
 
+.remove-favorite{
+    background: var(--accent);
+    border: var(--accent) ;
+}
+.remove-favorite:hover{
+    background: var(--accent);
+    border: 2px solid var(--accent);
+}
+
 
 /* Arrow button styles */
 .slick-prev,
