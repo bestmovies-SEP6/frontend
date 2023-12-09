@@ -33,7 +33,11 @@ import {timeAgo} from "../../../utils/date";
 import DeleteIcon from '@mui/icons-material/Delete';
 import Pagination from "../../components/pagination/Pagination";
 import {Bar, Line} from "react-chartjs-2";
-import {useAddToFavoritesMutation, useGetFavoritesQuery} from "../../../redux/features/api/favoritesApi";
+import {
+    useAddToFavoritesMutation,
+    useGetFavoritesQuery,
+    useRemoveFromFavoritesMutation
+} from "../../../redux/features/api/favoritesApi";
 
 function MovieDetailsPage() {
     const {id} = useParams();
@@ -381,7 +385,7 @@ function DetailContainer({movie, persons, directors}) {
 
 
     const [addToFavoritesMutation, {isLoading: isLoadingAddToFavorites}] = useAddToFavoritesMutation()
-    const [removeFromFavorites, {isLoading: isLoadingFavoriteRemove}] = useRemoveFromWishlistMutation();
+    const [removeFromFavorites, {isLoading: isLoadingFavoriteRemove}] = useRemoveFromFavoritesMutation();
 
     const {data: wishLists} = useGetWishlistsQuery();
     const {data: favorites} = useGetFavoritesQuery();
@@ -409,7 +413,7 @@ function DetailContainer({movie, persons, directors}) {
 
     if (isLoadingFavoriteRemove) {
         toast.info("Removing from favorites...", {
-            toastId: "facorites",
+            toastId: "favorites",
             autoClose: false,
         });
     }
@@ -498,6 +502,30 @@ function DetailContainer({movie, persons, directors}) {
             closeOnClick: false,
         })
     }
+    async function removeFromWishListClick() {
+        if (!isLoggedIn) {
+            toast.error("Login is required to remove a wishlist")
+            return;
+        }
+
+        const {error} = await removeFromWishlist(movie.id)
+
+        if (error) {
+            toast.update("wishlist", {
+                render: error.data,
+                type: toast.TYPE.ERROR,
+                autoClose: false,
+                closeOnClick: false,
+            })
+            return;
+        }
+        toast.update("wishlist", {
+            render: "Removed from wishlist",
+            type: toast.TYPE.SUCCESS,
+            autoClose: 2000,
+            closeOnClick: false,
+        })
+    }
 
     return <>
         <div className={"movie-details-container"}>
@@ -529,7 +557,7 @@ function DetailContainer({movie, persons, directors}) {
                 <div className={"buttons"}>
 
                     {isInFavorites && isLoggedIn ? (
-                            <button onClick={removeFromFavorites} className={"details-button remove-favorite"}>Remove from
+                            <button onClick={removeFromFavoritesClick} className={"details-button remove-favorite"}>Remove from
                                 favorites</button>
                         ) :
                         (
@@ -538,7 +566,7 @@ function DetailContainer({movie, persons, directors}) {
                         )}
 
                     {isInWishlist && isLoggedIn ? (
-                        <button onClick={removeFromWishlist} className={"wishlist-button remove"}>Remove from
+                        <button onClick={removeFromWishListClick} className={"wishlist-button remove"}>Remove from
                             Wishlist
                         </button>
                     ) : (
