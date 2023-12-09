@@ -40,15 +40,15 @@ function AuthenticationPage() {
 
                         {/* Left panel for sign-in */}
                         <div className="toggle-panel toggle-left">
-                            <h1>Welcome Back!</h1>
-                            <p>Enter your personal details to use Best Movies!!</p>
+                            <h1 className={"title-text"}>Welcome Back!</h1>
+                            <p className={"support-text"}>Already have an account ? Enter your personal details to use Best Movies!!</p>
                             <button className="container-button hidden" onClick={handleLoginClick}>Sign In</button>
                         </div>
 
                         {/* Right panel for sign-up */}
                         <div className="toggle-panel toggle-right">
-                            <h1>Hello, Welcome to Best Movies!</h1>
-                            <p>Register with your personal details to use Best Movies!</p>
+                            <h1 className={"title-text"}>Hello, Welcome to Best Movies!</h1>
+                            <p>Dont have an account yet ? Register with your personal details to use Best Movies!</p>
                             <button className="container-button hidden" onClick={handleRegisterClick}>Sign Up</button>
                         </div>
                     </div>
@@ -64,6 +64,7 @@ function SignUpContainer() {
     const [email, setEmail] = useState("");
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
+    const [confirmPassword, setConfirmPassword] = useState("");
 
     const [registerMutation, {isLoading}] = useRegisterMutation();
     const dispatch = useDispatch();
@@ -77,6 +78,14 @@ function SignUpContainer() {
     }
 
     async function onSignup() {
+
+        if (password !== confirmPassword) {
+            toast.error("Passwords do not match", {
+                toastId: "signUpToast"
+            })
+            return;
+        }
+
         try {
             validateCredentials(username, password);
             validateEmail(email);
@@ -112,18 +121,29 @@ function SignUpContainer() {
     return (
         <>
             <div className="form-element">
-                <h1>Create Account</h1>
-                <span>Fill in the details for Registration</span>
-                <input type={"text"} placeholder={"Username"} value={username}
-                       onChange={(e) => setUsername(e.target.value)}/>
+                <div>
+                    <h1 className={"title-text"}>Create Account</h1>
+                    <span>Fill in the details for Registration</span>
+                </div>
+                <div className={"login-inputs"}>
+                    <input type={"text"} placeholder={"Username"} value={username}
+                           onChange={(e) => setUsername(e.target.value)}/>
 
-                <PasswordInput
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-                />
+                    <PasswordInput
+                        placeHolder={"Password"}
+                        value={password}
+                        onChange={(e) => setPassword(e.target.value)}
+                    />
+                    <PasswordInput
+                        placeHolder={"Confirm Password"}
+                        value={confirmPassword}
+                        onChange={(e) => setConfirmPassword(e.target.value)}
+                    />
 
-                <input type="email" placeholder="Email" value={email}
-                       onChange={(e) => setEmail(e.target.value)}/>
+                    <input type="email" placeholder="Email" value={email}
+                           onChange={(e) => setEmail(e.target.value)}/>
+                </div>
+
                 <button className="container-button" onClick={onSignup}>Sign Up</button>
             </div>
         </>
@@ -166,7 +186,7 @@ function SignInContainer() {
             });
             return;
         }
-         toast.update("signInToast", {
+        toast.update("signInToast", {
             render: `Welcome back ${username}`,
             type: "success",
             autoClose: 2000,
@@ -182,18 +202,22 @@ function SignInContainer() {
     return (
         <>
             <div className="form-element">
-                <h1>Sign In</h1>
-                <span>Use your username and password</span>
-                <input type="text" placeholder="Username" value={username}
-                       onChange={(e) => setUsername(e.target.value)}/>
+                <div>
+                    <h1 className={"title-text"}>Sign In</h1>
+                    <span>Use your username and password</span>
+                </div>
+                <div className={"login-inputs"}>
+                    <input type="text" placeholder="Username" value={username}
+                           onChange={(e) => setUsername(e.target.value)}/>
 
-                <PasswordInput
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-                />
+                    <PasswordInput
+                        placeHolder={"Password"}
+                        value={password}
+                        onChange={(e) => setPassword(e.target.value)}
+                    />
+                </div>
 
-                {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
-                <a href="#">Forget Your Password?</a>
+
                 <button className="container-button" onClick={onSignIn}>Sign In</button>
             </div>
         </>
@@ -201,7 +225,7 @@ function SignInContainer() {
 }
 
 
-function PasswordInput({value, onChange}) {
+function PasswordInput({value, onChange, placeHolder}) {
     const [type, setType] = useState("password");
     const [icon, setIcon] = useState(<VisibilityOffOutlinedIcon/>);
     const handleToggle = () => {
@@ -216,9 +240,14 @@ function PasswordInput({value, onChange}) {
 
     return (
         <>
-            <input type={type} placeholder="Password" value={value}
-                   onChange={onChange}/>
-            <span onClick={handleToggle} className="toggle-eye-icon"> {icon} </span>
+            <div className={"password-input"}>
+                <input type={type} placeholder={placeHolder} value={value}
+                       onChange={onChange}/>
+            <span onClick={handleToggle}>
+                {icon}
+            </span>
+            </div>
+
         </>
     )
 }
