@@ -41,7 +41,8 @@ function AuthenticationPage() {
                         {/* Left panel for sign-in */}
                         <div className="toggle-panel toggle-left">
                             <h1 className={"title-text"}>Welcome Back!</h1>
-                            <p className={"support-text"}>Already have an account ? Enter your personal details to use Best Movies!!</p>
+                            <p className={"support-text"}>Already have an account ? Enter your personal details to use
+                                Best Movies!!</p>
                             <button className="container-button hidden" onClick={handleLoginClick}>Sign In</button>
                         </div>
 
@@ -99,7 +100,7 @@ function SignUpContainer() {
 
         console.log(error)
         if (error) {
-            toast.update("signUpToast", {
+            toast.error("signUpToast", {
                 render: error.data,
                 type: "error",
                 pauseOnHover: true
@@ -108,11 +109,10 @@ function SignUpContainer() {
         }
         const jwtToken = data.jwt_token;
         toast.dismiss("signUpToast");
-        toast.update("signUpToast", {
-            render: "Account Created Successfully, welcome to Best Movies",
-            type: "success",
-            pauseOnHover: false,
-        });
+        toast.success("Account created successfully, welcome to Bestmovies , " + username, {
+                autoClose: 2000,
+            }
+        );
         dispatch(setCredentials({jwtToken, username}));
         setUsername("");
         setPassword("");
@@ -245,7 +245,7 @@ function PasswordInput({value, onChange, placeHolder}) {
             <div className={"password-input"}>
                 <input type={type} placeholder={placeHolder} value={value}
                        onChange={onChange}/>
-            <span onClick={handleToggle}>
+                <span onClick={handleToggle}>
                 {icon}
             </span>
             </div>
