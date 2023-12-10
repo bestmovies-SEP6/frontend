@@ -28,7 +28,9 @@ function Navbar() {
             </div>
             <div className={"buttons-nav"}>
                 <button onClick={onPeopleClick} className={"nav-btn"}>
-                    <PersonIcon/>
+                    <div className={"nav-icon"}>
+                        <PersonIcon/>
+                    </div>
                     People
                 </button>
                 <SignInOutButton/>
@@ -54,7 +56,9 @@ function SignInOutButton() {
     if (isLoggedIn) {
         return <>
             <button className={"nav-btn"} onClick={onSignOutClick}>
-                <LogoutIcon/>
+                <div className={"nav-icon"}>
+                    <LogoutIcon/>
+                </div>
                 Sign Out
             </button>
 
@@ -62,7 +66,9 @@ function SignInOutButton() {
     }
     return <>
         <button onClick={onSignInClick} className={"nav-btn"}>
-            <LoginIcon/>
+            <div className={"nav-icon"}>
+                <LoginIcon/>
+            </div>
             Sign In
         </button>
     </>

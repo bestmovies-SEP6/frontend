@@ -6,7 +6,7 @@ function PersonInfo({personData}) {
     return (
         <div className={"person-info-container"}>
             <div className={"person-image"}>
-                <img src={personData.profile_path} alt={personData.name}/>
+                <img src={personData.profile_path} className={"person-img"} alt={personData.name}/>
             </div>
             <div className={"person-social-medias"}>
                 <p>Social Media Links</p>

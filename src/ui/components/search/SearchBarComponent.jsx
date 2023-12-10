@@ -26,21 +26,27 @@ export default function SearchBarComponent() {
         navigate(`/filter?query=${searchText.trim()}`)
     }
 
+    function onEnterPress(e) {
+        if (e.key === 'Enter') {
+            onSearchIconClick();
+        }
+    }
+
     return (
         <div className="search">
             <div onClick={onFilterButtonClick} className={"filter_button"}>
-                <FilterAltOutlinedIcon/>
+                    <FilterAltOutlinedIcon/>
                 Filter
             </div>
             <div className={"search-field"}>
                 <input className={"search-text"} type="text" placeholder={"Search movies..."}
-                       value={searchText} onChange={(e) => setSearchText(e.target.value)}/>
+                       value={searchText}
+                       onKeyDown={onEnterPress}
+                       onChange={(e) => setSearchText(e.target.value)}/>
             </div>
             <div className={"search-icon"} onClick={onSearchIconClick}>
                 <SearchOutlinedIcon/>
             </div>
-
-
         </div>
     );
 }

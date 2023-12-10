@@ -1,22 +1,11 @@
 .person-details-container {
     display: flex;
-    flex-direction: row; /* Align children horizontally */
-    align-items: flex-start; /* Align items to the start of the flex container */
-    justify-content: flex-start; /* Align items to the start of the main axis */
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: flex-start;
     padding-top: 12vh;
     padding-bottom: 3vh;
-    gap: 2rem; /* This adds space between your flex items */
     background-color: var(--background);
     color: var(--secondary-text);
     flex-wrap: wrap;
-}
-
-.person-info-container {
-    min-width: 0; /* Prevents overflow of child elements */
-    max-width: 30%; /* Ensures that neither child takes more than half of the container */
-}
-.person-biography-container {
-    flex: 2; /* This will allow both to grow and fill up the space equally */
-    min-width: 0; /* Prevents overflow of child elements */
-    max-width: 70%; /* Ensures that neither child takes more than half of the container */
 }

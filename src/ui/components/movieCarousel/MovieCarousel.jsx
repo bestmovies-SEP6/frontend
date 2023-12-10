@@ -32,12 +32,13 @@ function MovieCarousel() {
         })
     }
     const settings = {
-        dots: true,
+        dots: false,
         infinite: true,
         speed: 500,
         autoplay: true,
         autoplaySpeed: 5000,
         slidesToShow: 1,
+        adaptiveWidth: true,
         adaptiveHeight: true,
         nextArrow: <SampleNextArrow/>,
         prevArrow: <SamplePrevArrow/>,
@@ -76,7 +77,6 @@ function CarouselElement({movie}) {
     const backGroundStyle = {
         backgroundImage: `url(${movie.backdrop_path})`,
         backgroundSize: "cover",
-
     }
 
     function onDetailsClick() {

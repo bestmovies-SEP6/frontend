@@ -1,7 +1,7 @@
 
 .carousel-image {
     width: 100%; /* Full width of the container */
-    height: 100vh; /* Full height of the container */
+    aspect-ratio: 16/7.5;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -9,14 +9,6 @@
     cursor: grab;
     z-index: 20;
 }
-
-.carousel-image img {
-    width: 100%;
-    height: 100vh;
-    object-fit: fill;
-    display: block;
-}
-
 .navbar-gradient {
     width: 100%;
     height: 12vh;
@@ -58,7 +50,7 @@
 }
 
 .movie-detail {
-    margin: 3px 3px 3px 5px;
+    margin: 0.5rem 0.5rem 0.5rem 0.8rem;
     padding: 3px;
     display: flex;
     justify-content: space-between;
@@ -75,7 +67,7 @@
 .movie-title {
     text-align: center;
     font-weight: bold;
-    font-size: 3em; /* Adjust the font size as needed */
+    font-size: 2.5rem; /* Adjust the font size as needed */
 }
 
 
@@ -98,7 +90,7 @@
     background: var(--primary);
     border-radius: 15px;
     border: 2px solid var(--primary);
-    padding: 6px 24px;
+    padding: 0.4rem 1.2rem;
     font-size: 1em;
     cursor: pointer;
     color: var(--text);
@@ -113,8 +105,8 @@
 .wishlist-button {
     background: transparent;
     border-radius: 15px;
-    padding: 6px 24px;
-    font-size: 1em;
+    padding: 0.4rem 1.2rem;
+    font-size: 1rem;
     cursor: pointer;
     color: var(--text);
     transition: background-color 0.3s ease;
@@ -182,3 +174,38 @@
     opacity: 1; /* Full opacity on hover/focus */
 }
 
+@media only screen and (max-width: 600px) {
+
+    .movie-title {
+        font-size: 1.5rem; /* Adjust the font size as needed */
+    }
+    .movie-description{
+        display: none;
+    }
+    .carousel-image{
+        aspect-ratio: 1 !important;
+
+    }
+    .movie-detail{
+        font-size: small;
+    }
+    .wishlist-button{
+        font-size: small;
+
+    }
+    .details-button{
+        font-size: small;
+    }
+
+}
+
+@media only screen and (min-width: 601px) and (max-width: 900px) {
+
+    .movie-title {
+        font-size: 2rem; /* Adjust the font size as needed */
+    }
+    .carousel-image{
+        aspect-ratio: 16/11 !important;
+
+    }
+}
