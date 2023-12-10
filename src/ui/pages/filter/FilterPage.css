@@ -1,4 +1,4 @@
-.filter-container{
+.filter-container {
     width: 100%;
     height: 100%;
     margin-top: 3rem;
@@ -7,7 +7,6 @@
     gap: 1rem;
 
 }
-
 
 
 .filter-options {
@@ -20,7 +19,7 @@
     height: 4vh;
 }
 
-.options{
+.options {
     width: 50%;
     display: flex;
     justify-content: space-between;
@@ -28,12 +27,12 @@
     gap: 0.5rem;
 }
 
-.option{
+.option {
     flex: 1;
     min-width: 30%;
 }
 
-.search-input{
+.search-input {
     width: 100%;
     height: 100%;
     background-color: var(--secondary-background);
@@ -44,11 +43,11 @@
     font-size: 0.7rem;
 }
 
-.date-picker{
+.date-picker {
     cursor: pointer;
 }
 
-.react-datepicker{
+.react-datepicker {
     background-color: var(--secondary-background);
     color: var(--text);
     border: none;
@@ -57,7 +56,7 @@
     font-size: 0.7rem;
 }
 
-.react-datepicker__header{
+.react-datepicker__header {
     background-color: var(--secondary-background);
     color: var(--text);
 
@@ -65,19 +64,18 @@
 
 .react-datepicker__year-text:hover,
 .react-datepicker__year-text--in-selecting-range:hover,
-.react-datepicker__year-text--in-range:hover
-{
+.react-datepicker__year-text--in-range:hover {
     border-radius: 0.3rem;
     background-color: var(--secondary);
 }
+
 .react-datepicker__year-text--selected,
 .react-datepicker__year-text--in-selecting-range,
-.react-datepicker__year-text--in-range
-{
+.react-datepicker__year-text--in-range {
     background-color: var(--secondary);
 }
 
-.search-input *{
+.search-input * {
     padding: 0.01rem !important;
     color: var(--secondary-text) !important;
     background-color: var(--secondary-background) !important;
@@ -89,11 +87,24 @@
     color: var(--secondary-text);
 }
 
-.search-input:focus{
+.search-input:focus {
     outline: var(--primary) 1px solid;
 }
 
-.filter-button{
+.filter-button {
     margin-right: 2rem;
+}
 
+.filter-button-btn {
+    background-color: var(--secondary);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--secondary-background);
+    border-radius: 4px;
+    gap: 0;
+    margin-left: 0.3rem;
+    font-size: 0.7rem;
+    padding: 0.05rem 0.5rem 0.05rem 0.2rem;
+    cursor: pointer;
 }

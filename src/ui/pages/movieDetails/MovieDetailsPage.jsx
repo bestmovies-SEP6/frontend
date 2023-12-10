@@ -266,7 +266,7 @@ function ReviewInput({movie_id}) {
                         sx={{
                             width: '100%',
                             display: 'flex',
-                            paddingLeft: '75%',
+                            paddingLeft: '50%',
                             alignItems: 'center',
                         }}
                     >

@@ -1,9 +1,9 @@
 import React from "react";
 import "./PersonBiography.css";
-import MovieSimpleCard from "../moviecard/MovieSimpleCard";
 import {useNavigate} from "react-router-dom";
 import {toast} from "react-toastify";
 import {StatisticsComponent} from "../StatisticsComponent";
+import MovieCard from "../../movieCard/MovieCard";
 
 
 function PersonBiography({personData}) {
@@ -40,16 +40,16 @@ function PersonBiography({personData}) {
 
                 <h4>Acting</h4>
                 <div className={"known-for-container"}>
-                    {personData.combined_credits.cast.map((movie, index) => (
-                            <MovieSimpleCard movie={movie} key={index} onClick={() => onClickMovieCard(movie)}/>
+                    {personData.combined_credits.cast.map((movie) => (
+                            <MovieCard movie={movie} key={movie.id} onClick={() => onClickMovieCard(movie)}/>
                         )
                     )}
                 </div>
 
                 <h4>Crew</h4>
                 <div className={"known-for-container"}>
-                    {personData.combined_credits.crew.map((movie, index) => (
-                            <MovieSimpleCard movie={movie} key={index} onClick={() => onClickMovieCard(movie)}/>
+                    {personData.combined_credits.crew.map((movie) => (
+                            <MovieCard movie={movie} key={movie.id} onClick={() => onClickMovieCard(movie)}/>
                         )
                     )}
                 </div>

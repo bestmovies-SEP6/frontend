@@ -35,7 +35,7 @@ export default function SearchBarComponent() {
     return (
         <div className="search">
             <div onClick={onFilterButtonClick} className={"filter_button"}>
-                <FilterAltOutlinedIcon/>
+                    <FilterAltOutlinedIcon/>
                 Filter
             </div>
             <div className={"search-field"}>

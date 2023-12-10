@@ -1,9 +1,5 @@
 .person-biography-container {
-    margin-top: 2vh;
-    margin-right: 1vw;
-    padding-right: 10vw;
-    flex: 1;
-
+   width: 75%;
 }
 
 .person-biography-container > h1{
@@ -41,7 +37,6 @@
 
 .known-for-container {
     display: flex;
-    flex-direction: row;
     justify-content: flex-start;
     align-items: flex-start;
     flex-wrap: nowrap;

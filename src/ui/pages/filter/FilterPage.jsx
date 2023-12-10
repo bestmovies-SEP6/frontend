@@ -123,7 +123,7 @@ function FilterPage() {
 
 
                         <div onClick={onFilterClick} className={"filter-button"}>
-                            <button className={"filter_button"}>
+                            <button className={"filter-button-btn"}>
                                 <FilterAltOutlinedIcon/>
                                 Filter
                             </button>

@@ -28,12 +28,10 @@ function People() {
 
     return (
         <>
-            <div className={"people-heading"}>
-                <h2>Popular People</h2>
+            <div className={"people-heading hard-title"}>
+                <h2>Popular Peoples</h2>
             </div>
-            <div className={"people-container"}>
                 <PeopleCardList pageNo={pageNo} />
-            </div>
             <Pagination total_pages={100}
                         onNext={onNextPageClick}
                         onPrevious={onPreviousPageClick}

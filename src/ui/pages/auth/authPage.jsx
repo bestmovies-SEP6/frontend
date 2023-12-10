@@ -70,7 +70,7 @@ function SignUpContainer() {
     const dispatch = useDispatch();
     const navigate = useNavigate();
     if (isLoading) {
-        toast.info("Creating Account... This might take a minute if its a first database call..", {
+        toast.loading("Creating Account... This might take a minute if its a first database call..", {
             toastId: "signUpToast",
             pauseOnHover: false,
             autoClose: false
@@ -90,6 +90,7 @@ function SignUpContainer() {
             validateCredentials(username, password);
             validateEmail(email);
         } catch (e) {
+            toast.dismiss("signUpToast")
             toast.error(e.message, {
                 toastId: "signUpToast"
             })
@@ -106,6 +107,7 @@ function SignUpContainer() {
             return;
         }
         const jwtToken = data.jwt_token;
+        toast.dismiss("signUpToast");
         toast.update("signUpToast", {
             render: "Account Created Successfully, welcome to Best Movies",
             type: "success",

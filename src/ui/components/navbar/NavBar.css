@@ -49,7 +49,6 @@
 }
 
 #logo{
-
     cursor: pointer;
     font-size: 1.5rem;
     font-weight: bold;
@@ -65,7 +64,7 @@
     flex: 1;
     max-width: 38%;
     z-index: 10;
-    margin-left: 13rem;
+    margin-left: 13%;
 }
 
 .buttons-nav {
@@ -79,7 +78,7 @@
 .nav-btn {
     background: var(--primary);
     color: var(--text);
-    padding: 6px 10px;
+    padding: 0.2rem 0.5rem;
     border-radius: 0.8rem;
     font-size: small;
     letter-spacing: 0;
@@ -98,5 +97,35 @@
     background: var(--secondary);
 }
 
+@media only screen and (max-width: 600px) {
+    .navbar{
+        gap: 0;
+        padding: 0;
+        margin: 0;
+    }
+
+    .navbar-search {
+        margin : 0;
+    }
+
+    .nav-icon{
+        display: none;
+    }
+
+    #logo{
+        font-size: 1.25rem;
+
+    }
+}
+
+@media only screen and (min-width: 601px) and (max-width: 900px) {
+
+    .navbar-search {
+        margin : 0;
+    }
+    .nav-icon{
+        display: none;
+    }
+}
 
 
