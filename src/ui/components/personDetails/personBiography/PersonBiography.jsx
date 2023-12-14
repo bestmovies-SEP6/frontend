@@ -19,7 +19,7 @@ function PersonBiography({personData}) {
     }
 
     function onClickMovieCard(movie) {
-        if (movie.media_type === "tv") {
+        if (movie.media_type !== "movie") {
             showToast("TV shows are not supported yet")
         } else {
             navigate(`/movie/${movie.id}`);
